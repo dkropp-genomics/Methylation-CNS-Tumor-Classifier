@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "methylclf"
+version = "0.1.0"
+description = "CNS tumor classification from DNA methylation: data access, in-fold transformers, metrics"
+authors = [{ name = "Dawson Kropp", email = "drkropp1999@gmail.com" }]
+requires-python = ">=3.12"
+# Installed with `pip install --no-deps -e .`; the packages themselves come
+# from conda (environment.yml), so pip never replaces a conda build.
+dependencies = ["numpy", "pandas", "zarr>=3", "scikit-learn", "pyyaml"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "scripts", "tests"]
+
+[tool.black]
+line-length = 100

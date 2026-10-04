@@ -1,0 +1,24 @@
+# Python environment (modeling, tests).
+#   conda env create -f environment.yml
+#   conda activate methyl-py && python -m pip install --no-deps -e .
+# Both channels are named here on purpose: bioconda is not in the user-level
+# conda config on the development machine.
+# Memory: the full pipeline needs 24 GB available to Linux. Under WSL2 set
+#   [wsl2] memory=24GB, swap=16GB   in C:\Users\<name>\.wslconfig
+# (the WSL default of half of RAM was not enough for preprocessing).
+name: methyl-py
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - pyarrow
+  - scikit-learn
+  - zarr=3.4
+  - pyyaml
+  - matplotlib
+  - umap-learn
+  - pytest=9.1
+  - pip

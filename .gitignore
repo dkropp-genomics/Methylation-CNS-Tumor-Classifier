@@ -7,3 +7,4 @@ __pycache__/
 .Rhistory
 .RData
 *:Zone.Identifier
+*.egg-info/

@@ -1,0 +1,27 @@
+# R environment (SeSAMe preprocessing, minfi spot-check).
+#   conda env create -f environment-r.yml
+#
+# REQUIRED AFTER CREATING THE ENVIRONMENT, or SeSAMe's dye-bias step fails
+# with "pthread_create() is 22": rebuild preprocessCore from source with
+# threading disabled.
+#   conda activate methyl-r
+#   Rscript -e 'install.packages("preprocessCore", repos = "https://bioconductor.org/packages/3.20/bioc", type = "source", configure.args = "--disable-threading")'
+#   Rscript -e 'sesameData::sesameDataCache()'
+# Any later `conda install` into this environment can put the conda build of
+# preprocessCore back. Re-run the 20-sample pilot afterwards to check.
+#
+# Memory: preprocessing with 6 workers peaked at 18.4 GB; 24 GB must be
+# available to Linux (WSL2: [wsl2] memory=24GB, swap=16GB in .wslconfig).
+name: methyl-r
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.4.3
+  - r-arrow
+  - bioconductor-sesame=1.24.0
+  - bioconductor-geoquery
+  - bioconductor-biocparallel
+  - bioconductor-minfi
+  - bioconductor-illuminahumanmethylation450kmanifest
+  - bioconductor-illuminahumanmethylation450kanno.ilmn12.hg19
