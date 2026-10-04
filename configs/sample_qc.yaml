@@ -1,0 +1,10 @@
+metric: frac_detected
+min_value: 0.70
+decided_on: "2026-10-03"
+decided_from: GSE90496 pooled QC distribution only; no class, material or GSE109379 values seen
+reason: >
+  No natural gap in frac_detected. Samples below 0.60 have median mean_intensity
+  903 vs 6861 overall (failed arrays); below 0.70 the median is 2931. Above 0.70
+  intensity approaches normal, consistent with degraded FFPE DNA on a working
+  array, which the project is designed to handle. Drops 34 of 2801 (1.2%).
+  Conventional 0.90-0.95 cuts would drop 16-39% and were rejected.
