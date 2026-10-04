@@ -1,0 +1,33 @@
+{
+  "config": {
+    "run_name": "rf_v1",
+    "model": "rf",
+    "seed": 42,
+    "n_jobs": 10,
+    "select_by": "macro_f1",
+    "features": {
+      "n_probes": [
+        5000,
+        10000,
+        20000
+      ],
+      "correct_material": [
+        false,
+        true
+      ]
+    },
+    "model_params": {
+      "n_estimators": [
+        500
+      ],
+      "max_features": [
+        "sqrt"
+      ],
+      "class_weight": [
+        "balanced_subsample"
+      ]
+    }
+  },
+  "folds_sha256": "e417d5617b8add6c38db7fc0a9c61341a13763109f61f708045af102c64fbb3e",
+  "n_samples": 2767
+}

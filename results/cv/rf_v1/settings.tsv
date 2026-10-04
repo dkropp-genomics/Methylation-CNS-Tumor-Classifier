@@ -1,0 +1,7 @@
+setting	correct_material	n_probes	model_params
+s000	False	5000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
+s001	False	10000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
+s002	False	20000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
+s003	True	5000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
+s004	True	10000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
+s005	True	20000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"

@@ -1,0 +1,6 @@
+outer	selected_by	setting	accuracy	macro_f1	balanced_accuracy	log_loss	correct_material	n_probes	model_params
+0	macro_f1	s002	0.95978	0.94291	0.93267	0.66392	False	20000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
+1	macro_f1	s001	0.95572	0.94276	0.93514	0.66576	False	10000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
+2	macro_f1	s000	0.95393	0.94171	0.93256	0.68261	False	5000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
+3	macro_f1	s004	0.95348	0.93428	0.92633	0.65653	True	10000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
+4	macro_f1	s003	0.95799	0.94753	0.93859	0.67451	True	5000	"{""class_weight"": ""balanced_subsample"", ""max_features"": ""sqrt"", ""n_estimators"": 500}"
