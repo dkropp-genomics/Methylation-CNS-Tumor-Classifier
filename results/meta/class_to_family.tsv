@@ -1,0 +1,92 @@
+mc_class	capper_name	family	family_name	in_capper_family	n_reference	source
+A IDH	A IDH	MCF IDH GLM	glioma, IDH mutant	1	78	Capper et al. 2018, Supplementary Table 1
+A IDH, HG	A IDH, HG	MCF IDH GLM	glioma, IDH mutant	1	46	Capper et al. 2018, Supplementary Table 1
+ANA PA	ANA PA	ANA PA		0	21	Capper et al. 2018, Supplementary Table 1
+ATRT, MYC	ATRT, MYC	MCF ATRT	atypical teratoid/rhabdoid tumor	1	29	Capper et al. 2018, Supplementary Table 1
+ATRT, SHH	ATRT, SHH	MCF ATRT	atypical teratoid/rhabdoid tumor	1	46	Capper et al. 2018, Supplementary Table 1
+ATRT, TYR	ATRT, TYR	MCF ATRT	atypical teratoid/rhabdoid tumor	1	37	Capper et al. 2018, Supplementary Table 1
+CHGL	CHGL	CHGL		0	12	Capper et al. 2018, Supplementary Table 1
+CHORDM	CHORDM	CHORDM		0	9	Capper et al. 2018, Supplementary Table 1
+CN	CN	CN		0	21	Capper et al. 2018, Supplementary Table 1
+CNS NB, FOXR2	CNS NB, FOXR2	CNS NB, FOXR2		0	39	Capper et al. 2018, Supplementary Table 1
+CONTR, ADENOPIT	CONTR, ADENOPIT	CONTR, ADENOPIT		0	9	Capper et al. 2018, Supplementary Table 1
+CONTR, CEBM	CONTR, CEBM	CONTR, CEBM		0	8	Capper et al. 2018, Supplementary Table 1
+CONTR, HEMI	CONTR, HEMI	CONTR, HEMI		0	13	Capper et al. 2018, Supplementary Table 1
+CONTR, HYPTHAL	CONTR, HYPTHAL	CONTR, HYPTHAL		0	9	Capper et al. 2018, Supplementary Table 1
+CONTR, INFLAM	CONTR, INFLAM	CONTR, INFLAM		0	24	Capper et al. 2018, Supplementary Table 1
+CONTR, PINEAL	CONTR, PINEAL	CONTR, PINEAL		0	12	Capper et al. 2018, Supplementary Table 1
+CONTR, PONS	CONTR, PONS	CONTR, PONS		0	12	Capper et al. 2018, Supplementary Table 1
+CONTR, REACT	CONTR, REACT	CONTR, REACT		0	23	Capper et al. 2018, Supplementary Table 1
+CONTR, WM	CONTR, WM	CONTR, WM		0	9	Capper et al. 2018, Supplementary Table 1
+CPH, ADM	CPH, ADM	CPH, ADM		0	25	Capper et al. 2018, Supplementary Table 1
+CPH, PAP	CPH, PAP	CPH, PAP		0	20	Capper et al. 2018, Supplementary Table 1
+DLGNT	DLGNT	DLGNT		0	8	Capper et al. 2018, Supplementary Table 1
+DMG, K27	DMG, K27	DMG, K27		0	78	Capper et al. 2018, Supplementary Table 1
+EFT, CIC	EFT, CIC	EFT, CIC		0	13	Capper et al. 2018, Supplementary Table 1
+ENB, A	ENB, A	MCF ENB	esthesioneuroblastoma	1	23	Capper et al. 2018, Supplementary Table 1
+ENB, B	ENB, B	MCF ENB	esthesioneuroblastoma	1	16	Capper et al. 2018, Supplementary Table 1
+EPN, MPE	EPN, MPE	EPN, MPE		0	28	Capper et al. 2018, Supplementary Table 1
+EPN, PF A	EPN, PF A	EPN, PF A		0	91	Capper et al. 2018, Supplementary Table 1
+EPN, PF B	EPN, PF B	EPN, PF B		0	51	Capper et al. 2018, Supplementary Table 1
+EPN, RELA	EPN, RELA	EPN, RELA		0	70	Capper et al. 2018, Supplementary Table 1
+EPN, SPINE	EPN, SPINE	EPN, SPINE		0	27	Capper et al. 2018, Supplementary Table 1
+EPN, YAP	EPN, YAP	EPN, YAP		0	11	Capper et al. 2018, Supplementary Table 1
+ETMR	ETMR	ETMR		0	43	Capper et al. 2018, Supplementary Table 1
+EWS	EWS	EWS		0	14	Capper et al. 2018, Supplementary Table 1
+GBM, G34	GBM, G34	GBM, G34		0	41	Capper et al. 2018, Supplementary Table 1
+GBM, MES	GBM, MES	MCF GBM	glioblastoma, IDH wildtype	1	56	Capper et al. 2018, Supplementary Table 1
+GBM, MID	GBM, MID	MCF GBM	glioblastoma, IDH wildtype	1	14	Capper et al. 2018, Supplementary Table 1
+GBM, MYCN	GBM, MYCN	MCF GBM	glioblastoma, IDH wildtype	1	16	Capper et al. 2018, Supplementary Table 1
+GBM, RTK I	GBM, RTK I	MCF GBM	glioblastoma, IDH wildtype	1	64	Capper et al. 2018, Supplementary Table 1
+GBM, RTK II	GBM, RTK II	MCF GBM	glioblastoma, IDH wildtype	1	143	Capper et al. 2018, Supplementary Table 1
+GBM, RTK III	GBM, RTK III	MCF GBM	glioblastoma, IDH wildtype	1	13	Capper et al. 2018, Supplementary Table 1
+HGNET, BCOR	HGNET, BCOR	HGNET, BCOR		0	23	Capper et al. 2018, Supplementary Table 1
+HGNET, MN1	HGNET, MN1	HGNET, MN1		0	21	Capper et al. 2018, Supplementary Table 1
+HMB	HMB	HMB		0	25	Capper et al. 2018, Supplementary Table 1
+IHG	IHG	IHG		0	10	Capper et al. 2018, Supplementary Table 1
+LGG, DIG/DIA	LGG, DIG/DIA	LGG, DIG/DIA		0	8	Capper et al. 2018, Supplementary Table 1
+LGG, DNT	LGG, DNT	LGG, DNT		0	44	Capper et al. 2018, Supplementary Table 1
+LGG, GG	LGG, GG	LGG, GG		0	21	Capper et al. 2018, Supplementary Table 1
+LGG, MYB	LGG, MYB	LGG, MYB		0	22	Capper et al. 2018, Supplementary Table 1
+LGG, PA MID	LGG, PA MID	MCF PA	pilocytic astrocytoma	1	38	Capper et al. 2018, Supplementary Table 1
+LGG, PA PF	LGG, PA PF	MCF PA	pilocytic astrocytoma	1	114	Capper et al. 2018, Supplementary Table 1
+LGG, PA/GG ST	LGG, PA/GG ST	MCF PA	pilocytic astrocytoma	1	24	Capper et al. 2018, Supplementary Table 1
+LGG, RGNT	LGG, RGNT	LGG, RGNT		0	9	Capper et al. 2018, Supplementary Table 1
+LGG, SEGA	LGG, SEGA	LGG, SEGA		0	21	Capper et al. 2018, Supplementary Table 1
+LIPN	LIPN	LIPN		0	10	Capper et al. 2018, Supplementary Table 1
+LYMPHO	LYMPHO	LYMPHO		0	13	Capper et al. 2018, Supplementary Table 1
+MB, G3	MB, G3	MCF MB G3G4	medulloblastoma group 3 and 4	1	77	Capper et al. 2018, Supplementary Table 1
+MB, G4	MB, G4	MCF MB G3G4	medulloblastoma group 3 and 4	1	138	Capper et al. 2018, Supplementary Table 1
+MB, SHH CHL AD	MB, SHH CHL AD	MCF MB SHH	medulloblastoma, SHH	1	84	Capper et al. 2018, Supplementary Table 1
+MB, SHH INF	MB, SHH INF	MCF MB SHH	medulloblastoma, SHH	1	52	Capper et al. 2018, Supplementary Table 1
+MB, WNT	MB, WNT	MB, WNT		0	39	Capper et al. 2018, Supplementary Table 1
+MELAN	MELAN	MELAN		0	12	Capper et al. 2018, Supplementary Table 1
+MELCYT	MELCYT	MELCYT		0	15	Capper et al. 2018, Supplementary Table 1
+MNG	MNG	MNG		0	90	Capper et al. 2018, Supplementary Table 1
+O IDH	O IDH	MCF IDH GLM	glioma, IDH mutant	1	80	Capper et al. 2018, Supplementary Table 1
+PGG, nC	PGG, nC	PGG, nC		0	19	Capper et al. 2018, Supplementary Table 1
+PIN T, PB A	PIN T, PB A	PIN T, PB A		0	9	Capper et al. 2018, Supplementary Table 1
+PIN T, PB B	PIN T, PB B	PIN T, PB B		0	22	Capper et al. 2018, Supplementary Table 1
+PIN T, PPT	PIN T, PPT	PIN T, PPT		0	19	Capper et al. 2018, Supplementary Table 1
+PITAD, ACTH	PITAD, ACTH	PITAD, ACTH		0	18	Capper et al. 2018, Supplementary Table 1
+PITAD, FSH LH	PITAD, FSH LH	PITAD, FSH LH		0	21	Capper et al. 2018, Supplementary Table 1
+PITAD, PRL	PITAD, PRL	PITAD, PRL		0	8	Capper et al. 2018, Supplementary Table 1
+PITAD, STH DNS A	PITAD, STH DNS A	PITAD, STH DNS A		0	9	Capper et al. 2018, Supplementary Table 1
+PITAD, STH DNS B	PITAD, STH DNS B	PITAD, STH DNS B		0	12	Capper et al. 2018, Supplementary Table 1
+PITAD, STH SPA	PITAD, STH SPA	PITAD, STH SPA		0	17	Capper et al. 2018, Supplementary Table 1
+PITAD, TSH	PITAD, TSH	PITAD, TSH		0	10	Capper et al. 2018, Supplementary Table 1
+PITUI	PITUI, SCO, GCT	PITUI		0	29	Capper et al. 2018, Supplementary Table 1
+PLASMA	PLASMA	PLASMA		0	8	Capper et al. 2018, Supplementary Table 1
+PLEX, AD	PLEX, AD	MCF PLEX T	plexus tumor	1	22	Capper et al. 2018, Supplementary Table 1
+PLEX, PED A	PLEX, PED A	MCF PLEX T	plexus tumor	1	15	Capper et al. 2018, Supplementary Table 1
+PLEX, PED B	PLEX, PED B	MCF PLEX T	plexus tumor	1	46	Capper et al. 2018, Supplementary Table 1
+PTPR, A	PTPR, A	PTPR, A		0	8	Capper et al. 2018, Supplementary Table 1
+PTPR, B	PTPR, B	PTPR, B		0	22	Capper et al. 2018, Supplementary Table 1
+PXA	PXA	PXA		0	44	Capper et al. 2018, Supplementary Table 1
+RETB	RETB	RETB		0	19	Capper et al. 2018, Supplementary Table 1
+SCHW	SCHW	SCHW		0	23	Capper et al. 2018, Supplementary Table 1
+SCHW, MEL	SCHW, MEL	SCHW, MEL		0	8	Capper et al. 2018, Supplementary Table 1
+SFT HMPC	SFT HMPC	SFT HMPC		0	16	Capper et al. 2018, Supplementary Table 1
+SUBEPN, PF	SUBEPN, PF	SUBEPN, PF		0	37	Capper et al. 2018, Supplementary Table 1
+SUBEPN, SPINE	SUBEPN, SPINE	SUBEPN, SPINE		0	9	Capper et al. 2018, Supplementary Table 1
+SUBEPN, ST	SUBEPN, ST	SUBEPN, ST		0	19	Capper et al. 2018, Supplementary Table 1
