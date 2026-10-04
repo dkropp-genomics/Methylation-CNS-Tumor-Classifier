@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""Run the in-fold feature pipeline once on real data (outer fold 0).
+"""Run the in-fold feature pipeline once on real data (outer fold 0), with
+material correction off and on.
 
 Fits on the outer-fold-0 TRAINING samples, transforms that fold's test
 samples, and reports counts, timing and memory. No model is trained and no
@@ -8,33 +9,42 @@ score is computed. Touches GSE90496 only.
 import resource
 import time
 
+import numpy as np
+
 from methylclf.data import BetaStore
-from methylclf.features import make_feature_pipeline
+from methylclf.features import FeaturePipeline
 
 st = BetaStore.open("data/betas/zarr/GSE90496.zarr",
                     "results/splits/folds_seed42_qc.tsv",
                     "results/probes/probes_kept.tsv")
-fold = st.samples["outer_fold"].astype(int)
-train_ids = st.samples.loc[fold != 0, "geo_accession"].to_numpy()
-test_ids = st.samples.loc[fold == 0, "geo_accession"].to_numpy()
-print(f"outer fold 0: {len(train_ids)} training, {len(test_ids)} test samples")
+s = st.samples
+is_train = (s["outer_fold"].astype(int) != 0).to_numpy()
+ids, y, mat = (s[c].to_numpy() for c in ("geo_accession", "mc_class", "material"))
+print(f"outer fold 0: {is_train.sum()} training, {(~is_train).sum()} test samples")
+print(f"material values (training fold): {s.loc[is_train, 'material'].value_counts().to_dict()}")
 
 t0 = time.time()
-X_train = st.load(train_ids)
+X_train, X_test = st.load(ids[is_train]), st.load(ids[~is_train])
 print(f"loaded training {X_train.shape}, {X_train.nbytes / 1e9:.2f} GB, {time.time() - t0:.0f} s")
 
-t0 = time.time()
-pipe = make_feature_pipeline(n_probes=10000).fit(X_train)
-print(f"fit: {time.time() - t0:.0f} s")
-miss, sel = pipe.named_steps["missing"], pipe.named_steps["select"]
-print(f"probes in: {miss.n_features_in_}")
-print(f"  kept by missingness (<= 5% missing in training fold): {len(miss.keep_)}")
-print(f"  missing in every training sample: {int((miss.frac_missing_ == 1).sum())}")
-print(f"  selected by variance: {len(sel.keep_)}")
-del X_train
-
-X_test = pipe.transform(st.load(test_ids))
-probes = pipe.get_feature_names_out(st.probe_ids)
-print(f"test fold transformed: {X_test.shape} {X_test.dtype}, NaN left: {int((X_test != X_test).sum())}")
-print(f"first selected probes: {list(probes[:3])}")
+selected = {}
+for on in (False, True):
+    t0 = time.time()
+    pipe = FeaturePipeline(n_probes=10000, correct_material=on)
+    pipe.fit(X_train, y[is_train], mat[is_train])
+    Z_test = pipe.transform(X_test, mat[~is_train])
+    selected[on] = set(pipe.get_feature_names_out(st.probe_ids))
+    print(f"\ncorrection {'ON' if on else 'OFF'}: fit + transform {time.time() - t0:.0f} s")
+    print(f"  kept by missingness: {len(pipe.missing_.keep_)} of {pipe.n_features_in_}")
+    print(f"  test fold: {Z_test.shape} {Z_test.dtype}, NaN left: {int(np.isnan(Z_test).sum())}")
+    if on:
+        d = pipe.correct_.shift_
+        a = np.abs(d)
+        print(f"  classes with both materials used: {len(pipe.correct_.classes_used_)} of "
+              f"{len(set(y[is_train]))}")
+        print(f"  FFPE - frozen shift per probe: median {np.median(d):+.4f}, "
+              f"median |shift| {np.median(a):.4f}, 99th pct |shift| {np.percentile(a, 99):.4f}, "
+              f"max |shift| {a.max():.4f}")
+        print(f"  probes with |shift| > 0.05: {int((a > 0.05).sum())}; > 0.10: {int((a > 0.10).sum())}")
+print(f"\nselected probes shared by OFF and ON: {len(selected[False] & selected[True])} of 10000")
 print(f"peak memory: {resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6:.1f} GB")
