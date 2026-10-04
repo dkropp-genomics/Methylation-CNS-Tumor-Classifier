@@ -178,6 +178,30 @@ def small_noise_case(n_total, n=150, n_classes=3, seed=42):
 SMALL = "F-statistic, 150 samples, 3 made-up classes"
 
 
+def small_repeats(X, a):
+    """Experiment 4 repeated: one draw of 150 clustered samples is noisy, so
+    report the mean and spread over many draws."""
+    rows_out = []
+    for r in range(a.small_repeats):
+        seed = a.seed + 1000 + r
+        rows, fake_y, fake_fold = small_noise_case(X.shape[0], seed=seed)
+        _, sm = run_demo(X[rows], fake_y, fake_fold, a.k, a.trees, a.jobs, seed, log=lambda *_: None)
+        row = sm[sm.experiment == "F-statistic, real labels"].iloc[0]
+        rows_out.append({"repeat": r, "seed": seed, "accuracy_leaky": row["accuracy_leaky"],
+                         "accuracy_inside": row["accuracy_inside"], "accuracy_gap": row["accuracy_gap"]})
+        print(f"repeat {r:2d}: leaky {row['accuracy_leaky']:.3f}  inside {row['accuracy_inside']:.3f}")
+    t = pd.DataFrame(rows_out)
+    out = Path(a.out)
+    out.mkdir(parents=True, exist_ok=True)
+    t.to_csv(out / "leakage_small_repeats.tsv", sep="\t", index=False, float_format="%.4f")
+    print(f"\n{SMALL}, {len(t)} repeats, chance = 0.333")
+    for c in ("accuracy_leaky", "accuracy_inside", "accuracy_gap"):
+        print(f"  {c:16s} mean {t[c].mean():.3f}  sd {t[c].std():.3f}  "
+              f"min {t[c].min():.3f}  max {t[c].max():.3f}")
+    print(f"  repeats where leaky > inside: {int((t.accuracy_gap > 0).sum())} of {len(t)}")
+    print(f"wrote {out}/leakage_small_repeats.tsv")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--store", default="data/betas/zarr/GSE90496.zarr")
@@ -188,6 +212,9 @@ def main():
     ap.add_argument("--trees", type=int, default=300)
     ap.add_argument("--jobs", type=int, default=10)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--small-repeats", type=int, default=0,
+                    help="only repeat experiment 4 this many times, each with a different "
+                         "random subset and made-up labels, and report the spread")
     a = ap.parse_args()
 
     from methylclf.data import BetaStore
@@ -202,6 +229,9 @@ def main():
     t0 = time.time()
     X = st.load(demo["geo_accession"].to_numpy())
     print(f"loaded {X.shape}, {X.nbytes / 1e9:.2f} GB ({time.time() - t0:.0f} s)")
+
+    if a.small_repeats:
+        return small_repeats(X, a)
 
     per_fold, summary = run_demo(X, demo["mc_class"].to_numpy(), inner, a.k, a.trees, a.jobs, a.seed)
     rows, fake_y, fake_fold = small_noise_case(X.shape[0], seed=a.seed)
