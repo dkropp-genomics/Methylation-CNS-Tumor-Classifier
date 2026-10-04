@@ -77,7 +77,10 @@ def make_model(name: str, params: dict, seed: int, n_jobs: int):
     if name == "rf":
         from sklearn.ensemble import RandomForestClassifier
         return RandomForestClassifier(random_state=seed, n_jobs=n_jobs, **params)
-    fail(f"unknown model '{name}' (known: rf)")
+    if name == "lgbm":
+        from lightgbm import LGBMClassifier
+        return LGBMClassifier(random_state=seed, n_jobs=n_jobs, **params)
+    fail(f"unknown model '{name}' (known: rf, lgbm)")
 
 
 # --------------------------------------------------------------------------
@@ -119,7 +122,8 @@ def check_manifest(cfg: dict, samples: pd.DataFrame, res_dir: Path, settings: pd
     else:
         res_dir.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(now, indent=2) + "\n")
-        settings.to_csv(res_dir / "settings.tsv", sep="\t", index=False)
+        if len(settings):
+            settings.to_csv(res_dir / "settings.tsv", sep="\t", index=False)
 
 
 def log_fit(res_dir: Path, row: dict):
