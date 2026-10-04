@@ -303,9 +303,17 @@ def stage_outer(load, samples, cfg, settings, pred_dir, res_dir, pipeline_factor
 def run(stage, cfg, samples, load, pipeline_factory, pred_root, res_root,
         outer_folds=None, final_scoring=False):
     """Everything the command line does, on any loader (the tests pass a fake one)."""
-    settings = expand_settings(cfg)
     pred_dir = Path(pred_root) / cfg["run_name"]
     res_dir = Path(res_root) / cfg["run_name"]
+    if stage == "outer":
+        # the settings table written by the search (grid or Optuna), not the config
+        for name in ("manifest.json", "settings.tsv", "selected.tsv"):
+            if not (res_dir / name).exists():
+                fail(f"outer: {res_dir / name} not found; finish the inner search and "
+                     f"select first")
+        settings = pd.read_csv(res_dir / "settings.tsv", sep="\t", dtype={"setting": str})
+    else:
+        settings = expand_settings(cfg)
     outer_folds = list(range(N_OUTER)) if outer_folds is None else list(outer_folds)
     if any(k not in range(N_OUTER) for k in outer_folds):
         fail(f"outer folds must be within 0..{N_OUTER - 1}")

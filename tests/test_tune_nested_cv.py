@@ -113,6 +113,21 @@ def test_complete_search_selects_the_best_trial_per_outer_fold():
         assert st["setting"].is_unique and set(best["setting"]) <= set(st["setting"])
 
 
+def test_final_scoring_works_on_a_finished_search():
+    X, s = make_data()
+    with tempfile.TemporaryDirectory() as d:
+        (_, _, best, _), _ = go(d, X, s)
+        load = Loader(X, s)
+        args = ("outer", CFG, s, load, FeaturePipeline, Path(d) / "pred", Path(d) / "res")
+        expect_stop(lambda: tune.cv.run(*args), "--final-scoring")
+        assert tune.cv.run(*args, final_scoring=True) == 5
+        for k in range(5):
+            setting = best.loc[best["outer"] == k, "setting"].iloc[0]
+            proba, sid, _ = tune.cv.load_pred(tune.cv.pred_path(Path(d) / "pred" / "t", k, None, setting))
+            assert set(sid) == set(s.loc[s["outer_fold"] == str(k), "geo_accession"])
+            assert np.allclose(proba.sum(axis=1), 1, atol=1e-5)
+
+
 def test_bad_or_changed_config_stops():
     X, s = make_data()
     bad = copy.deepcopy(CFG); del bad["search_space"]["n_probes"]
