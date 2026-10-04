@@ -1,0 +1,5 @@
+stage	outer	inner	setting	n_train	n_test	n_features	seconds_features	seconds_model	finished
+inner	0	0	s000	1475	738	50000	14.0	319.6	2026-10-04 17:47:46
+inner	0	0	s001	1475	738	50000	14.0	329.9	2026-10-04 17:53:16
+inner	0	0	s002	1475	738	50000	14.0	303.9	2026-10-04 17:58:20
+inner	0	0	s003	1475	738	50000	14.0	325.3	2026-10-04 18:03:45

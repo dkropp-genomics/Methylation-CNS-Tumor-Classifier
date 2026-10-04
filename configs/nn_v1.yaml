@@ -1,0 +1,23 @@
+# Neural network, plain and masked, on the same folds as the tree models.
+# Changing anything here after a run has started is refused (manifest.json).
+run_name: nn_v1
+model: mlp
+seed: 42
+n_threads: 6
+select_by: macro_f1            # averaged over the coverage levels below
+levels: [1.0, 0.1, 0.01, 0.001]   # share of array CpGs observed at test time
+mask_seed: 20261004            # fixes which CpGs each sample "observes"
+features:                      # FeaturePipeline arguments, fixed for the network
+  n_probes: 50000
+  correct_material: false
+train:
+  hidden: [512, 256]
+  batch_size: 128
+  weight_decay: 0.01
+  max_epochs: 60
+  eval_every: 5                # held-out scores are recorded every 5 epochs
+  min_fraction: 0.001          # masked training hides down to 0.1% observed
+grid:                          # every combination is one setting
+  masked: [false, true]        # false = plain network, true = masked training
+  lr: [0.001, 0.0003]
+  dropout: [0.2, 0.5]
