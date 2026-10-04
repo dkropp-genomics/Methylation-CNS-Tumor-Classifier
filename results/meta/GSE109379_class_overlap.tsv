@@ -1,0 +1,92 @@
+class	family	n_training	n_validation	status
+A IDH	A IDH	78	94	both
+A IDH, HG	A IDH	46	41	both
+ANA PA	ANA PA	21	25	both
+ATRT, MYC	ATRT	29	2	both
+ATRT, SHH	ATRT	46	5	both
+ATRT, TYR	ATRT	37	2	both
+CHGL	CHGL	12	0	training only
+CHORDM	CHORDM	9	2	both
+CN	CN	21	2	both
+CNS NB, FOXR2	CNS NB	39	4	both
+CONTR, ADENOPIT	CONTR	9	0	training only
+CONTR, CEBM	CONTR	8	0	training only
+CONTR, HEMI	CONTR	13	0	training only
+CONTR, HYPTHAL	CONTR	9	0	training only
+CONTR, INFLAM	CONTR	24	0	training only
+CONTR, PINEAL	CONTR	12	0	training only
+CONTR, PONS	CONTR	12	0	training only
+CONTR, REACT	CONTR	23	0	training only
+CONTR, WM	CONTR	9	0	training only
+CPH, ADM	CPH	25	0	training only
+CPH, PAP	CPH	20	0	training only
+DLGNT	DLGNT	8	4	both
+DMG, K27	DMG	78	39	both
+EFT, CIC	EFT	13	0	training only
+ENB, A	ENB	23	1	both
+ENB, B	ENB	16	0	training only
+EPN, MPE	EPN	28	17	both
+EPN, PF A	EPN	91	36	both
+EPN, PF B	EPN	51	8	both
+EPN, RELA	EPN	70	20	both
+EPN, SPINE	EPN	27	7	both
+EPN, YAP	EPN	11	0	training only
+ETMR	ETMR	43	6	both
+EWS	EWS	14	3	both
+GBM, G34	GBM	41	13	both
+GBM, MES	GBM	56	104	both
+GBM, MID	GBM	14	19	both
+GBM, MYCN	GBM	16	17	both
+GBM, RTK I	GBM	64	44	both
+GBM, RTK II	GBM	143	118	both
+GBM, RTK III	GBM	13	9	both
+HGNET, BCOR	HGNET	23	3	both
+HGNET, MN1	HGNET	21	5	both
+HMB	HMB	25	2	both
+IHG	IHG	10	5	both
+LGG, DIG/DIA	LGG	8	0	training only
+LGG, DNT	LGG	44	12	both
+LGG, GG	LGG	21	5	both
+LGG, MYB	LGG	22	5	both
+LGG, PA MID	LGG	38	17	both
+LGG, PA PF	LGG	114	40	both
+LGG, PA/GG ST	LGG	24	21	both
+LGG, RGNT	LGG	9	3	both
+LGG, SEGA	LGG	21	1	both
+LIPN	LIPN	10	1	both
+LYMPHO	LYMPHO	13	1	both
+MB, G3	MB	77	22	both
+MB, G4	MB	138	43	both
+MB, SHH CHL AD	MB	84	42	both
+MB, SHH INF	MB	52	13	both
+MB, WNT	MB	39	9	both
+MELAN	MELAN	12	6	both
+MELCYT	MELCYT	15	4	both
+MNG	MNG	90	59	both
+O IDH	O IDH	80	83	both
+PGG, nC	PGG	19	1	both
+PIN T, PB A	PIN T	9	0	training only
+PIN T, PB B	PIN T	22	1	both
+PIN T, PPT	PIN T	19	1	both
+PITAD, ACTH	PITAD	18	1	both
+PITAD, FSH LH	PITAD	21	2	both
+PITAD, PRL	PITAD	8	0	training only
+PITAD, STH DNS A	PITAD	9	0	training only
+PITAD, STH DNS B	PITAD	12	1	both
+PITAD, STH SPA	PITAD	17	0	training only
+PITAD, TSH	PITAD	10	1	both
+PITUI	PITUI	29	1	both
+PLASMA	PLASMA	8	0	training only
+PLEX, AD	PLEX	22	1	both
+PLEX, PED A	PLEX	15	1	both
+PLEX, PED B	PLEX	46	3	both
+PTPR, A	PTPR	8	1	both
+PTPR, B	PTPR	22	1	both
+PXA	PXA	44	23	both
+RETB	RETB	19	0	training only
+SCHW	SCHW	23	8	both
+SCHW, MEL	SCHW	8	4	both
+SFT HMPC	SFT HMPC	16	2	both
+SUBEPN, PF	SUBEPN	37	3	both
+SUBEPN, SPINE	SUBEPN	9	3	both
+SUBEPN, ST	SUBEPN	19	1	both

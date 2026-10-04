@@ -1,0 +1,9 @@
+data/
+logs/
+mlruns/
+__pycache__/
+*.pyc
+.pytest_cache/
+.Rhistory
+.RData
+*:Zone.Identifier

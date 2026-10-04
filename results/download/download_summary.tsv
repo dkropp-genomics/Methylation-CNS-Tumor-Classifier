@@ -1,0 +1,3 @@
+accession	url	tar_bytes	tar_sha256	n_idat_files	n_samples	idat_dir_bytes	verified_utc
+GSE90496	https://ftp.ncbi.nlm.nih.gov/geo/series/GSE90nnn/GSE90496/suppl/GSE90496_RAW.tar	24328478720	719ab965f8ccdb0804f7e9b184e594dea0a876969857d34d184e7ae0efda789e	5602	2801	24324155790	2026-09-30T01:27:01Z
+GSE109379	https://ftp.ncbi.nlm.nih.gov/geo/series/GSE109nnn/GSE109379/suppl/GSE109379_RAW.tar	NA	removed	2208	1104	9707463405	2026-10-03T20:16:49Z
