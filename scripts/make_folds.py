@@ -26,8 +26,19 @@ Usage (from the repo root):
     python scripts/make_folds.py
     python scripts/make_folds.py --seed 7 --outer 5 --inner 3
 
+After sample QC, rebuild the folds on the samples that passed:
+    python scripts/make_folds.py \
+        --qc-status results/qc/GSE90496_sample_qc_status.tsv \
+        --store-index data/betas/zarr/GSE90496.samples.tsv
+This writes folds_seed{SEED}_qc.tsv and leaves the pre-QC table untouched
+(other scripts read that one as the full sample list). Folds are redrawn
+rather than filtered: deleting rows from an existing table can leave a rare
+class absent from a test fold.
+
 Output:
-    results/splits/folds_seed{SEED}.tsv  -- one row per sample
+    results/splits/folds_seed{SEED}.tsv     -- one row per sample (no QC)
+    results/splits/folds_seed{SEED}_qc.tsv  -- QC-passed samples only, with
+        zarr_row = that sample's row in the beta store (if --store-index)
     columns: geo_accession, mc_class, mc_family, material,
              outer_fold, inner_fold_o0 ... inner_fold_o{K-1}
     inner_fold_o{k} is -1 for samples in outer test fold k (they are
@@ -37,6 +48,7 @@ Output:
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 import pandas as pd
@@ -65,6 +77,53 @@ def load_labels(path: Path) -> pd.DataFrame:
     assert meta["geo_accession"].is_unique, "duplicate sample IDs"
     assert meta.notna().all().all(), "missing values in label columns"
     return meta
+
+
+def die(msg: str) -> None:
+    print(f"ERROR: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+
+def apply_qc(meta: pd.DataFrame, status_path: Path) -> pd.DataFrame:
+    """Keep only samples that passed sample QC. Sample sets must match."""
+    if not status_path.exists():
+        die(f"QC status file not found: {status_path}")
+    st = pd.read_csv(status_path, sep="\t")
+    for col in ("geo_accession", "keep"):
+        if col not in st.columns:
+            die(f"{status_path}: missing column {col}")
+    if st["keep"].dtype != bool:
+        die(f"{status_path}: column 'keep' must be True/False")
+    a, b = set(meta["geo_accession"]), set(st["geo_accession"])
+    if a != b or st["geo_accession"].duplicated().any():
+        example = sorted(a ^ b)[0] if a != b else "duplicate IDs"
+        die(f"metadata and {status_path} do not hold the same samples "
+            f"({len(a - b)} only in metadata, {len(b - a)} only in QC; "
+            f"e.g. {example})")
+    kept_ids = set(st.loc[st["keep"], "geo_accession"])
+    kept = meta[meta["geo_accession"].isin(kept_ids)].reset_index(drop=True)
+    print(f"Sample QC: {len(meta) - len(kept)} of {len(meta)} samples "
+          f"dropped, {len(kept)} kept")
+    return kept
+
+
+def add_store_rows(folds: pd.DataFrame, index_path: Path) -> pd.DataFrame:
+    """Add zarr_row: each sample's row number in the beta store."""
+    if not index_path.exists():
+        die(f"store index not found: {index_path}")
+    idx = pd.read_csv(index_path, sep="\t")
+    for col in ("row", "geo_accession"):
+        if col not in idx.columns:
+            die(f"{index_path}: missing column {col}")
+    if idx["geo_accession"].duplicated().any():
+        die(f"{index_path}: duplicated sample IDs")
+    rows = folds["geo_accession"].map(idx.set_index("geo_accession")["row"])
+    if rows.isna().any():
+        bad = folds.loc[rows.isna(), "geo_accession"].iloc[0]
+        die(f"sample {bad} is not in the store index {index_path}")
+    folds = folds.copy()
+    folds.insert(1, "zarr_row", rows.astype(int))
+    return folds
 
 
 def assign_folds(
@@ -140,14 +199,27 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--outer", type=int, default=5)
     parser.add_argument("--inner", type=int, default=3)
+    parser.add_argument("--qc-status", type=Path, default=None,
+                        help="sample QC status table; keep only passed samples")
+    parser.add_argument("--store-index", type=Path, default=None,
+                        help="<GSE>.samples.tsv; adds the zarr_row column")
     args = parser.parse_args()
 
     meta = load_labels(args.meta)
+    if args.qc_status is not None:
+        meta = apply_qc(meta, args.qc_status)
+    sizes = meta["mc_class"].value_counts()
+    if sizes.min() < args.outer:
+        die(f"class '{sizes.idxmin()}' has {sizes.min()} samples, fewer than "
+            f"the {args.outer} outer folds")
     folds = assign_folds(meta, args.outer, args.inner, args.seed)
     check_folds(folds, args.outer, args.inner)
+    if args.store_index is not None:
+        folds = add_store_rows(folds, args.store_index)
 
     args.outdir.mkdir(parents=True, exist_ok=True)
-    out = args.outdir / f"folds_seed{args.seed}.tsv"
+    suffix = "_qc" if args.qc_status is not None else ""
+    out = args.outdir / f"folds_seed{args.seed}{suffix}.tsv"
     folds.to_csv(out, sep="\t", index=False)
     print(f"\nWrote {out}")
 
