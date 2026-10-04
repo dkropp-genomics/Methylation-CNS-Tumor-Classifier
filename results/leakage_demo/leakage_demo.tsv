@@ -1,0 +1,25 @@
+experiment	arm	fold	n_train	n_test	n_probes	probes_shared_with_leaky	accuracy	macro_f1	balanced_accuracy
+variance, real labels	leaky	0	1475	738	1000	1000	0.9133	0.8710	0.8590
+variance, real labels	inside	0	1475	738	1000	969	0.9173	0.8889	0.8738
+F-statistic, real labels	leaky	0	1475	738	1000	1000	0.8740	0.8135	0.8085
+F-statistic, real labels	inside	0	1475	738	1000	852	0.8780	0.8284	0.8233
+F-statistic, shuffled labels	leaky	0	1475	738	1000	1000	0.0420	0.0067	0.0115
+F-statistic, shuffled labels	inside	0	1475	738	1000	453	0.0420	0.0075	0.0120
+variance, real labels	leaky	1	1475	738	1000	1000	0.9444	0.9145	0.9083
+variance, real labels	inside	1	1475	738	1000	963	0.9336	0.8891	0.8808
+F-statistic, real labels	leaky	1	1475	738	1000	1000	0.9051	0.8770	0.8665
+F-statistic, real labels	inside	1	1475	738	1000	862	0.8997	0.8645	0.8624
+F-statistic, shuffled labels	leaky	1	1475	738	1000	1000	0.0420	0.0098	0.0130
+F-statistic, shuffled labels	inside	1	1475	738	1000	365	0.0230	0.0045	0.0065
+variance, real labels	leaky	2	1476	737	1000	1000	0.9349	0.9073	0.8894
+variance, real labels	inside	2	1476	737	1000	962	0.9281	0.9028	0.8871
+F-statistic, real labels	leaky	2	1476	737	1000	1000	0.9091	0.8551	0.8565
+F-statistic, real labels	inside	2	1476	737	1000	810	0.8996	0.8525	0.8473
+F-statistic, shuffled labels	leaky	2	1476	737	1000	1000	0.0366	0.0082	0.0114
+F-statistic, shuffled labels	inside	2	1476	737	1000	481	0.0407	0.0058	0.0106
+F-statistic, 150 samples, 3 made-up classes	leaky	0	99	51	1000	1000	0.6275	0.6316	0.6275
+F-statistic, 150 samples, 3 made-up classes	inside	0	99	51	1000	206	0.4902	0.4870	0.4902
+F-statistic, 150 samples, 3 made-up classes	leaky	1	99	51	1000	1000	0.5098	0.4991	0.5098
+F-statistic, 150 samples, 3 made-up classes	inside	1	99	51	1000	225	0.4118	0.3983	0.4118
+F-statistic, 150 samples, 3 made-up classes	leaky	2	102	48	1000	1000	0.5833	0.5794	0.5833
+F-statistic, 150 samples, 3 made-up classes	inside	2	102	48	1000	282	0.4792	0.4722	0.4792
