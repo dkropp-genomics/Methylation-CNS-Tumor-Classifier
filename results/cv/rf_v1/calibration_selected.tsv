@@ -1,0 +1,6 @@
+outer	setting	transform	C	log_loss_before	log_loss_after
+0	s002	raw	1.00000	0.66393	0.14372
+1	s001	raw	1.00000	0.66577	0.16420
+2	s000	raw	10.00000	0.68261	0.12815
+3	s004	raw	1.00000	0.65653	0.14116
+4	s003	raw	1.00000	0.67451	0.13675
