@@ -1,0 +1,9 @@
+run	level	metric	value	ci_low	ci_high	n	n_groups
+rf_v1	class	macro_f1	0.97843	0.97048	0.98424	2480	69
+rf_v1	class	accuracy	0.97339	0.96694	0.97903	2480	69
+rf_v1	family	macro_f1	0.99295	0.98616	0.99760	2480	54
+rf_v1	family	accuracy	0.99516	0.99234	0.99758	2480	54
+lgbm_v1	class	macro_f1	0.95859	0.94563	0.96706	2480	69
+lgbm_v1	class	accuracy	0.96210	0.95403	0.96895	2480	69
+lgbm_v1	family	macro_f1	0.97400	0.96156	0.98283	2480	54
+lgbm_v1	family	accuracy	0.98669	0.98226	0.99113	2480	54

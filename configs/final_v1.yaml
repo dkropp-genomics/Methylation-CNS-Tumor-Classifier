@@ -1,0 +1,91 @@
+# External validation on GSE109379: every choice that could be made after
+# seeing the scores, written down before any model has read that cohort.
+# Agreed by Dawson on 2026-10-05. scripts/check_final_config.py confirms that
+# each model entry follows its rule, using inner-fold results only.
+run_name: final_v1
+decided_on: "2026-10-05"
+train_cohort: GSE90496            # all 2,767 QC-passed samples
+validation_cohort: GSE109379      # 1,096 QC-passed samples, scored once
+
+# 1. What the validation labels are
+labels:
+  source: >
+    GEO's "methylation class" is the top-scoring class of the published
+    classifier (Capper et al. 2018, version v11b2), with no score cut-off.
+    It agrees with Supplementary Table 4 in all 1,035 cases where that table
+    names a class (scripts/check_validation_labels.py).
+  wording: agreement with the published classifier's calls   # never "accuracy"
+  headline_set: all                # every QC-passed validation sample
+  subsets:                         # columns of results/meta/GSE109379_subsets.tsv
+    - capper_matched               # published score >= 0.9
+    - path_concordant              # pathology agreed (independent at entity level only)
+    - capper_no_match              # published score < 0.9
+
+# 2. The pre-registered target: "within 5 points of CV"
+target:
+  model: rf
+  scores: calibrated
+  level: family
+  metric: macro_f1
+  reference: results/final_v1/cv_reference.tsv   # CV on the classes present in validation
+  max_drop: 0.05                   # met when validation >= reference - 0.05
+  also_report: [accuracy]
+
+# 3. One final setting per model (no outer-test score is used by any rule)
+models:
+  rf:
+    kind: tree
+    run: rf_v1
+    config: configs/rf_v1.yaml
+    setting: s004                  # 10,000 probes, material correction on
+    rule: best mean inner macro-F1 over all 15 inner fits; ties to the earlier setting
+  lgbm:
+    kind: tree
+    run: lgbm_v1
+    config: configs/lgbm_v1.yaml
+    setting: ta46a6b97d9           # outer fold 2's selected trial; 10,000 probes, no correction
+    rule: the per-fold selected trial with the highest inner macro-F1
+    note: trials are not shared between outer folds, so this rule is simple but partly arbitrary
+  nn_plain:
+    kind: nn
+    run: nn_v2
+    config: configs/nn_v2.yaml
+    network: plain
+    setting: s000
+    epoch: 60
+    rule: the setting and the number of epochs selected in most outer folds
+  nn_masked:
+    kind: nn
+    run: nn_v2
+    config: configs/nn_v2.yaml
+    network: masked
+    setting: s001
+    epoch: 150
+    rule: the setting and the number of epochs selected in most outer folds
+  centroid:
+    kind: centroid
+    features: {n_probes: 50000, correct_material: false}
+    rule: nothing to choose
+
+# 4. The final calibrator
+calibration:
+  scores_from: >
+    one 5-fold pass over GSE90496 on the existing outer folds with the final
+    setting, giving one out-of-fold score vector per training sample
+  rf:   {transform: raw, C: 1.0}
+  lgbm: {transform: log, C: 10.0}
+  rule: the form chosen in most outer folds (calibration_selected.tsv)
+  uncalibrated: [nn_plain, nn_masked, centroid]   # as in Phase 4
+
+# 5. Analyses run on validation. Nothing is added after the scores are seen.
+analyses:
+  full_coverage: [rf, lgbm, nn_plain, nn_masked, centroid]
+  headline: rf
+  sparsity:
+    levels: [1.0, 0.1, 0.01, 0.001]
+    mask_seed: 20261004            # the Phase 4 rule: same CpGs for every model
+  confident_share:
+    threshold: 0.9
+    cv_value: 0.920                # calibrated forest, class level, outer folds
+  by_material: true                # 10 frozen samples: reported, not interpreted
+  n_boot: 1000
