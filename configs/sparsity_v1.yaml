@@ -1,0 +1,11 @@
+# Sparse-coverage stress test: every frozen model, refit with its selected
+# settings on each outer training side and scored on the outer test fold with
+# only a share of CpGs observed. Nothing is tuned here.
+run_name: sparsity_v1
+levels: [1.0, 0.1, 0.01, 0.001]   # must equal the levels the network was selected on
+mask_seed: 20261004               # must equal nn_v2's: the same CpGs for every model
+models:
+  rf:        {kind: tree, run: rf_v1,   config: configs/rf_v1.yaml}
+  lgbm:      {kind: tree, run: lgbm_v1, config: configs/lgbm_v1.yaml}
+  nn_plain:  {kind: nn,   run: nn_v2,   config: configs/nn_v2.yaml, network: plain}
+  nn_masked: {kind: nn,   run: nn_v2,   config: configs/nn_v2.yaml, network: masked}
