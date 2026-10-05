@@ -30,7 +30,7 @@ Three things I did not expect:
 ![Accuracy as fewer CpGs are observed](results/cv/sparsity_report_v1/sparsity_curve.png)
 
 ```bash
-nextflow run pipeline/main.nf -profile final    # TODO: confirm after the first full pipeline run
+nextflow run pipeline/main.nf -profile quick    # TODO: confirm after the first full pipeline run
 ```
 
 ## How it works
@@ -349,12 +349,12 @@ error. `environment-r.yml` documents the command.
 ### Run
 
 ```bash
-nextflow run pipeline/main.nf -profile final    # TODO: confirm after the first full pipeline run
+nextflow run pipeline/main.nf -profile quick    # TODO: confirm after the first full pipeline run
 ```
 
 | Profile | What it reruns | Time on a 6-core desktop |
 |---|---|---|
-| `final` | Download, preprocessing, the selected settings, final models, external scoring, SHAP | TODO: measure (about 4 hours expected) |
+| `quick` | Download, preprocessing, final models from the committed selections, external scoring, SHAP. Cross-validation is not rerun | TODO: measure (about 4 hours expected) |
 | `full` | Everything, including the hyperparameter searches | About 20 hours |
 
 Where the time goes in `full`: network search about 9 hours, LightGBM search

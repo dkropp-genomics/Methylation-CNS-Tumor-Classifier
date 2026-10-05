@@ -8,3 +8,5 @@ __pycache__/
 .RData
 *:Zone.Identifier
 *.egg-info/
+.nextflow/
+.nextflow.log*

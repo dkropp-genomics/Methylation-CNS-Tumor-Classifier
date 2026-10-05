@@ -212,6 +212,9 @@ main <- function() {
                   co, b, length(i), length(bad), proc.time()[["elapsed"]] - t0,
                   median(qc$seconds)))
       for (g in bad) cat("  FAILED ", g, ": ", qc$status[qc$geo_accession == g], "\n", sep = "")
+      # Free this batch before the next one: forked workers copy whatever the
+      # main process still holds, which made memory grow with every batch.
+      rm(res, qc); invisible(gc())
     }
   }
   cat(sprintf("finished: %d samples in plan, %d failed in batches run now\n", nrow(s), n_fail))
