@@ -10,7 +10,12 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from methylclf.features import (  # noqa: E402
-    FeaturePipeline, MaterialCorrector, MedianImputer, MissingnessFilter, TopVarianceSelector)
+    FeaturePipeline,
+    MaterialCorrector,
+    MedianImputer,
+    MissingnessFilter,
+    TopVarianceSelector,
+)
 
 
 def toy(n=100, p=40, seed=0, frac_nan=0.02):
@@ -32,9 +37,9 @@ def expect_error(fn, text):
 
 def test_missingness_threshold_is_exact_and_fit_only():
     X = np.full((100, 4), 0.5, dtype=np.float32)
-    X[:5, 1] = np.nan   # exactly 5% -> kept
-    X[:6, 2] = np.nan   # 6%        -> dropped
-    X[:, 3] = np.nan    # all       -> dropped
+    X[:5, 1] = np.nan  # exactly 5% -> kept
+    X[:6, 2] = np.nan  # 6%        -> dropped
+    X[:, 3] = np.nan  # all       -> dropped
     f = MissingnessFilter(0.05).fit(X)
     assert list(f.keep_) == [0, 1]
     # test rows that are entirely missing in column 0 do not change the decision
@@ -47,13 +52,13 @@ def test_imputer_uses_fit_medians_not_the_new_samples():
     X = toy(101, 30)
     imp = MedianImputer().fit(X)
     assert np.allclose(imp.medians_, np.nanmedian(X, axis=0), atol=1e-7)
-    T = np.full((3, 30), 0.9, dtype=np.float32)   # a very different "test fold"
+    T = np.full((3, 30), 0.9, dtype=np.float32)  # a very different "test fold"
     T[0, :] = np.nan
     out = imp.transform(T)
     assert out.dtype == np.float32 and not np.isnan(out).any()
-    assert np.array_equal(out[0], imp.medians_)       # filled with TRAINING medians
-    assert np.array_equal(out[1:], T[1:])             # observed values untouched
-    assert np.isnan(T[0]).all()                       # copy=True left the input alone
+    assert np.array_equal(out[0], imp.medians_)  # filled with TRAINING medians
+    assert np.array_equal(out[1:], T[1:])  # observed values untouched
+    assert np.isnan(T[0]).all()  # copy=True left the input alone
 
 
 def test_imputer_even_count_and_in_place():
@@ -79,7 +84,8 @@ def test_selector_picks_highest_variance_in_column_order():
     assert np.array_equal(s.keep_, want)
     assert np.array_equal(s.transform(X), X[:, want])
     expect_error(lambda: TopVarianceSelector(k=41).fit(X), "probes are available")
-    Xn = X.copy(); Xn[0, 0] = np.nan
+    Xn = X.copy()
+    Xn[0, 0] = np.nan
     expect_error(lambda: TopVarianceSelector(k=5).fit(Xn), "run MedianImputer first")
 
 
@@ -99,9 +105,10 @@ def toy_material(seed=0, p=30, shift=0.08):
         idx = np.flatnonzero(y == c)
         material[idx] = np.where(np.arange(40) < 40 * frac, "FFPE", "frozen")
     class_mean = {c: rng.uniform(0.2, 0.7, p) for c in "ABCDEF"}
-    class_mean["D"] = class_mean["D"] * 0 + 0.75   # the all-FFPE classes sit high:
-    class_mean["E"] = class_mean["E"] * 0 + 0.75   # the confound
-    d = np.zeros(p); d[:10] = shift
+    class_mean["D"] = class_mean["D"] * 0 + 0.75  # the all-FFPE classes sit high:
+    class_mean["E"] = class_mean["E"] * 0 + 0.75  # the confound
+    d = np.zeros(p)
+    d[:10] = shift
     X = np.stack([class_mean[c] for c in y]) + rng.normal(0, 0.02, (240, p))
     X += (material == "FFPE")[:, None] * d
     return X.astype(np.float32), y, material, d
@@ -110,9 +117,11 @@ def toy_material(seed=0, p=30, shift=0.08):
 def test_corrector_weights_by_hand():
     # class A: 2 FFPE, 2 frozen, difference 0.2 (weight 1.0)
     # class B: 2 FFPE, 6 frozen, difference 0.4 (weight 1.5)  -> (0.2 + 0.6) / 2.5 = 0.32
-    X = np.array([[.7], [.7], [.5], [.5]] + [[.8], [.8]] + [[.4]] * 6, dtype=np.float32)
+    X = np.array([[0.7], [0.7], [0.5], [0.5]] + [[0.8], [0.8]] + [[0.4]] * 6, dtype=np.float32)
     y = np.array(list("AAAA") + list("BBBBBBBB"), dtype=object)
-    m = np.array(["FFPE", "FFPE", "frozen", "frozen", "FFPE", "FFPE"] + ["frozen"] * 6, dtype=object)
+    m = np.array(
+        ["FFPE", "FFPE", "frozen", "frozen", "FFPE", "FFPE"] + ["frozen"] * 6, dtype=object
+    )
     mc = MaterialCorrector().fit(X, y, m)
     assert np.isclose(mc.shift_[0], 0.32) and mc.classes_used_ == ["A", "B"]
 
@@ -120,12 +129,12 @@ def test_corrector_weights_by_hand():
 def test_corrector_recovers_the_shift_where_the_plain_difference_does_not():
     X, y, m, d = toy_material()
     mc = MaterialCorrector().fit(X, y, m)
-    assert mc.classes_used_ == ["A", "B", "C"]          # D, E, F have one material
-    assert np.abs(mc.shift_ - d).max() < 0.02           # within-class: close to the truth
+    assert mc.classes_used_ == ["A", "B", "C"]  # D, E, F have one material
+    assert np.abs(mc.shift_ - d).max() < 0.02  # within-class: close to the truth
     plain = X[m == "FFPE"].mean(axis=0) - X[m == "frozen"].mean(axis=0)
-    assert np.abs(plain - d).max() > 0.1                # plain: polluted by class
+    assert np.abs(plain - d).max() > 0.1  # plain: polluted by class
     out = mc.transform(X, m)
-    for c in "ABC":                                     # after: materials agree within class
+    for c in "ABC":  # after: materials agree within class
         gap = out[(y == c) & (m == "FFPE")].mean(0) - out[(y == c) & (m == "frozen")].mean(0)
         assert np.abs(gap).max() < 0.03
 
@@ -133,10 +142,10 @@ def test_corrector_recovers_the_shift_where_the_plain_difference_does_not():
 def test_corrector_leaves_frozen_alone_clips_and_needs_no_labels_to_transform():
     X, y, m, _ = toy_material()
     mc = MaterialCorrector().fit(X, y, m)
-    out = mc.transform(X, m)                            # note: no y passed
+    out = mc.transform(X, m)  # note: no y passed
     assert out.dtype == np.float32
     assert np.array_equal(out[m == "frozen"], X[m == "frozen"])
-    low = np.zeros((1, X.shape[1]), dtype=np.float32)   # 0 minus a positive shift
+    low = np.zeros((1, X.shape[1]), dtype=np.float32)  # 0 minus a positive shift
     assert mc.transform(low, np.array(["FFPE"], dtype=object)).min() == 0.0
     assert out is not X and mc.set_params(copy=False).transform(X, m) is X
 
@@ -146,8 +155,10 @@ def test_corrector_errors():
     expect_error(lambda: MaterialCorrector().fit(X, y), "material is required")
     expect_error(lambda: MaterialCorrector().fit(X, None, m), "class labels y are required")
     expect_error(lambda: MaterialCorrector().fit(X, y, m[:-1]), "material values")
-    expect_error(lambda: MaterialCorrector(ffpe_label="ffpe").fit(X, y, m), "found ['FFPE', 'frozen']")
-    only = np.isin(y, list("DEF"))                      # no class with both materials
+    expect_error(
+        lambda: MaterialCorrector(ffpe_label="ffpe").fit(X, y, m), "found ['FFPE', 'frozen']"
+    )
+    only = np.isin(y, list("DEF"))  # no class with both materials
     expect_error(lambda: MaterialCorrector().fit(X[only], y[only], m[only]), "cannot be estimated")
     mc = MaterialCorrector().fit(X, y, m)
     expect_error(lambda: mc.transform(X[:1], np.array(["fresh"], dtype=object)), "unknown material")
@@ -195,19 +206,23 @@ def test_pipeline_off_equals_the_three_steps_by_hand():
     X[:, 7] = np.nan
     pipe = FeaturePipeline(n_probes=12).fit(X[:60])
     out = pipe.transform(X[60:])
-    f = MissingnessFilter().fit(X[:60]); Z = f.transform(X[:60])
-    i = MedianImputer().fit(Z); s = TopVarianceSelector(12).fit(i.transform(Z))
+    f = MissingnessFilter().fit(X[:60])
+    Z = f.transform(X[:60])
+    i = MedianImputer().fit(Z)
+    s = TopVarianceSelector(12).fit(i.transform(Z))
     want = s.transform(i.transform(f.transform(X[60:])))
     assert np.array_equal(out, want)
     assert out.shape == (20, 12) and out.dtype == np.float32 and not np.isnan(out).any()
     assert pipe.correct_ is None and pipe.n_features_in_ == 50
-    assert np.isnan(X[:60]).any()                       # the caller's array was not modified
+    assert np.isnan(X[:60]).any()  # the caller's array was not modified
 
 
 def test_pipeline_on_requires_material_and_changes_ffpe_rows_only():
     X, y, m, _ = toy_material(p=60)
-    expect_error(lambda: FeaturePipeline(n_probes=10, correct_material=True).fit(X, y),
-                 "material is required")
+    expect_error(
+        lambda: FeaturePipeline(n_probes=10, correct_material=True).fit(X, y),
+        "material is required",
+    )
     on = FeaturePipeline(n_probes=60, correct_material=True).fit(X, y, m)
     off = FeaturePipeline(n_probes=60).fit(X, y, m)
     a, b = on.transform(X, m), off.transform(X, m)

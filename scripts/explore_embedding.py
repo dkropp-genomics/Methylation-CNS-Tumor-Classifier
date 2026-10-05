@@ -22,6 +22,7 @@ The validation cohort is never read.
 Usage:
   python scripts/explore_embedding.py
 """
+
 import argparse
 import sys
 from pathlib import Path
@@ -53,8 +54,10 @@ def read_tables(folds_path, probes_path, n_rows, n_cols):
     folds = pd.read_csv(folds_path, sep="\t")
     need = {"geo_accession", "zarr_row", "mc_class", "mc_family", "material"}
     if need - set(folds.columns):
-        die(f"{folds_path}: missing columns {sorted(need - set(folds.columns))} "
-            "(use the QC fold table made with --store-index)")
+        die(
+            f"{folds_path}: missing columns {sorted(need - set(folds.columns))} "
+            "(use the QC fold table made with --store-index)"
+        )
     if folds["zarr_row"].duplicated().any():
         die(f"{folds_path}: duplicated zarr_row")
     if folds["zarr_row"].min() < 0 or folds["zarr_row"].max() >= n_rows:
@@ -78,7 +81,7 @@ def iter_blocks(z, rows):
     for start in range(0, z.shape[0], CHUNK):
         pos = np.where((rows >= start) & (rows < start + CHUNK))[0]
         if len(pos):
-            yield pos, np.asarray(z[start:start + CHUNK])[rows[pos] - start]
+            yield pos, np.asarray(z[start : start + CHUNK])[rows[pos] - start]
 
 
 def probe_stats(z, rows, cols):
@@ -126,15 +129,23 @@ def pc_associations(pcs, explained, folds, mixed_classes):
     rows = []
     for i in range(pcs.shape[1]):
         v = pcs[:, i]
-        row = {"pc": i + 1, "var_explained": explained[i],
-               "eta2_class": eta_squared(v, folds["mc_class"]),
-               "eta2_material": eta_squared(v, folds["material"]),
-               "eta2_material_within_class": np.nan}
+        row = {
+            "pc": i + 1,
+            "var_explained": explained[i],
+            "eta2_class": eta_squared(v, folds["mc_class"]),
+            "eta2_material": eta_squared(v, folds["material"]),
+            "eta2_material_within_class": np.nan,
+        }
         if in_mixed.any():
             sub = folds[in_mixed]
             # Remove each class's own mean, then ask what material explains.
-            resid = v[in_mixed] - pd.Series(v[in_mixed]).groupby(
-                sub["mc_class"].to_numpy()).transform("mean").to_numpy()
+            resid = (
+                v[in_mixed]
+                - pd.Series(v[in_mixed])
+                .groupby(sub["mc_class"].to_numpy())
+                .transform("mean")
+                .to_numpy()
+            )
             row["eta2_material_within_class"] = eta_squared(resid, sub["material"])
         rows.append(row)
     return pd.DataFrame(rows).round(4)
@@ -142,6 +153,7 @@ def pc_associations(pcs, explained, folds, mixed_classes):
 
 def make_figures(emb, mixed, fig_dir):
     import matplotlib
+
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
@@ -150,8 +162,15 @@ def make_figures(emb, mixed, fig_dir):
     def by_material(ax, xcol, ycol):
         for m, color in MATERIAL_COLORS.items():
             d = emb[emb["material"] == m]
-            ax.scatter(d[xcol], d[ycol], s=5, alpha=0.6, color=color,
-                       label=f"{m} (n={len(d)})", linewidths=0)
+            ax.scatter(
+                d[xcol],
+                d[ycol],
+                s=5,
+                alpha=0.6,
+                color=color,
+                label=f"{m} (n={len(d)})",
+                linewidths=0,
+            )
         ax.set_xlabel(xcol)
         ax.set_ylabel(ycol)
 
@@ -167,16 +186,20 @@ def make_figures(emb, mixed, fig_dir):
 
     # 2. Family: UMAP, one color per family, name written at its centre.
     fams = sorted(emb["mc_family"].unique())
-    cmap = [plt.get_cmap(name)(i) for name in ("tab20", "tab20b", "tab20c")
-            for i in range(20)]
+    cmap = [plt.get_cmap(name)(i) for name in ("tab20", "tab20b", "tab20c") for i in range(20)]
     fig, ax = plt.subplots(figsize=(13, 11))
     for i, f in enumerate(fams):
         d = emb[emb["mc_family"] == f]
-        ax.scatter(d["UMAP1"], d["UMAP2"], s=6, alpha=0.7,
-                   color=cmap[i % len(cmap)], linewidths=0)
-        ax.text(d["UMAP1"].median(), d["UMAP2"].median(), f, fontsize=7,
-                ha="center", va="center",
-                bbox=dict(boxstyle="round,pad=0.15", fc="white", ec="none", alpha=0.7))
+        ax.scatter(d["UMAP1"], d["UMAP2"], s=6, alpha=0.7, color=cmap[i % len(cmap)], linewidths=0)
+        ax.text(
+            d["UMAP1"].median(),
+            d["UMAP2"].median(),
+            f,
+            fontsize=7,
+            ha="center",
+            va="center",
+            bbox=dict(boxstyle="round,pad=0.15", fc="white", ec="none", alpha=0.7),
+        )
     ax.set_xlabel("UMAP1")
     ax.set_ylabel("UMAP2")
     ax.set_title(f"Training cohort by class family ({len(fams)} families, look-only)")
@@ -192,13 +215,19 @@ def make_figures(emb, mixed, fig_dir):
             ax.scatter(emb["UMAP1"], emb["UMAP2"], s=2, color="#dddddd", linewidths=0)
             for m, color in MATERIAL_COLORS.items():
                 d = emb[(emb["mc_class"] == cls) & (emb["material"] == m)]
-                ax.scatter(d["UMAP1"], d["UMAP2"], s=14, color=color,
-                           label=f"{m} (n={len(d)})", linewidths=0)
+                ax.scatter(
+                    d["UMAP1"],
+                    d["UMAP2"],
+                    s=14,
+                    color=color,
+                    label=f"{m} (n={len(d)})",
+                    linewidths=0,
+                )
             ax.set_title(cls, fontsize=10)
             ax.legend(fontsize=8, frameon=False)
             ax.set_xticks([])
             ax.set_yticks([])
-        for ax in axes.ravel()[len(show):]:
+        for ax in axes.ravel()[len(show) :]:
             ax.axis("off")
         fig.suptitle("Do FFPE and frozen samples of the same class sit together?")
         fig.tight_layout()
@@ -215,8 +244,12 @@ def main(argv=None):
     ap.add_argument("--n-probes", type=int, default=20000)
     ap.add_argument("--max-missing", type=float, default=0.05)
     ap.add_argument("--n-pcs", type=int, default=50)
-    ap.add_argument("--min-per-material", type=int, default=5,
-                    help="a class counts as mixed with at least this many of each")
+    ap.add_argument(
+        "--min-per-material",
+        type=int,
+        default=5,
+        help="a class counts as mixed with at least this many of each",
+    )
     ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args(argv)
 
@@ -238,8 +271,10 @@ def main(argv=None):
     sel = np.sort(order)
 
     x, filled = load_matrix(z, rows, cols[sel])
-    print(f"Loaded {x.shape[0]} x {x.shape[1]}; filled {filled} missing values "
-          f"({filled / x.size:.2%}) with probe medians")
+    print(
+        f"Loaded {x.shape[0]} x {x.shape[1]}; filled {filled} missing values "
+        f"({filled / x.size:.2%}) with probe medians"
+    )
 
     n_pcs = min(args.n_pcs, x.shape[0] - 1, x.shape[1])
     pca = PCA(n_components=n_pcs, svd_solver="randomized", random_state=args.seed)
@@ -252,8 +287,10 @@ def main(argv=None):
             counts[m] = 0
     is_mixed = (counts[list(MATERIAL_COLORS)] >= args.min_per_material).all(axis=1)
     mixed = counts[is_mixed].sum(axis=1).sort_values(ascending=False).index.tolist()
-    print(f"Classes with >= {args.min_per_material} samples of each material: "
-          f"{len(mixed)} of {len(counts)}")
+    print(
+        f"Classes with >= {args.min_per_material} samples of each material: "
+        f"{len(mixed)} of {len(counts)}"
+    )
 
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)

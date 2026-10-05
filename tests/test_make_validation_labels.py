@@ -36,8 +36,9 @@ def write(tmp: Path, name: str, rows) -> None:
 def run(tmp: Path, *args: str, train=TRAIN, val=VAL):
     write(tmp, "GSE90496", train)
     write(tmp, "GSE109379", val)
-    return subprocess.run([sys.executable, str(SCRIPT), *args], cwd=tmp,
-                          capture_output=True, text=True, timeout=60)
+    return subprocess.run(
+        [sys.executable, str(SCRIPT), *args], cwd=tmp, capture_output=True, text=True, timeout=60
+    )
 
 
 def table(tmp: Path, name: str) -> dict[str, dict]:
@@ -81,7 +82,8 @@ def test_alias_maps_a_renamed_class():
     with tempfile.TemporaryDirectory() as d:
         tmp = Path(d)
         (tmp / "aliases.tsv").write_text(
-            "# same class, different spelling\nvalidation_label\ttraining_class\nGBM, NEW\tGBM, MES\n")
+            "# same class, different spelling\nvalidation_label\ttraining_class\nGBM, NEW\tGBM, MES\n"
+        )
         res = run(tmp, "--aliases", "aliases.tsv")
         ok(res)
         lab = table(tmp, "GSE109379_labels.tsv")

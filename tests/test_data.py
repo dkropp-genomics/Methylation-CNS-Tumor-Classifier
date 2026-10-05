@@ -32,19 +32,23 @@ def make_store(tmp: Path, poison: float = 1e6, fold_edit=None, probe_edit=None):
 
     zpath = tmp / "GSEtest.zarr"
     arr = zarr.open_group(str(zpath), mode="w").create_array(
-        "betas", shape=data.shape, chunks=(8, 16), dtype="float32")
+        "betas", shape=data.shape, chunks=(8, 16), dtype="float32"
+    )
     arr[:] = data
 
     gsm = [f"GSM{1000 + i}" for i in range(N_ROWS)]
     cg = [f"cg{i:08d}" for i in range(N_COLS)]
     pd.DataFrame({"row": range(N_ROWS), "geo_accession": gsm}).to_csv(
-        tmp / "GSEtest.samples.tsv", sep="\t", index=False)
+        tmp / "GSEtest.samples.tsv", sep="\t", index=False
+    )
     pd.DataFrame({"col": range(N_COLS), "Probe_ID": cg}).to_csv(
-        tmp / "GSEtest.probes.tsv", sep="\t", index=False)
+        tmp / "GSEtest.probes.tsv", sep="\t", index=False
+    )
 
     keep_r = [i for i in range(N_ROWS) if i not in DROPPED_ROWS]
-    folds = pd.DataFrame({"geo_accession": [gsm[i] for i in keep_r], "zarr_row": keep_r,
-                          "mc_class": "A"})
+    folds = pd.DataFrame(
+        {"geo_accession": [gsm[i] for i in keep_r], "zarr_row": keep_r, "mc_class": "A"}
+    )
     # fold table deliberately NOT in store order
     folds = folds.sample(frac=1, random_state=1).reset_index(drop=True)
     keep_c = [j for j in range(N_COLS) if j not in FILTERED_COLS]
@@ -137,23 +141,28 @@ def test_fold_table_with_wrong_zarr_row_is_refused():
         f = f.copy()
         f.loc[[0, 1], "zarr_row"] = f.loc[[1, 0], "zarr_row"].to_numpy()
         return f
+
     expect_error(lambda: open_store(fold_edit=swap), "store index says row")
 
 
 def test_fold_table_by_position_instead_of_zarr_row_is_refused():
     # the classic mistake: zarr_row = position in the (QC-filtered) fold table
-    expect_error(lambda: open_store(fold_edit=lambda f: f.assign(zarr_row=range(len(f)))),
-                 "store index says row")
+    expect_error(
+        lambda: open_store(fold_edit=lambda f: f.assign(zarr_row=range(len(f)))),
+        "store index says row",
+    )
 
 
 def test_probe_table_with_shifted_col_is_refused():
-    expect_error(lambda: open_store(probe_edit=lambda p: p.assign(col=p["col"] + 1)),
-                 "but the store has")
+    expect_error(
+        lambda: open_store(probe_edit=lambda p: p.assign(col=p["col"] + 1)), "but the store has"
+    )
 
 
 def test_missing_column_is_refused():
-    expect_error(lambda: open_store(fold_edit=lambda f: f.drop(columns="zarr_row")),
-                 "missing column")
+    expect_error(
+        lambda: open_store(fold_edit=lambda f: f.drop(columns="zarr_row")), "missing column"
+    )
 
 
 if __name__ == "__main__":

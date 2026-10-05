@@ -35,8 +35,12 @@ GSE90496_LIKE = [
     ["!Sample_geo_accession", "GSM1", "GSM2", "GSM3"],
     ["!Sample_status", "Public", "Public", "Public"],
     ["!Sample_source_name_ch1", "brain tumor", "brain tumor", "brain tumor"],
-    ["!Sample_characteristics_ch1", "methylation class: GBM, RTK II",
-     "methylation class: PIN T,  PB A", "methylation class: CONTR, CEBM"],
+    [
+        "!Sample_characteristics_ch1",
+        "methylation class: GBM, RTK II",
+        "methylation class: PIN T,  PB A",
+        "methylation class: CONTR, CEBM",
+    ],
     ["!Sample_characteristics_ch1", "material: FFPE", "material: Frozen", "material: FFPE"],
 ]
 
@@ -46,8 +50,13 @@ def run(tmp: Path, *args: str, gz: bytes | None = None, acc: str = "GSE90496"):
     meta.mkdir(parents=True, exist_ok=True)
     if gz is not None:
         (meta / f"{acc}_series_matrix.txt.gz").write_bytes(gz)
-    return subprocess.run([sys.executable, str(SCRIPT), acc, *args], cwd=tmp,
-                          capture_output=True, text=True, timeout=60)
+    return subprocess.run(
+        [sys.executable, str(SCRIPT), acc, *args],
+        cwd=tmp,
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
 
 
 def table(tmp: Path, acc: str = "GSE90496") -> list[list[str]]:
@@ -148,9 +157,14 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
 
 
 def test_make_names_matches_r():
-    cases = {"methylation class": "methylation.class", "material": "material",
-             "WHO 2016 diagnosis": "WHO.2016.diagnosis", "2nd opinion": "X2nd.opinion",
-             "age (years)": "age..years.", ".5x": "X.5x"}
+    cases = {
+        "methylation class": "methylation.class",
+        "material": "material",
+        "WHO 2016 diagnosis": "WHO.2016.diagnosis",
+        "2nd opinion": "X2nd.opinion",
+        "age (years)": "age..years.",
+        ".5x": "X.5x",
+    }
     for key, want in cases.items():
         assert pgm.r_make_names(key) == want, (key, pgm.r_make_names(key))
 

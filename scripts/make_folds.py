@@ -64,9 +64,7 @@ def load_labels(path: Path) -> pd.DataFrame:
     meta = meta.rename(columns={"methylation.class": "mc_class"})
 
     # Collapse repeated whitespace: GEO has "PIN T,  PB A" with two spaces.
-    meta["mc_class"] = (
-        meta["mc_class"].str.replace(r"\s+", " ", regex=True).str.strip()
-    )
+    meta["mc_class"] = meta["mc_class"].str.replace(r"\s+", " ", regex=True).str.strip()
     # Rough family = text before the first comma. A placeholder until we
     # add the curated family mapping from Capper et al.
     meta["mc_family"] = meta["mc_class"].str.split(",").str[0].str.strip()
@@ -97,13 +95,16 @@ def apply_qc(meta: pd.DataFrame, status_path: Path) -> pd.DataFrame:
     a, b = set(meta["geo_accession"]), set(st["geo_accession"])
     if a != b or st["geo_accession"].duplicated().any():
         example = sorted(a ^ b)[0] if a != b else "duplicate IDs"
-        die(f"metadata and {status_path} do not hold the same samples "
+        die(
+            f"metadata and {status_path} do not hold the same samples "
             f"({len(a - b)} only in metadata, {len(b - a)} only in QC; "
-            f"e.g. {example})")
+            f"e.g. {example})"
+        )
     kept_ids = set(st.loc[st["keep"], "geo_accession"])
     kept = meta[meta["geo_accession"].isin(kept_ids)].reset_index(drop=True)
-    print(f"Sample QC: {len(meta) - len(kept)} of {len(meta)} samples "
-          f"dropped, {len(kept)} kept")
+    print(
+        f"Sample QC: {len(meta) - len(kept)} of {len(meta)} samples " f"dropped, {len(kept)} kept"
+    )
     return kept
 
 
@@ -126,9 +127,7 @@ def add_store_rows(folds: pd.DataFrame, index_path: Path) -> pd.DataFrame:
     return folds
 
 
-def assign_folds(
-    meta: pd.DataFrame, n_outer: int, n_inner: int, seed: int
-) -> pd.DataFrame:
+def assign_folds(meta: pd.DataFrame, n_outer: int, n_inner: int, seed: int) -> pd.DataFrame:
     """Add outer and inner stratified fold columns to `meta`."""
     folds = meta.reset_index(drop=True).copy()
     y = folds["mc_class"].to_numpy()
@@ -144,9 +143,7 @@ def assign_folds(
         col = f"inner_fold_o{k}"
         folds[col] = -1
         train_idx = folds.index[folds["outer_fold"] != k].to_numpy()
-        inner = StratifiedKFold(
-            n_splits=n_inner, shuffle=True, random_state=seed + k + 1
-        )
+        inner = StratifiedKFold(n_splits=n_inner, shuffle=True, random_state=seed + k + 1)
         for j, (_, val_idx) in enumerate(inner.split(train_idx, y[train_idx])):
             folds.loc[train_idx[val_idx], col] = j
 
@@ -181,15 +178,19 @@ def check_folds(folds: pd.DataFrame, n_outer: int, n_inner: int) -> None:
     print(f"Samples: {len(folds)}  Classes: {n_classes}")
     print("\nSamples per outer test fold:")
     print(folds["outer_fold"].value_counts().sort_index().to_string())
-    print("\nFFPE fraction per outer test fold (overall "
-          f"{(folds['material'] == 'FFPE').mean():.3f}):")
-    print(folds.groupby("outer_fold")["material"]
-          .apply(lambda s: round((s == "FFPE").mean(), 3)).to_string())
+    print(
+        "\nFFPE fraction per outer test fold (overall "
+        f"{(folds['material'] == 'FFPE').mean():.3f}):"
+    )
+    print(
+        folds.groupby("outer_fold")["material"]
+        .apply(lambda s: round((s == "FFPE").mean(), 3))
+        .to_string()
+    )
     print(f"\nSmallest class count in any inner training set: {min(min_train)}")
     rare = folds["mc_class"].value_counts().idxmin()
     print(f"\nRarest class '{rare}' across outer test folds:")
-    print(folds[folds["mc_class"] == rare]["outer_fold"]
-          .value_counts().sort_index().to_string())
+    print(folds[folds["mc_class"] == rare]["outer_fold"].value_counts().sort_index().to_string())
 
 
 def main() -> None:
@@ -199,10 +200,15 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--outer", type=int, default=5)
     parser.add_argument("--inner", type=int, default=3)
-    parser.add_argument("--qc-status", type=Path, default=None,
-                        help="sample QC status table; keep only passed samples")
-    parser.add_argument("--store-index", type=Path, default=None,
-                        help="<GSE>.samples.tsv; adds the zarr_row column")
+    parser.add_argument(
+        "--qc-status",
+        type=Path,
+        default=None,
+        help="sample QC status table; keep only passed samples",
+    )
+    parser.add_argument(
+        "--store-index", type=Path, default=None, help="<GSE>.samples.tsv; adds the zarr_row column"
+    )
     args = parser.parse_args()
 
     meta = load_labels(args.meta)
@@ -210,8 +216,10 @@ def main() -> None:
         meta = apply_qc(meta, args.qc_status)
     sizes = meta["mc_class"].value_counts()
     if sizes.min() < args.outer:
-        die(f"class '{sizes.idxmin()}' has {sizes.min()} samples, fewer than "
-            f"the {args.outer} outer folds")
+        die(
+            f"class '{sizes.idxmin()}' has {sizes.min()} samples, fewer than "
+            f"the {args.outer} outer folds"
+        )
     folds = assign_folds(meta, args.outer, args.inner, args.seed)
     check_folds(folds, args.outer, args.inner)
     if args.store_index is not None:

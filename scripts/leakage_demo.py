@@ -27,6 +27,7 @@ Run:  python scripts/leakage_demo.py            (about 5-10 minutes)
 Out:  results/leakage_demo/leakage_demo.tsv     one row per experiment, arm, fold
       results/leakage_demo/leakage_summary.tsv  means and the leaky-minus-inside gap
 """
+
 import argparse
 import sys
 import time
@@ -55,10 +56,10 @@ def f_statistic(Z, codes, n_classes):
     total = np.zeros(p)
     sq = np.zeros(p)
     for j in range(0, p, BLOCK):
-        b = Z[:, j:j + BLOCK].astype(np.float64)
-        total[j:j + BLOCK] = b.sum(axis=0)
-        sq[j:j + BLOCK] = (b * b).sum(axis=0)
-    between = -total**2 / n
+        b = Z[:, j : j + BLOCK].astype(np.float64)
+        total[j : j + BLOCK] = b.sum(axis=0)
+        sq[j : j + BLOCK] = (b * b).sum(axis=0)
+    between = -(total**2) / n
     for c in range(n_classes):
         idx = np.flatnonzero(codes == c)
         if idx.size:
@@ -86,7 +87,7 @@ def fit_selection(X, rows, labelings, k):
     Z = imp.transform(Z)
     var = np.empty(Z.shape[1])
     for j in range(0, Z.shape[1], BLOCK):
-        var[j:j + BLOCK] = Z[:, j:j + BLOCK].var(axis=0, ddof=1, dtype=np.float64)
+        var[j : j + BLOCK] = Z[:, j : j + BLOCK].var(axis=0, ddof=1, dtype=np.float64)
     out = {}
     for name, kind, which in EXPERIMENTS:
         codes, n_classes = labelings[which]
@@ -142,21 +143,35 @@ def run_demo(X, y, fold, k=1000, n_trees=300, n_jobs=10, seed=42, log=print):
                 rf.fit(take(X, train, cols, med), lab[train])
                 s = score(lab[test], rf.predict_proba(take(X, test, cols, med)), list(rf.classes_))
                 shared = np.intersect1d(cols, leaky[name][0]).size
-                rows.append({"experiment": name, "arm": arm, "fold": int(f),
-                             "n_train": train.size, "n_test": test.size, "n_probes": cols.size,
-                             "probes_shared_with_leaky": shared,
-                             "accuracy": s["accuracy"], "macro_f1": s["macro_f1"],
-                             "balanced_accuracy": s["balanced_accuracy"]})
+                rows.append(
+                    {
+                        "experiment": name,
+                        "arm": arm,
+                        "fold": int(f),
+                        "n_train": train.size,
+                        "n_test": test.size,
+                        "n_probes": cols.size,
+                        "probes_shared_with_leaky": shared,
+                        "accuracy": s["accuracy"],
+                        "macro_f1": s["macro_f1"],
+                        "balanced_accuracy": s["balanced_accuracy"],
+                    }
+                )
         log(f"fold {f}: {train.size} train, {test.size} test ({time.time() - t0:.0f} s)")
     per_fold = pd.DataFrame(rows)
     mean = per_fold.groupby(["experiment", "arm"], sort=False)[
-        ["accuracy", "macro_f1", "balanced_accuracy", "probes_shared_with_leaky"]].mean()
+        ["accuracy", "macro_f1", "balanced_accuracy", "probes_shared_with_leaky"]
+    ].mean()
     wide = mean.unstack("arm")
-    summary = pd.DataFrame({
-        "accuracy_leaky": wide[("accuracy", "leaky")], "accuracy_inside": wide[("accuracy", "inside")],
-        "macro_f1_leaky": wide[("macro_f1", "leaky")], "macro_f1_inside": wide[("macro_f1", "inside")],
-        "probes_shared": wide[("probes_shared_with_leaky", "inside")],
-    })
+    summary = pd.DataFrame(
+        {
+            "accuracy_leaky": wide[("accuracy", "leaky")],
+            "accuracy_inside": wide[("accuracy", "inside")],
+            "macro_f1_leaky": wide[("macro_f1", "leaky")],
+            "macro_f1_inside": wide[("macro_f1", "inside")],
+            "probes_shared": wide[("probes_shared_with_leaky", "inside")],
+        }
+    )
     summary.insert(2, "accuracy_gap", summary["accuracy_leaky"] - summary["accuracy_inside"])
     summary["macro_f1_gap"] = summary["macro_f1_leaky"] - summary["macro_f1_inside"]
     return per_fold, summary.reset_index()
@@ -185,19 +200,32 @@ def small_repeats(X, a):
     for r in range(a.small_repeats):
         seed = a.seed + 1000 + r
         rows, fake_y, fake_fold = small_noise_case(X.shape[0], seed=seed)
-        _, sm = run_demo(X[rows], fake_y, fake_fold, a.k, a.trees, a.jobs, seed, log=lambda *_: None)
+        _, sm = run_demo(
+            X[rows], fake_y, fake_fold, a.k, a.trees, a.jobs, seed, log=lambda *_: None
+        )
         row = sm[sm.experiment == "F-statistic, real labels"].iloc[0]
-        rows_out.append({"repeat": r, "seed": seed, "accuracy_leaky": row["accuracy_leaky"],
-                         "accuracy_inside": row["accuracy_inside"], "accuracy_gap": row["accuracy_gap"]})
-        print(f"repeat {r:2d}: leaky {row['accuracy_leaky']:.3f}  inside {row['accuracy_inside']:.3f}")
+        rows_out.append(
+            {
+                "repeat": r,
+                "seed": seed,
+                "accuracy_leaky": row["accuracy_leaky"],
+                "accuracy_inside": row["accuracy_inside"],
+                "accuracy_gap": row["accuracy_gap"],
+            }
+        )
+        print(
+            f"repeat {r:2d}: leaky {row['accuracy_leaky']:.3f}  inside {row['accuracy_inside']:.3f}"
+        )
     t = pd.DataFrame(rows_out)
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     t.to_csv(out / "leakage_small_repeats.tsv", sep="\t", index=False, float_format="%.4f")
     print(f"\n{SMALL}, {len(t)} repeats, chance = 0.333")
     for c in ("accuracy_leaky", "accuracy_inside", "accuracy_gap"):
-        print(f"  {c:16s} mean {t[c].mean():.3f}  sd {t[c].std():.3f}  "
-              f"min {t[c].min():.3f}  max {t[c].max():.3f}")
+        print(
+            f"  {c:16s} mean {t[c].mean():.3f}  sd {t[c].std():.3f}  "
+            f"min {t[c].min():.3f}  max {t[c].max():.3f}"
+        )
     print(f"  repeats where leaky > inside: {int((t.accuracy_gap > 0).sum())} of {len(t)}")
     print(f"wrote {out}/leakage_small_repeats.tsv")
 
@@ -212,20 +240,27 @@ def main():
     ap.add_argument("--trees", type=int, default=300)
     ap.add_argument("--jobs", type=int, default=10)
     ap.add_argument("--seed", type=int, default=42)
-    ap.add_argument("--small-repeats", type=int, default=0,
-                    help="only repeat experiment 4 this many times, each with a different "
-                         "random subset and made-up labels, and report the spread")
+    ap.add_argument(
+        "--small-repeats",
+        type=int,
+        default=0,
+        help="only repeat experiment 4 this many times, each with a different "
+        "random subset and made-up labels, and report the spread",
+    )
     a = ap.parse_args()
 
     from methylclf.data import BetaStore
+
     st = BetaStore.open(a.store, a.folds, a.probes)
     s = st.samples
     demo = s[s["outer_fold"].astype(int) != 0]
     inner = demo["inner_fold_o0"].astype(int).to_numpy()
     if (inner < 0).any():
         sys.exit("ERROR: an outer-fold-0 training sample has no inner fold")
-    print(f"demo set: {len(demo)} samples (training side of outer fold 0), "
-          f"{demo['mc_class'].nunique()} classes, inner folds {np.bincount(inner).tolist()}")
+    print(
+        f"demo set: {len(demo)} samples (training side of outer fold 0), "
+        f"{demo['mc_class'].nunique()} classes, inner folds {np.bincount(inner).tolist()}"
+    )
     t0 = time.time()
     X = st.load(demo["geo_accession"].to_numpy())
     print(f"loaded {X.shape}, {X.nbytes / 1e9:.2f} GB ({time.time() - t0:.0f} s)")
@@ -233,10 +268,14 @@ def main():
     if a.small_repeats:
         return small_repeats(X, a)
 
-    per_fold, summary = run_demo(X, demo["mc_class"].to_numpy(), inner, a.k, a.trees, a.jobs, a.seed)
+    per_fold, summary = run_demo(
+        X, demo["mc_class"].to_numpy(), inner, a.k, a.trees, a.jobs, a.seed
+    )
     rows, fake_y, fake_fold = small_noise_case(X.shape[0], seed=a.seed)
-    pf2, sm2 = run_demo(X[rows], fake_y, fake_fold, a.k, a.trees, a.jobs, a.seed, log=lambda *_: None)
-    keep = "F-statistic, real labels"   # "real" here means the made-up labels as given
+    pf2, sm2 = run_demo(
+        X[rows], fake_y, fake_fold, a.k, a.trees, a.jobs, a.seed, log=lambda *_: None
+    )
+    keep = "F-statistic, real labels"  # "real" here means the made-up labels as given
     per_fold = pd.concat([per_fold, pf2[pf2.experiment == keep].assign(experiment=SMALL)])
     summary = pd.concat([summary, sm2[sm2.experiment == keep].assign(experiment=SMALL)])
     out = Path(a.out)
@@ -244,8 +283,10 @@ def main():
     per_fold.to_csv(out / "leakage_demo.tsv", sep="\t", index=False, float_format="%.4f")
     summary.to_csv(out / "leakage_summary.tsv", sep="\t", index=False, float_format="%.4f")
     counts = demo["mc_class"].value_counts()
-    print(f"\nchance, experiments 1-3: always guessing the largest class = "
-          f"{counts.iloc[0] / len(demo):.3f} accuracy; experiment 4: 0.333")
+    print(
+        f"\nchance, experiments 1-3: always guessing the largest class = "
+        f"{counts.iloc[0] / len(demo):.3f} accuracy; experiment 4: 0.333"
+    )
     print(f"k = {a.k} probes, {a.trees} trees, mean over 3 folds\n")
     with pd.option_context("display.width", 200, "display.float_format", "{:.3f}".format):
         print(summary.to_string(index=False))

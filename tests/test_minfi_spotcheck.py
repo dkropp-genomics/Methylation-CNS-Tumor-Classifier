@@ -1,6 +1,7 @@
 """Tests for R/minfi_spotcheck.R with MINFI_MOCK=1 (no minfi, no IDATs).
 Run with `python -m pytest tests/` or `python tests/test_minfi_spotcheck.py`.
 """
+
 import csv
 import os
 import shutil
@@ -38,9 +39,18 @@ def setup(tmp, ids=("GSM1", "GSM2")):
 
 
 def run(tmp, table):
-    cmd = rscript() + [str(SCRIPT), "--samples", str(table), "--sesame", str(tmp / "sesame"),
-                       "--out", str(tmp / "out" / "cmp.tsv")]
-    return subprocess.run(cmd, capture_output=True, text=True, env={**os.environ, "MINFI_MOCK": "1"})
+    cmd = rscript() + [
+        str(SCRIPT),
+        "--samples",
+        str(table),
+        "--sesame",
+        str(tmp / "sesame"),
+        "--out",
+        str(tmp / "out" / "cmp.tsv"),
+    ]
+    return subprocess.run(
+        cmd, capture_output=True, text=True, env={**os.environ, "MINFI_MOCK": "1"}
+    )
 
 
 def test_table_written(tmp_path):
@@ -49,7 +59,7 @@ def test_table_written(tmp_path):
     with open(tmp_path / "out" / "cmp.tsv") as fh:
         rows = list(csv.DictReader(fh, delimiter="\t"))
     assert [x["geo_accession"] for x in rows] == ["GSM1", "GSM2"]
-    assert all(x["n_probes_compared"] == "199" for x in rows)      # one NA dropped
+    assert all(x["n_probes_compared"] == "199" for x in rows)  # one NA dropped
     assert all(float(x["pearson_r"]) > 0.99 for x in rows)
     assert all(0 < float(x["mean_abs_diff"]) < 0.02 for x in rows)
     assert rows[0]["material"] == "FFPE"

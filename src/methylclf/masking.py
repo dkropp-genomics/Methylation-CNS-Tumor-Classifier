@@ -11,6 +11,7 @@ A probe is observed at coverage level p when its number is below p. So:
 
 Nothing here is fitted to data, so it is applied to any sample without leakage.
 """
+
 from __future__ import annotations
 
 import zlib
@@ -23,10 +24,11 @@ def probe_positions(feature_names, array_probe_ids) -> np.ndarray:
     where = {p: i for i, p in enumerate(array_probe_ids)}
     missing = [p for p in feature_names if p not in where]
     if missing:
-        raise SystemExit(f"ERROR: masking: {len(missing)} feature probes are not in the "
-                         f"array probe list (first: {missing[0]})")
-    return np.fromiter((where[p] for p in feature_names), dtype=np.int64,
-                       count=len(feature_names))
+        raise SystemExit(
+            f"ERROR: masking: {len(missing)} feature probes are not in the "
+            f"array probe list (first: {missing[0]})"
+        )
+    return np.fromiter((where[p] for p in feature_names), dtype=np.int64, count=len(feature_names))
 
 
 def observed_uniform(sample_ids, n_array_probes: int, cols, seed: int) -> np.ndarray:

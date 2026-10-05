@@ -38,8 +38,10 @@ def make_idats(folder: Path, gsms=GSMS, channels=("Grn", "Red")) -> list[Path]:
     return paths
 
 
-PLATFORM_FILES = ["GPL13534_HumanMethylation450_15017482_v.1.2.bpm.gz",
-                  "GPL13534_450K_Manifest_header_Descriptions.xlsx.gz"]
+PLATFORM_FILES = [
+    "GPL13534_HumanMethylation450_15017482_v.1.2.bpm.gz",
+    "GPL13534_450K_Manifest_header_Descriptions.xlsx.gz",
+]
 
 
 def make_geo(root: Path, extra: tuple[str, ...] = (), **kw) -> Path:
@@ -80,10 +82,21 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
 
 
 def run(repo: Path, url: str, *args: str) -> subprocess.CompletedProcess:
-    env = dict(os.environ, GEO_BASE_URL=url, MIN_FREE_GB="0",
-               NO_PROXY="127.0.0.1,localhost", no_proxy="127.0.0.1,localhost")
-    return subprocess.run(["bash", str(SCRIPT), ACC, *args], cwd=repo, env=env,
-                          capture_output=True, text=True, timeout=120)
+    env = dict(
+        os.environ,
+        GEO_BASE_URL=url,
+        MIN_FREE_GB="0",
+        NO_PROXY="127.0.0.1,localhost",
+        no_proxy="127.0.0.1,localhost",
+    )
+    return subprocess.run(
+        ["bash", str(SCRIPT), ACC, *args],
+        cwd=repo,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=120,
+    )
 
 
 class Case:
@@ -131,7 +144,7 @@ def test_fresh_download_then_skip():
         assert len(summary) == 2 and summary[1].split("\t")[5] == str(len(GSMS))
         assert (c.repo / "data/raw" / f"{ACC}_RAW.tar").stat().st_size == c.tar.stat().st_size
         assert not list((c.repo / "data/raw").glob("*.part"))
-        assert "already verified" in c.run().stdout          # second run skips
+        assert "already verified" in c.run().stdout  # second run skips
 
 
 def test_existing_extraction_is_reused():

@@ -28,8 +28,15 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-METRICS = ["macro_f1", "balanced_accuracy", "accuracy", "brier", "ece",
-           "confident_share", "confident_accuracy"]
+METRICS = [
+    "macro_f1",
+    "balanced_accuracy",
+    "accuracy",
+    "brier",
+    "ece",
+    "confident_share",
+    "confident_accuracy",
+]
 
 
 def _fail(msg: str):
@@ -42,8 +49,10 @@ def _encode(labels, classes, what):
         _fail(f"{what}: duplicated class names")
     unknown = sorted({x for x in labels if x not in index})
     if unknown:
-        _fail(f"{what}: {len(unknown)} label(s) not among the model's classes, "
-              f"first: {unknown[0]!r}")
+        _fail(
+            f"{what}: {len(unknown)} label(s) not among the model's classes, "
+            f"first: {unknown[0]!r}"
+        )
     return np.array([index[x] for x in labels], dtype=np.int64)
 
 
@@ -78,7 +87,6 @@ def _from_confusion(cm):
 
 def _ece(conf, correct, n_bins):
     bins = np.minimum((conf * n_bins).astype(np.int64), n_bins - 1)
-    n = np.bincount(bins, minlength=n_bins)
     acc = np.bincount(bins, weights=correct, minlength=n_bins)
     cf = np.bincount(bins, weights=conf, minlength=n_bins)
     return np.abs(acc - cf).sum() / conf.size  # = sum_b (n_b / n) * |acc_b - conf_b|
@@ -102,8 +110,11 @@ class _Scored:
         f1, bal, acc = _from_confusion(confusion_counts(t, pred, self.k))
         sure = conf >= self.threshold
         return {
-            "macro_f1": f1, "balanced_accuracy": bal, "accuracy": acc,
-            "brier": self.brier[s].mean(), "ece": _ece(conf, correct, self.n_bins),
+            "macro_f1": f1,
+            "balanced_accuracy": bal,
+            "accuracy": acc,
+            "brier": self.brier[s].mean(),
+            "ece": _ece(conf, correct, self.n_bins),
             "confident_share": sure.mean(),
             "confident_accuracy": correct[sure].mean() if sure.any() else np.nan,
         }
@@ -133,8 +144,9 @@ def confusion_table(y_true, proba, classes) -> pd.DataFrame:
     """Confusion matrix as a table: rows = true class, columns = predicted."""
     t, proba, classes = _check(y_true, proba, classes)
     cm = confusion_counts(t, proba.argmax(axis=1), len(classes))
-    return pd.DataFrame(cm, index=pd.Index(classes, name="true"),
-                        columns=pd.Index(classes, name="predicted"))
+    return pd.DataFrame(
+        cm, index=pd.Index(classes, name="true"), columns=pd.Index(classes, name="predicted")
+    )
 
 
 def reliability_table(y_true, proba, classes, n_bins=15) -> pd.DataFrame:
@@ -146,14 +158,30 @@ def reliability_table(y_true, proba, classes, n_bins=15) -> pd.DataFrame:
     rows = []
     for b in range(n_bins):
         m = bins == b
-        rows.append({"bin_low": b / n_bins, "bin_high": (b + 1) / n_bins, "n": int(m.sum()),
-                     "mean_confidence": conf[m].mean() if m.any() else np.nan,
-                     "accuracy": correct[m].mean() if m.any() else np.nan})
+        rows.append(
+            {
+                "bin_low": b / n_bins,
+                "bin_high": (b + 1) / n_bins,
+                "n": int(m.sum()),
+                "mean_confidence": conf[m].mean() if m.any() else np.nan,
+                "accuracy": correct[m].mean() if m.any() else np.nan,
+            }
+        )
     return pd.DataFrame(rows)
 
 
-def summarize(y_true, proba, classes, family_of=None, groups=None, n_boot=1000,
-              seed=0, ci=0.95, threshold=0.9, n_bins=15) -> pd.DataFrame:
+def summarize(
+    y_true,
+    proba,
+    classes,
+    family_of=None,
+    groups=None,
+    n_boot=1000,
+    seed=0,
+    ci=0.95,
+    threshold=0.9,
+    n_bins=15,
+) -> pd.DataFrame:
     """Every metric with a bootstrap confidence interval.
 
     family_of : dict class -> family; adds level "family" rows.
@@ -188,8 +216,17 @@ def summarize(y_true, proba, classes, family_of=None, groups=None, n_boot=1000,
                     boots[m][b] = res[m]
             for m in METRICS:
                 ok = boots[m][~np.isnan(boots[m])]
-                lo, hi = (np.percentile(ok, [lo_q, hi_q]) if ok.size else (np.nan, np.nan))
-                rows.append({"group": group, "level": level, "metric": m, "value": point[m],
-                             "ci_low": lo, "ci_high": hi, "n": members.size,
-                             "n_classes": int(np.unique(lt[members]).size)})
+                lo, hi = np.percentile(ok, [lo_q, hi_q]) if ok.size else (np.nan, np.nan)
+                rows.append(
+                    {
+                        "group": group,
+                        "level": level,
+                        "metric": m,
+                        "value": point[m],
+                        "ci_low": lo,
+                        "ci_high": hi,
+                        "n": members.size,
+                        "n_classes": int(np.unique(lt[members]).size),
+                    }
+                )
     return pd.DataFrame(rows)

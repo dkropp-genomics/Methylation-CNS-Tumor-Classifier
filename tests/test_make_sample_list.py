@@ -1,4 +1,5 @@
 """Tests for scripts/make_sample_list.py."""
+
 import sys
 import tempfile
 from pathlib import Path
@@ -26,9 +27,10 @@ def test_keeps_each_table_s_order_reference_first():
 def test_stops_on_duplicates_empty_tables_and_missing_columns():
     ref, ext = tables()
     for parts, text in (
-            ([("GSE90496", ref), ("GSE109379", ref)], "more than once"),
-            ([("GSE90496", ref.iloc[:0]), ("GSE109379", ext)], "no samples"),
-            ([("GSE90496", ref.rename(columns={"geo_accession": "id"}))], "no geo_accession")):
+        ([("GSE90496", ref), ("GSE109379", ref)], "more than once"),
+        ([("GSE90496", ref.iloc[:0]), ("GSE109379", ext)], "no samples"),
+        ([("GSE90496", ref.rename(columns={"geo_accession": "id"}))], "no geo_accession"),
+    ):
         try:
             msl.build(parts)
         except SystemExit as e:
@@ -43,11 +45,24 @@ def test_command_line_writes_the_file():
         d = Path(tmp)
         ref.to_csv(d / "ref.tsv", sep="\t", index=False)
         ext.to_csv(d / "ext.tsv", sep="\t", index=False)
-        msl.main(["--reference", str(d / "ref.tsv"), "--external", str(d / "ext.tsv"),
-                  "--out", str(d / "meta" / "all.tsv")])
+        msl.main(
+            [
+                "--reference",
+                str(d / "ref.tsv"),
+                "--external",
+                str(d / "ext.tsv"),
+                "--out",
+                str(d / "meta" / "all.tsv"),
+            ]
+        )
         assert (d / "meta" / "all.tsv").read_text().splitlines() == [
-            "cohort\tgeo_accession", "GSE90496\tGSM3", "GSE90496\tGSM1", "GSE90496\tGSM2",
-            "GSE109379\tGSM9", "GSE109379\tGSM8"]
+            "cohort\tgeo_accession",
+            "GSE90496\tGSM3",
+            "GSE90496\tGSM1",
+            "GSE90496\tGSM2",
+            "GSE109379\tGSM9",
+            "GSE109379\tGSM8",
+        ]
 
 
 if __name__ == "__main__":

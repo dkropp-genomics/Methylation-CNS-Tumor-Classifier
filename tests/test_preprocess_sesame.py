@@ -4,6 +4,7 @@ Needs Rscript with the arrow and BiocParallel packages. It is found on PATH, or
 through `conda run -n methyl-r`, or set RSCRIPT to the full path.
 Run with `python -m pytest tests/` or `python tests/test_preprocess_sesame.py`.
 """
+
 import csv
 import os
 import shutil
@@ -41,11 +42,23 @@ def make_inputs(tmp, ids, skip_red=()):
 
 
 def run(tmp, table, *extra):
-    cmd = rscript() + [str(SCRIPT), "--samples", str(table), "--out", str(tmp / "out"),
-                       "--idat-root", str(tmp / "idat"), "--batch-size", "2",
-                       "--workers", "1", *extra]
-    return subprocess.run(cmd, capture_output=True, text=True,
-                          env={**os.environ, "SESAME_MOCK": "1"})
+    cmd = rscript() + [
+        str(SCRIPT),
+        "--samples",
+        str(table),
+        "--out",
+        str(tmp / "out"),
+        "--idat-root",
+        str(tmp / "idat"),
+        "--batch-size",
+        "2",
+        "--workers",
+        "1",
+        *extra,
+    ]
+    return subprocess.run(
+        cmd, capture_output=True, text=True, env={**os.environ, "SESAME_MOCK": "1"}
+    )
 
 
 def read_tsv(path):
@@ -61,7 +74,8 @@ def test_batches_qc_and_failed_sample(tmp_path):
     assert r.returncode == 0, r.stderr
     out = tmp_path / "out" / "GSETEST"
     assert sorted(p.name for p in out.iterdir()) == [
-        f"batch_000{b}.{ext}" for b in (1, 2, 3) for ext in ("parquet", "qc.tsv")]
+        f"batch_000{b}.{ext}" for b in (1, 2, 3) for ext in ("parquet", "qc.tsv")
+    ]
     rows = [row for b in (1, 2, 3) for row in read_tsv(out / f"batch_000{b}.qc.tsv")]
     assert [row["geo_accession"] for row in rows] == IDS
     status = {row["geo_accession"]: row["status"] for row in rows}
@@ -79,14 +93,15 @@ def test_parquet_is_float32_in_sample_order(tmp_path):
         import pyarrow.parquet as pq
     except ImportError:
         import pytest
+
         pytest.skip("pyarrow not installed")
     assert run(tmp_path, make_inputs(tmp_path, IDS)).returncode == 0
     tab = pq.read_table(tmp_path / "out" / "GSETEST" / "batch_0002.parquet")
     assert tab.column_names == ["Probe_ID", "GSM3", "GSM4"]
     assert tab.schema.field("GSM4").type == pa.float32()
     assert tab.num_rows == 1000
-    assert tab["GSM3"].null_count == 1000      # failed sample: all NA
-    assert tab["GSM4"].null_count == 100       # NA kept as NA
+    assert tab["GSM3"].null_count == 1000  # failed sample: all NA
+    assert tab["GSM4"].null_count == 100  # NA kept as NA
     assert tab["Probe_ID"][0].as_py() == "cg00000001"
 
 
@@ -95,7 +110,7 @@ def test_rerun_skips_complete_and_redoes_missing(tmp_path):
     assert run(tmp_path, table).returncode == 0
     out = tmp_path / "out" / "GSETEST"
     keep = (out / "batch_0001.parquet").stat().st_mtime_ns
-    (out / "batch_0002.qc.tsv").unlink()       # batch 2 now looks incomplete
+    (out / "batch_0002.qc.tsv").unlink()  # batch 2 now looks incomplete
     r = run(tmp_path, table)
     assert r.returncode == 0, r.stderr
     assert "skip  GSETEST batch 1" in r.stdout and "done  GSETEST batch 2" in r.stdout

@@ -9,6 +9,7 @@ training tumor at each coverage level. Reads the training cohort only.
 
 Output: results/final_v1/nn_repro_check.tsv
 """
+
 import sys
 import time
 from pathlib import Path
@@ -28,25 +29,41 @@ if cfg["models"][name]["kind"] != "nn":
     ff.cv.fail(f"{name} is not a network")
 art = ff.load_model(ff.model_path(Path("data/models") / cfg["run_name"], name))
 mcfg = yaml.safe_load(Path(cfg["models"][name]["config"]).read_text())
-st = BetaStore.open("data/betas/zarr/GSE90496.zarr", "results/splits/folds_seed42_qc.tsv",
-                    "results/probes/probes_kept.tsv")
+st = BetaStore.open(
+    "data/betas/zarr/GSE90496.zarr",
+    "results/splits/folds_seed42_qc.tsv",
+    "results/probes/probes_kept.tsv",
+)
 ids, y, mat, _ = ff.cv.columns(st.samples)
 Z = art["pipe"].transform(st.load(ids), mat)
 t0 = time.time()
 again = dict(art, fit=ff.fit_nn(mcfg, art["settings"], Z, y, art["classes"]))
 print(f"{name}: refitted in {time.time() - t0:.0f} s")
 
-weights = max(float(np.abs(art["fit"]["state"][k] - again["fit"]["state"][k]).max())
-              for k in art["fit"]["state"])
+weights = max(
+    float(np.abs(art["fit"]["state"][k] - again["fit"]["state"][k]).max())
+    for k in art["fit"]["state"]
+)
 levels = [float(v) for v in cfg["analyses"]["sparsity"]["levels"]]
 probe_ids = np.asarray(st.probe_ids, dtype=object)
-u = observed_uniform(ids, len(probe_ids), probe_positions(art["feature_names"], probe_ids),
-                     int(cfg["analyses"]["sparsity"]["mask_seed"]))
+u = observed_uniform(
+    ids,
+    len(probe_ids),
+    probe_positions(art["feature_names"], probe_ids),
+    int(cfg["analyses"]["sparsity"]["mask_seed"]),
+)
 a, b = ff.predict_levels(art, Z, u, levels), ff.predict_levels(again, Z, u, levels)
-rows = [{"model": name, "coverage": lv, "n_samples": len(ids), "max_abs_weight_diff": weights,
-         "max_abs_score_diff": float(np.abs(a[i] - b[i]).max()),
-         "n_top_class_changed": int((a[i].argmax(1) != b[i].argmax(1)).sum())}
-        for i, lv in enumerate(levels)]
+rows = [
+    {
+        "model": name,
+        "coverage": lv,
+        "n_samples": len(ids),
+        "max_abs_weight_diff": weights,
+        "max_abs_score_diff": float(np.abs(a[i] - b[i]).max()),
+        "n_top_class_changed": int((a[i].argmax(1) != b[i].argmax(1)).sum()),
+    }
+    for i, lv in enumerate(levels)
+]
 out = pd.DataFrame(rows)
 path = Path("results") / cfg["run_name"] / "nn_repro_check.tsv"
 if path.exists():

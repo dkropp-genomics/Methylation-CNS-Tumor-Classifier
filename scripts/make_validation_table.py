@@ -15,6 +15,7 @@ Output: results/splits/GSE109379_kept.tsv
   geo_accession, zarr_row, mc_class, family, material,
   capper_score, capper_matched, path_concordant, capper_no_match
 """
+
 from __future__ import annotations
 
 import argparse
@@ -23,7 +24,7 @@ from pathlib import Path
 
 import pandas as pd
 
-MATERIALS = {"FFPE", "Frozen"}                 # the spellings the fold table uses
+MATERIALS = {"FFPE", "Frozen"}  # the spellings the fold table uses
 FLAGS = ["capper_matched", "path_concordant", "capper_no_match"]
 
 
@@ -58,7 +59,7 @@ def build(status, index, labels, families, subsets, train_classes=None):
     t = t.rename(columns={"row": "zarr_row"})
     t = t.merge(labels[["geo_accession", "mc_class", "material"]], on="geo_accession")
     t = t.merge(subsets[["geo_accession", "capper_score"] + FLAGS], on="geo_accession")
-    t["mc_class"] = t["mc_class"].str.split().str.join(" ")      # GEO has double spaces
+    t["mc_class"] = t["mc_class"].str.split().str.join(" ")  # GEO has double spaces
 
     family_of = dict(zip(families["mc_class"], families["family"]))
     unknown = sorted(set(t["mc_class"]) - set(family_of))
@@ -108,8 +109,10 @@ def main(argv=None):
     t = build(status, index, labels, families, subsets, set(train["mc_class"]))
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     t.to_csv(args.out, sep="\t", index=False)
-    print(f"wrote {args.out}: {len(t)} samples, {t['mc_class'].nunique()} classes, "
-          f"{t['family'].nunique()} families")
+    print(
+        f"wrote {args.out}: {len(t)} samples, {t['mc_class'].nunique()} classes, "
+        f"{t['family'].nunique()} families"
+    )
     print("material:", t["material"].value_counts().to_dict())
     for c in FLAGS:
         print(f"  {c:16s} {int((t[c] == 'True').sum())}")

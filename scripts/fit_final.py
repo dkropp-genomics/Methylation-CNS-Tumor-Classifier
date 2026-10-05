@@ -25,6 +25,7 @@ Outputs:
   data/predictions/final_v1/oof_<model>_o<k>.npz out-of-fold scores (tree models)
   results/final_v1/manifest.json, fits.tsv, fit_summary.tsv, repro_check.tsv
 """
+
 from __future__ import annotations
 
 import argparse
@@ -52,6 +53,7 @@ KINDS = ("tree", "nn", "centroid")
 # --------------------------------------------------------------------------
 def load_model_cfgs(cfg) -> dict:
     import yaml
+
     out = {}
     for name, m in cfg["models"].items():
         if m.get("kind") not in KINDS:
@@ -67,8 +69,10 @@ def load_model_cfgs(cfg) -> dict:
 def final_setting(name, m, mcfg, res_root) -> dict:
     """Features and model settings of one final model."""
     if m["kind"] == "centroid":
-        return {"n_probes": int(m["features"]["n_probes"]),
-                "correct_material": bool(m["features"]["correct_material"])}
+        return {
+            "n_probes": int(m["features"]["n_probes"]),
+            "correct_material": bool(m["features"]["correct_material"]),
+        }
     path = Path(res_root) / m["run"] / "settings.tsv"
     if not path.is_file():
         cv.fail(f"{path} not found")
@@ -78,20 +82,29 @@ def final_setting(name, m, mcfg, res_root) -> dict:
         cv.fail(f"{path}: setting {m['setting']} of model {name} not found")
     row = hit.iloc[0]
     if m["kind"] == "tree":
-        return {"n_probes": int(row["n_probes"]),
-                "correct_material": bool(row["correct_material"]),
-                "params": json.loads(row["model_params"])}
+        return {
+            "n_probes": int(row["n_probes"]),
+            "correct_material": bool(row["correct_material"]),
+            "params": json.loads(row["model_params"]),
+        }
     masked = bool(row["masked"])
     if masked != (m["network"] == "masked"):
-        cv.fail(f"models.{name}: setting {m['setting']} is "
-                f"{'masked' if masked else 'plain'}, but network says {m['network']}")
+        cv.fail(
+            f"models.{name}: setting {m['setting']} is "
+            f"{'masked' if masked else 'plain'}, but network says {m['network']}"
+        )
     limit = tnn.max_epochs_for(mcfg, masked)
     if not 1 <= int(m["epoch"]) <= limit:
         cv.fail(f"models.{name}.epoch must be within 1..{limit}")
-    return {"n_probes": int(mcfg["features"]["n_probes"]),
-            "correct_material": bool(mcfg["features"]["correct_material"]),
-            "masked": masked, "lr": float(row["lr"]), "dropout": float(row["dropout"]),
-            "epoch": int(m["epoch"]), "max_epochs": limit}
+    return {
+        "n_probes": int(mcfg["features"]["n_probes"]),
+        "correct_material": bool(mcfg["features"]["correct_material"]),
+        "masked": masked,
+        "lr": float(row["lr"]),
+        "dropout": float(row["dropout"]),
+        "epoch": int(m["epoch"]),
+        "max_epochs": limit,
+    }
 
 
 def probes_digest(probe_ids) -> str:
@@ -126,32 +139,53 @@ def fit_centroid(Z, y, classes) -> dict:
 
 def fit_nn(mcfg, s, Z, y, classes) -> dict:
     from methylclf.nn import Standardizer, train_mlp
+
     scaler = Standardizer().fit(Z)
     index = {c: i for i, c in enumerate(classes)}
     y_idx = np.array([index[c] for c in y], dtype=np.int64)
     t = mcfg["train"]
-    net = train_mlp(scaler.transform(Z), y_idx, len(classes), masked=s["masked"],
-                    hidden=tuple(t["hidden"]), dropout=s["dropout"], lr=s["lr"],
-                    weight_decay=float(t["weight_decay"]), batch_size=int(t["batch_size"]),
-                    max_epochs=s["max_epochs"], stop_epoch=s["epoch"], eval_every=10 ** 9,
-                    min_fraction=float(t["min_fraction"]), seed=int(mcfg["seed"]),
-                    n_threads=int(mcfg["n_threads"]),
-                    schedule=str(t.get("schedule", "constant")))
+    net = train_mlp(
+        scaler.transform(Z),
+        y_idx,
+        len(classes),
+        masked=s["masked"],
+        hidden=tuple(t["hidden"]),
+        dropout=s["dropout"],
+        lr=s["lr"],
+        weight_decay=float(t["weight_decay"]),
+        batch_size=int(t["batch_size"]),
+        max_epochs=s["max_epochs"],
+        stop_epoch=s["epoch"],
+        eval_every=10**9,
+        min_fraction=float(t["min_fraction"]),
+        seed=int(mcfg["seed"]),
+        n_threads=int(mcfg["n_threads"]),
+        schedule=str(t.get("schedule", "constant")),
+    )
     # weights as plain arrays, so the saved file does not depend on how torch pickles
     state = {k: v.detach().cpu().numpy() for k, v in net.state_dict().items()}
-    return {"mean": scaler.mean_, "sd": scaler.sd_, "state": state,
-            "hidden": tuple(t["hidden"]), "dropout": s["dropout"],
-            "n_threads": int(mcfg["n_threads"])}
+    return {
+        "mean": scaler.mean_,
+        "sd": scaler.sd_,
+        "state": state,
+        "hidden": tuple(t["hidden"]),
+        "dropout": s["dropout"],
+        "n_threads": int(mcfg["n_threads"]),
+    }
 
 
 def predict_levels(art: dict, Z, u, levels) -> np.ndarray:
     """Raw scores at each coverage level, shaped (level, sample, class)."""
     from methylclf.masking import observed
+
     kind, fit = art["kind"], art["fit"]
     if kind == "tree":
-        out = [fit["model"].predict_proba(
-            np.where(observed(u, lv), Z, fit["median"][None, :]).astype(np.float32))
-            for lv in levels]
+        out = [
+            fit["model"].predict_proba(
+                np.where(observed(u, lv), Z, fit["median"][None, :]).astype(np.float32)
+            )
+            for lv in levels
+        ]
     elif kind == "centroid":
         X, out = Z.astype(np.float64), []
         for lv in levels:
@@ -163,6 +197,7 @@ def predict_levels(art: dict, Z, u, levels) -> np.ndarray:
     elif kind == "nn":
         import torch
         from methylclf.nn import build_mlp, predict_proba
+
         torch.set_num_threads(fit["n_threads"])
         net = build_mlp(Z.shape[1], len(art["classes"]), fit["hidden"], fit["dropout"])
         net.load_state_dict({k: torch.from_numpy(np.array(v)) for k, v in fit["state"].items()})
@@ -190,13 +225,15 @@ def model_path(model_dir: Path, name: str) -> Path:
 
 def save_model(path: Path, art: dict):
     import joblib
+
     tmp = path.with_name(path.name + ".tmp")
     joblib.dump(art, tmp, compress=3)
-    os.replace(tmp, path)                      # a file that exists is whole
+    os.replace(tmp, path)  # a file that exists is whole
 
 
 def load_model(path: Path) -> dict:
     import joblib
+
     if not Path(path).is_file():
         cv.fail(f"{path} not found; run scripts/fit_final.py first")
     return joblib.load(path)
@@ -209,8 +246,9 @@ def oof_path(pred_dir: Path, name: str, k: int) -> Path:
 # --------------------------------------------------------------------------
 # Stages
 # --------------------------------------------------------------------------
-def stage_oof(cfg, model_cfgs, settings, samples, X, pipeline_factory, pred_dir, res_dir,
-              pred_root):
+def stage_oof(
+    cfg, model_cfgs, settings, samples, X, pipeline_factory, pred_dir, res_dir, pred_root
+):
     """Out-of-fold raw scores of each tree model's final setting."""
     ids, y, mat, outer = cv.columns(samples)
     classes = sorted(set(y))
@@ -235,10 +273,17 @@ def stage_oof(cfg, model_cfgs, settings, samples, X, pipeline_factory, pred_dir,
             if old.exists():
                 P, old_ids, _ = cv.load_pred(old)
                 same = list(old_ids) == list(ids[~train])
-                checks.append({"model": name, "outer": k, "phase3_file": old.name,
-                               "max_abs_diff": float(np.abs(P - proba).max()) if same else np.nan,
-                               "n_top_class_changed":
-                                   int((P.argmax(1) != proba.argmax(1)).sum()) if same else -1})
+                checks.append(
+                    {
+                        "model": name,
+                        "outer": k,
+                        "phase3_file": old.name,
+                        "max_abs_diff": float(np.abs(P - proba).max()) if same else np.nan,
+                        "n_top_class_changed": (
+                            int((P.argmax(1) != proba.argmax(1)).sum()) if same else -1
+                        ),
+                    }
+                )
             n_done += 1
             print(f"  oof outer {k} {name}: {time.time() - t0:.0f} s", flush=True)
             del pipe, Z_tr, Z_te
@@ -248,7 +293,8 @@ def stage_oof(cfg, model_cfgs, settings, samples, X, pipeline_factory, pred_dir,
         t = pd.DataFrame(checks)
         if path.exists():
             t = pd.concat([pd.read_csv(path, sep="\t"), t]).drop_duplicates(
-                ["model", "outer"], keep="last")
+                ["model", "outer"], keep="last"
+            )
         t.sort_values(["model", "outer"]).to_csv(path, sep="\t", index=False)
     print(f"oof stage: {n_done} fits done now")
     return n_done
@@ -272,9 +318,21 @@ def pooled_oof(pred_dir, name, samples):
     return np.vstack([by_id[i] for i in ids]), y, classes
 
 
-def stage_fit(cfg, model_cfgs, settings, samples, X, probe_ids, pipeline_factory, pred_dir,
-              model_dir, res_dir, only=None):
+def stage_fit(
+    cfg,
+    model_cfgs,
+    settings,
+    samples,
+    X,
+    probe_ids,
+    pipeline_factory,
+    pred_dir,
+    model_dir,
+    res_dir,
+    only=None,
+):
     from methylclf.masking import observed_uniform, probe_positions
+
     ids, y, mat, _ = cv.columns(samples)
     classes = sorted(set(y))
     digest = probes_digest(probe_ids)
@@ -304,25 +362,45 @@ def stage_fit(cfg, model_cfgs, settings, samples, X, probe_ids, pipeline_factory
             fit = fit_centroid(Z, y, classes)
         else:
             fit = fit_nn(model_cfgs[name], s, Z, y, classes)
-        art = {"name": name, "kind": m["kind"], "run_name": cfg["run_name"],
-               "settings": s, "classes": classes, "pipe": pipe,
-               "feature_names": np.asarray(names, dtype=object),
-               "n_array_probes": len(probe_ids), "probes_sha256": digest,
-               "n_train": len(ids), "fit": fit, "calibrator": None}
-        row = {"model": name, "kind": m["kind"], "n_train": len(ids),
-               "n_features": Z.shape[1], "correct_material": key[1]}
+        art = {
+            "name": name,
+            "kind": m["kind"],
+            "run_name": cfg["run_name"],
+            "settings": s,
+            "classes": classes,
+            "pipe": pipe,
+            "feature_names": np.asarray(names, dtype=object),
+            "n_array_probes": len(probe_ids),
+            "probes_sha256": digest,
+            "n_train": len(ids),
+            "fit": fit,
+            "calibrator": None,
+        }
+        row = {
+            "model": name,
+            "kind": m["kind"],
+            "n_train": len(ids),
+            "n_features": Z.shape[1],
+            "correct_material": key[1],
+        }
         if m["kind"] == "tree":
             P, y_oof, oof_classes = pooled_oof(pred_dir, name, samples)
             if oof_classes != classes:
                 cv.fail(f"{name}: out-of-fold class order differs from the final model")
             c = cfg["calibration"][name]
             cmodel = cal.fit_calibrator(P, y_oof, c["transform"], float(c["C"]), classes)
-            art["calibrator"] = {"model": cmodel, "transform": c["transform"],
-                                 "C": float(c["C"]), "n_fit": len(y_oof)}
+            art["calibrator"] = {
+                "model": cmodel,
+                "transform": c["transform"],
+                "C": float(c["C"]),
+                "n_fit": len(y_oof),
+            }
             pred = np.asarray(classes, dtype=object)[P.argmax(1)]
-            row.update(oof_accuracy_raw=float((pred == y_oof).mean()),
-                       calibrator=f"{c['transform']} C={float(c['C']):g}",
-                       calibrator_converged=bool(cmodel.converged_))
+            row.update(
+                oof_accuracy_raw=float((pred == y_oof).mean()),
+                calibrator=f"{c['transform']} C={float(c['C']):g}",
+                calibrator_converged=bool(cmodel.converged_),
+            )
         save_model(path, art)
 
         # the saved file must give the same numbers as the model in memory
@@ -337,19 +415,35 @@ def stage_fit(cfg, model_cfgs, settings, samples, X, probe_ids, pipeline_factory
             cv.fail(f"{name}: the reloaded model differs from the fitted one (max {diff:.2e})")
         # agreement with the labels it was trained on: a sanity number, not a result
         full = predict_levels(art, Z, np.zeros(Z.shape, dtype=np.float32), [1.0])[0]
-        row.update(reload_max_abs_diff=diff,
-                   train_accuracy=float((np.asarray(classes, dtype=object)[full.argmax(1)]
-                                         == y).mean()),
-                   seconds_features=round(t_feat, 1), seconds_model=round(time.time() - t1, 1),
-                   file_mb=round(path.stat().st_size / 1e6, 1))
+        row.update(
+            reload_max_abs_diff=diff,
+            train_accuracy=float((np.asarray(classes, dtype=object)[full.argmax(1)] == y).mean()),
+            seconds_features=round(t_feat, 1),
+            seconds_model=round(time.time() - t1, 1),
+            file_mb=round(path.stat().st_size / 1e6, 1),
+        )
         rows.append(row)
-        cv.log_fit(res_dir, {"stage": "final", "outer": "all", "inner": "all", "setting": name,
-                             "n_train": len(ids), "n_test": 0, "n_features": Z.shape[1],
-                             "seconds_features": t_feat, "seconds_model": time.time() - t1,
-                             "finished": time.strftime("%Y-%m-%d %H:%M:%S")})
+        cv.log_fit(
+            res_dir,
+            {
+                "stage": "final",
+                "outer": "all",
+                "inner": "all",
+                "setting": name,
+                "n_train": len(ids),
+                "n_test": 0,
+                "n_features": Z.shape[1],
+                "seconds_features": t_feat,
+                "seconds_model": time.time() - t1,
+                "finished": time.strftime("%Y-%m-%d %H:%M:%S"),
+            },
+        )
         n_done += 1
-        print(f"{name}: fitted on {len(ids)} samples x {Z.shape[1]} probes in "
-              f"{time.time() - t0:.0f} s; reload check {diff:.1e}", flush=True)
+        print(
+            f"{name}: fitted on {len(ids)} samples x {Z.shape[1]} probes in "
+            f"{time.time() - t0:.0f} s; reload check {diff:.1e}",
+            flush=True,
+        )
     if rows:
         path = res_dir / "fit_summary.tsv"
         t = pd.DataFrame(rows)
@@ -360,9 +454,20 @@ def stage_fit(cfg, model_cfgs, settings, samples, X, probe_ids, pipeline_factory
     return n_done
 
 
-def run(stage, cfg, model_cfgs, samples, load, probe_ids, pipeline_factory,
-        pred_root="data/predictions", res_root="results", model_root="data/models",
-        cv_res_root="results/cv", only=None):
+def run(
+    stage,
+    cfg,
+    model_cfgs,
+    samples,
+    load,
+    probe_ids,
+    pipeline_factory,
+    pred_root="data/predictions",
+    res_root="results",
+    model_root="data/models",
+    cv_res_root="results/cv",
+    only=None,
+):
     """Everything the command line does, on any loader (the tests pass a fake one)."""
     for key in ("run_name", "models", "calibration", "analyses"):
         if key not in cfg:
@@ -376,23 +481,38 @@ def run(stage, cfg, model_cfgs, samples, load, probe_ids, pipeline_factory,
     pred_dir = Path(pred_root) / cfg["run_name"]
     res_dir = Path(res_root) / cfg["run_name"]
     model_dir = Path(model_root) / cfg["run_name"]
-    settings = {n: final_setting(n, m, model_cfgs.get(n), cv_res_root)
-                for n, m in cfg["models"].items()}
+    settings = {
+        n: final_setting(n, m, model_cfgs.get(n), cv_res_root) for n, m in cfg["models"].items()
+    }
     cv.check_manifest({"final": cfg, "models": model_cfgs}, samples, res_dir, pd.DataFrame())
     pred_dir.mkdir(parents=True, exist_ok=True)
     model_dir.mkdir(parents=True, exist_ok=True)
     ids = cv.columns(samples)[0]
     t0 = time.time()
-    X = load(ids)                                   # every training sample, once
-    print(f"loaded {X.shape[0]} x {X.shape[1]} training samples in {time.time() - t0:.0f} s",
-          flush=True)
+    X = load(ids)  # every training sample, once
+    print(
+        f"loaded {X.shape[0]} x {X.shape[1]} training samples in {time.time() - t0:.0f} s",
+        flush=True,
+    )
     n = 0
     if stage in ("oof", "all"):
-        n += stage_oof(cfg, model_cfgs, settings, samples, X, pipeline_factory, pred_dir,
-                       res_dir, pred_root)
+        n += stage_oof(
+            cfg, model_cfgs, settings, samples, X, pipeline_factory, pred_dir, res_dir, pred_root
+        )
     if stage in ("fit", "all"):
-        n += stage_fit(cfg, model_cfgs, settings, samples, X, probe_ids, pipeline_factory,
-                       pred_dir, model_dir, res_dir, only)
+        n += stage_fit(
+            cfg,
+            model_cfgs,
+            settings,
+            samples,
+            X,
+            probe_ids,
+            pipeline_factory,
+            pred_dir,
+            model_dir,
+            res_dir,
+            only,
+        )
     return n
 
 
@@ -420,13 +540,26 @@ def main(argv=None):
     if "GSE90496" not in Path(args.store).name:
         cv.fail("fit_final.py reads the training cohort (GSE90496) only")
     st = BetaStore.open(args.store, args.folds, args.probes)
-    run(args.stage, cfg, load_model_cfgs(cfg), st.samples, st.load,
-        np.asarray(st.probe_ids, dtype=object), FeaturePipeline, args.pred_root,
-        args.res_root, args.model_root, args.cv_res_root, args.models)
+    run(
+        args.stage,
+        cfg,
+        load_model_cfgs(cfg),
+        st.samples,
+        st.load,
+        np.asarray(st.probe_ids, dtype=object),
+        FeaturePipeline,
+        args.pred_root,
+        args.res_root,
+        args.model_root,
+        args.cv_res_root,
+        args.models,
+    )
     res_dir = Path(args.res_root) / cfg["run_name"]
     pd.set_option("display.width", 250, "display.max_columns", 30)
-    for name, title in (("repro_check.tsv", "out-of-fold scores against the Phase 3 files"),
-                        ("fit_summary.tsv", "final models")):
+    for name, title in (
+        ("repro_check.tsv", "out-of-fold scores against the Phase 3 files"),
+        ("fit_summary.tsv", "final models"),
+    ):
         if (res_dir / name).exists():
             print(f"\n== {title} ==")
             print(pd.read_csv(res_dir / name, sep="\t").to_string(index=False))

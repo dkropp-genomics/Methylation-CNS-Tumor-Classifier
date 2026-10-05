@@ -6,6 +6,7 @@ Fits on the outer-fold-0 TRAINING samples, transforms that fold's test
 samples, and reports counts, timing and memory. No model is trained and no
 score is computed. Touches GSE90496 only.
 """
+
 import resource
 import time
 
@@ -14,9 +15,11 @@ import numpy as np
 from methylclf.data import BetaStore
 from methylclf.features import FeaturePipeline
 
-st = BetaStore.open("data/betas/zarr/GSE90496.zarr",
-                    "results/splits/folds_seed42_qc.tsv",
-                    "results/probes/probes_kept.tsv")
+st = BetaStore.open(
+    "data/betas/zarr/GSE90496.zarr",
+    "results/splits/folds_seed42_qc.tsv",
+    "results/probes/probes_kept.tsv",
+)
 s = st.samples
 is_train = (s["outer_fold"].astype(int) != 0).to_numpy()
 ids, y, mat = (s[c].to_numpy() for c in ("geo_accession", "mc_class", "material"))
@@ -40,11 +43,17 @@ for on in (False, True):
     if on:
         d = pipe.correct_.shift_
         a = np.abs(d)
-        print(f"  classes with both materials used: {len(pipe.correct_.classes_used_)} of "
-              f"{len(set(y[is_train]))}")
-        print(f"  FFPE - frozen shift per probe: median {np.median(d):+.4f}, "
-              f"median |shift| {np.median(a):.4f}, 99th pct |shift| {np.percentile(a, 99):.4f}, "
-              f"max |shift| {a.max():.4f}")
-        print(f"  probes with |shift| > 0.05: {int((a > 0.05).sum())}; > 0.10: {int((a > 0.10).sum())}")
+        print(
+            f"  classes with both materials used: {len(pipe.correct_.classes_used_)} of "
+            f"{len(set(y[is_train]))}"
+        )
+        print(
+            f"  FFPE - frozen shift per probe: median {np.median(d):+.4f}, "
+            f"median |shift| {np.median(a):.4f}, 99th pct |shift| {np.percentile(a, 99):.4f}, "
+            f"max |shift| {a.max():.4f}"
+        )
+        print(
+            f"  probes with |shift| > 0.05: {int((a > 0.05).sum())}; > 0.10: {int((a > 0.10).sum())}"
+        )
 print(f"\nselected probes shared by OFF and ON: {len(selected[False] & selected[True])} of 10000")
 print(f"peak memory: {resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6:.1f} GB")

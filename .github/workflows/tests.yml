@@ -1,0 +1,41 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pre-commit
+      - run: pre-commit run --all-files --show-diff-on-failure
+
+  tests:
+    # Every test runs on synthetic data: no arrays are downloaded here.
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python environment (the one every result was produced with)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+      - name: R for the two tests that call Rscript (mock mode; SeSAMe and minfi are not needed)
+        run: |
+          micromamba create -y -n methyl-r -c conda-forge -c bioconda r-base=4.4 r-arrow bioconductor-biocparallel
+          echo "RSCRIPT=$(micromamba run -n methyl-r which Rscript)" >> "$GITHUB_ENV"
+      - name: Install the project package
+        run: python -m pip install --no-deps -e .
+      - name: Tests
+        run: python -m pytest tests/ -q --tb=short

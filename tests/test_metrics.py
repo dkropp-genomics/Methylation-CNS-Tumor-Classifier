@@ -11,7 +11,12 @@ from sklearn.metrics import balanced_accuracy_score, f1_score
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from methylclf.metrics import (  # noqa: E402
-    confusion_table, reliability_table, score, summarize, to_family)
+    confusion_table,
+    reliability_table,
+    score,
+    summarize,
+    to_family,
+)
 
 CLASSES = ["A", "B", "C"]
 
@@ -50,8 +55,8 @@ def test_by_hand():
     assert np.isclose(s["macro_f1"], (0.75 + 0.8 + 2 / 3) / 3)
     assert np.isclose(s["balanced_accuracy"], (0.75 + 1.0 + 0.5) / 3)
     assert np.isclose(s["accuracy"], 6 / 8)
-    assert np.isclose(s["brier"], 2 * 2 / 8)        # each wrong one-hot row costs 2
-    assert np.isclose(s["ece"], 2 / 8)              # confidence 1.0, accuracy 0.75
+    assert np.isclose(s["brier"], 2 * 2 / 8)  # each wrong one-hot row costs 2
+    assert np.isclose(s["ece"], 2 / 8)  # confidence 1.0, accuracy 0.75
     assert s["confident_share"] == 1.0 and np.isclose(s["confident_accuracy"], 0.75)
     cm = confusion_table(y, p, CLASSES)
     assert cm.loc["A"].tolist() == [3, 1, 0] and cm.loc["C"].tolist() == [1, 0, 1]
@@ -70,7 +75,7 @@ def test_classes_absent_from_y_true_are_left_out_of_macro_averages():
     y = list("AAABBB")
     p = onehot([0, 0, 2, 1, 1, 1])
     s = score(y, p, CLASSES)
-    assert np.isclose(s["macro_f1"], (0.8 + 1.0) / 2)       # over A and B only
+    assert np.isclose(s["macro_f1"], (0.8 + 1.0) / 2)  # over A and B only
     assert np.isclose(s["balanced_accuracy"], (2 / 3 + 1.0) / 2)
 
 
@@ -80,7 +85,7 @@ def test_brier_and_ece_by_hand():
     s = score(y, p, ["A", "B"])
     # Brier: three right at .8 -> .08 each; one wrong at .8 -> 1.28
     assert np.isclose(s["brier"], (3 * 0.08 + 1.28) / 4)
-    assert np.isclose(s["ece"], abs(0.75 - 0.8))            # all four in one bin
+    assert np.isclose(s["ece"], abs(0.75 - 0.8))  # all four in one bin
     assert s["confident_share"] == 0.0 and np.isnan(s["confident_accuracy"])
     r = reliability_table(y, p, ["A", "B"])
     assert r["n"].sum() == 4 and r.loc[r["n"] > 0, "accuracy"].iloc[0] == 0.75
@@ -90,11 +95,11 @@ def test_well_calibrated_scores_have_low_ece_and_overconfident_ones_do_not():
     rng = np.random.default_rng(1)
     n = 20000
     conf = rng.uniform(0.5, 1.0, n)
-    right = rng.random(n) < conf                             # correct with probability = conf
+    right = rng.random(n) < conf  # correct with probability = conf
     y = ["A"] * n
     p = np.column_stack([np.where(right, conf, 1 - conf), np.where(right, 1 - conf, conf)])
     assert score(y, p, ["A", "B"])["ece"] < 0.02
-    sharp = np.where(p > 0.5, 0.99, 0.01)                    # same decisions, inflated scores
+    sharp = np.where(p > 0.5, 0.99, 0.01)  # same decisions, inflated scores
     assert score(y, sharp, ["A", "B"])["ece"] > 0.15
 
 
@@ -123,8 +128,15 @@ def test_bootstrap_interval_contains_the_value_is_repeatable_and_narrows_with_n(
     b = summarize(y, p, classes, n_boot=300, seed=7)
     assert a.equals(b)
     assert ((a.ci_low <= a.value) & (a.value <= a.ci_high)).all()
-    assert list(a.metric) == ["macro_f1", "balanced_accuracy", "accuracy", "brier", "ece",
-                              "confident_share", "confident_accuracy"]
+    assert list(a.metric) == [
+        "macro_f1",
+        "balanced_accuracy",
+        "accuracy",
+        "brier",
+        "ece",
+        "confident_share",
+        "confident_accuracy",
+    ]
     width = lambda t: (t.ci_high - t.ci_low)[t.metric == "accuracy"].iloc[0]
     y2, p2, _ = random_case(n=3000)
     assert width(summarize(y2, p2, classes, n_boot=300)) < width(a) / 2

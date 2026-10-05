@@ -1,6 +1,7 @@
 """GEO sometimes refuses a request for a moment and answers the next one.
 Both download scripts must wait that out, and must still fail fast on a real
 error. A local server stands in for GEO: it refuses the first few requests."""
+
 import gzip
 import http.server
 import os
@@ -14,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import parse_geo_metadata as pgm  # noqa: E402
 
-BODY = gzip.compress(b"!Series_title\t\"x\"\n" * 50)
+BODY = gzip.compress(b'!Series_title\t"x"\n' * 50)
 
 
 def serve(refusals, status=403):
@@ -91,7 +92,7 @@ def test_python_download_gives_up_after_the_allowed_refusals():
                 assert "could not download" in str(e)
             else:
                 raise AssertionError("expected a stop")
-            assert state["seen"] == 4 + 3            # the waits, then the 3 ordinary tries
+            assert state["seen"] == 4 + 3  # the waits, then the 3 ordinary tries
     finally:
         restore(old)
         server.shutdown()
@@ -99,7 +100,7 @@ def test_python_download_gives_up_after_the_allowed_refusals():
 
 def test_python_download_does_not_wait_on_a_missing_file():
     server, url, state = serve(refusals=0)
-    old = with_env(GEO_RETRY_WAIT="60", GEO_REFUSAL_TRIES="20")   # would take 20 minutes
+    old = with_env(GEO_RETRY_WAIT="60", GEO_REFUSAL_TRIES="20")  # would take 20 minutes
     try:
         with tempfile.TemporaryDirectory() as tmp:
             try:
@@ -108,7 +109,7 @@ def test_python_download_does_not_wait_on_a_missing_file():
                 pass
             else:
                 raise AssertionError("expected a stop")
-            assert state["seen"] == 3                # the 3 ordinary tries, no waiting
+            assert state["seen"] == 3  # the 3 ordinary tries, no waiting
     finally:
         restore(old)
         server.shutdown()
@@ -118,13 +119,28 @@ def test_python_download_does_not_wait_on_a_missing_file():
 def remote_bytes(url, tries="5"):
     script = (ROOT / "scripts" / "download_idats.sh").read_text()
     start = script.index("remote_bytes() {")
-    function = script[start:script.index("\n}\n", start) + 3]
-    env = dict(os.environ, GEO_REFUSAL_TRIES=tries, GEO_RETRY_WAIT="0",
-               no_proxy="127.0.0.1", NO_PROXY="127.0.0.1")
+    function = script[start : script.index("\n}\n", start) + 3]
+    env = dict(
+        os.environ,
+        GEO_REFUSAL_TRIES=tries,
+        GEO_RETRY_WAIT="0",
+        no_proxy="127.0.0.1",
+        NO_PROXY="127.0.0.1",
+    )
     return subprocess.run(
-        ["bash", "-c", 'set -Eeuo pipefail; log() { printf "%s\\n" "$*"; }\n'
-         + function + '\nremote_bytes "$1"', "_", url],
-        capture_output=True, text=True, env=env)
+        [
+            "bash",
+            "-c",
+            'set -Eeuo pipefail; log() { printf "%s\\n" "$*"; }\n'
+            + function
+            + '\nremote_bytes "$1"',
+            "_",
+            url,
+        ],
+        capture_output=True,
+        text=True,
+        env=env,
+    )
 
 
 def test_shell_size_check_waits_out_refusals():
@@ -132,7 +148,7 @@ def test_shell_size_check_waits_out_refusals():
     try:
         r = remote_bytes(f"{url}/file")
         assert r.returncode == 0, r.stderr
-        assert r.stdout.strip() == str(len(BODY))         # only the size on stdout
+        assert r.stdout.strip() == str(len(BODY))  # only the size on stdout
         assert "GEO answered 403" in r.stderr and state["seen"] == 3
     finally:
         server.shutdown()
@@ -148,7 +164,7 @@ def test_shell_size_check_gives_up_and_fails_fast_on_a_missing_file():
     server, url, state = serve(refusals=0)
     try:
         r = remote_bytes(f"{url}/missing", tries="20")
-        assert r.returncode != 0 and state["seen"] == 1    # no waiting on a 404
+        assert r.returncode != 0 and state["seen"] == 1  # no waiting on a 404
     finally:
         server.shutdown()
 

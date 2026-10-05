@@ -4,6 +4,7 @@
 For every pilot sample: same probe order, same NaN positions, same values.
 Exits with an error unless every sample matches exactly.
 """
+
 import glob
 import sys
 
@@ -35,8 +36,10 @@ for gse in ("GSE90496", "GSE109379"):
             max_diff = float(np.abs(a[both] - b[both]).max())
             rows.append((gse, gsm, int(row_of[gsm]), int(np.isnan(b).sum()), same_nan, max_diff))
 
-out = pd.DataFrame(rows, columns=["cohort", "geo_accession", "zarr_row", "n_nan",
-                                  "nan_positions_match", "max_abs_diff"])
+out = pd.DataFrame(
+    rows,
+    columns=["cohort", "geo_accession", "zarr_row", "n_nan", "nan_positions_match", "max_abs_diff"],
+)
 out.to_csv("results/qc/store_vs_pilot.tsv", sep="\t", index=False)
 print(out.to_string(index=False))
 ok = out["nan_positions_match"].all() and (out["max_abs_diff"] == 0).all()

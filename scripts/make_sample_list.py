@@ -8,6 +8,7 @@ stores are checked against the same two tables, so the order is fixed here once.
 
   python scripts/make_sample_list.py
 """
+
 from __future__ import annotations
 
 import argparse
@@ -39,8 +40,11 @@ def build(parts) -> pd.DataFrame:
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--reference", default="results/splits/folds_seed42.tsv",
-                    help="pre-QC fold table of GSE90496 (all 2,801 arrays)")
+    ap.add_argument(
+        "--reference",
+        default="results/splits/folds_seed42.tsv",
+        help="pre-QC fold table of GSE90496 (all 2,801 arrays)",
+    )
     ap.add_argument("--external", default="results/meta/GSE109379_labels.tsv")
     ap.add_argument("--out", default="data/meta/all_samples.tsv")
     args = ap.parse_args(argv)
@@ -52,8 +56,10 @@ def main(argv=None):
     out = build(parts)
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(args.out, sep="\t", index=False)
-    print(f"wrote {args.out}: {len(out)} arrays "
-          f"({out['cohort'].value_counts(sort=False).to_dict()})")
+    print(
+        f"wrote {args.out}: {len(out)} arrays "
+        f"({out['cohort'].value_counts(sort=False).to_dict()})"
+    )
 
 
 if __name__ == "__main__":

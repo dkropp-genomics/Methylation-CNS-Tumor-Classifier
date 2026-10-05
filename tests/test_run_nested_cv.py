@@ -2,6 +2,7 @@
 
 Run with pytest, or directly:  python tests/test_run_nested_cv.py
 """
+
 import copy
 import importlib.util
 import tempfile
@@ -15,13 +16,20 @@ from methylclf.features import FeaturePipeline
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
-    "run_nested_cv", ROOT / "scripts" / "run_nested_cv.py")
+    "run_nested_cv", ROOT / "scripts" / "run_nested_cv.py"
+)
 cv = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cv)
 
-CFG = {"run_name": "t", "model": "rf", "seed": 1, "n_jobs": 1, "select_by": "macro_f1",
-       "features": {"n_probes": [10, 40], "correct_material": [False, True]},
-       "model_params": {"n_estimators": [15], "max_features": ["sqrt"]}}
+CFG = {
+    "run_name": "t",
+    "model": "rf",
+    "seed": 1,
+    "n_jobs": 1,
+    "select_by": "macro_f1",
+    "features": {"n_probes": [10, 40], "correct_material": [False, True]},
+    "model_params": {"n_estimators": [15], "max_features": ["sqrt"]},
+}
 N_SETTINGS = 4
 
 
@@ -35,17 +43,25 @@ def make_data(seed=0, n_classes=6, per=30, p=120):
     X[mat == "FFPE", :20] += 0.05
     X = np.clip(X, 0, 1).astype(np.float32)
     X[rng.random((n, p)) < 0.01] = np.nan
-    X[:, -1] = np.nan                       # a probe missing everywhere
-    s = pd.DataFrame({"geo_accession": [f"GSM{i:04d}" for i in range(n)],
-                      "mc_class": y, "material": mat, "outer_fold": "-1"})
+    X[:, -1] = np.nan  # a probe missing everywhere
+    s = pd.DataFrame(
+        {
+            "geo_accession": [f"GSM{i:04d}" for i in range(n)],
+            "mc_class": y,
+            "material": mat,
+            "outer_fold": "-1",
+        }
+    )
     outer = np.empty(n, dtype=int)
     for k, (_, te) in enumerate(StratifiedKFold(5, shuffle=True, random_state=1).split(X, y)):
         outer[te] = k
-    s["outer_fold"] = outer.astype(str)     # fold columns are strings, as in BetaStore
+    s["outer_fold"] = outer.astype(str)  # fold columns are strings, as in BetaStore
     for k in range(5):
         col = np.full(n, -1)
         tr = np.flatnonzero(outer != k)
-        for j, (_, te) in enumerate(StratifiedKFold(3, shuffle=True, random_state=k).split(tr, y[tr])):
+        for j, (_, te) in enumerate(
+            StratifiedKFold(3, shuffle=True, random_state=k).split(tr, y[tr])
+        ):
             col[tr[te]] = j
         s[f"inner_fold_o{k}"] = col.astype(str)
     return X, s
@@ -53,9 +69,11 @@ def make_data(seed=0, n_classes=6, per=30, p=120):
 
 class Loader:
     """Fake BetaStore.load that records every sample ID it was asked for."""
+
     def __init__(self, X, samples):
         self.X, self.row = X, {g: i for i, g in enumerate(samples["geo_accession"])}
         self.calls = []
+
     def __call__(self, ids):
         self.calls.append(list(ids))
         return self.X[[self.row[i] for i in ids]].copy()
@@ -79,9 +97,14 @@ def expect_stop(fn, text):
 def test_settings_grid():
     t = cv.expand_settings(CFG)
     assert list(t["setting"]) == ["s000", "s001", "s002", "s003"]
-    assert sorted(set(zip(t["n_probes"], t["correct_material"]))) == \
-        [(10, False), (10, True), (40, False), (40, True)]
-    bad = copy.deepcopy(CFG); bad["select_by"] = "auc"
+    assert sorted(set(zip(t["n_probes"], t["correct_material"]))) == [
+        (10, False),
+        (10, True),
+        (40, False),
+        (40, True),
+    ]
+    bad = copy.deepcopy(CFG)
+    bad["select_by"] = "auc"
     expect_stop(lambda: cv.expand_settings(bad), "select_by")
 
 
@@ -90,7 +113,7 @@ def test_inner_stage_never_loads_the_outer_test_fold():
     with tempfile.TemporaryDirectory() as d:
         n, load = go("inner", d, X, s)
         assert n == 5 * 3 * N_SETTINGS
-        assert len(load.calls) == 5                       # one load per outer fold
+        assert len(load.calls) == 5  # one load per outer fold
         for k, ids in enumerate(load.calls):
             test_ids = set(s.loc[s["outer_fold"] == str(k), "geo_accession"])
             assert not (set(ids) & test_ids)
@@ -111,14 +134,14 @@ def test_resume_skips_finished_fits_and_redoes_a_missing_one():
     with tempfile.TemporaryDirectory() as d:
         go("inner", d, X, s, outer_folds=[0, 1])
         n, load = go("inner", d, X, s, outer_folds=[0, 1])
-        assert n == 0 and load.calls == []                # nothing loaded, nothing fit
+        assert n == 0 and load.calls == []  # nothing loaded, nothing fit
         target = Path(d) / "pred" / "t" / "o1_i2_s001.npz"
         before = cv.load_pred(target)[0]
         target.unlink()
         n, load = go("inner", d, X, s, outer_folds=[0, 1])
         assert n == 1 and len(load.calls) == 1
-        assert np.array_equal(before, cv.load_pred(target)[0])   # same seed, same answer
-        n, _ = go("inner", d, X, s)                       # the remaining three outer folds
+        assert np.array_equal(before, cv.load_pred(target)[0])  # same seed, same answer
+        n, _ = go("inner", d, X, s)  # the remaining three outer folds
         assert n == 3 * 3 * N_SETTINGS
 
 
@@ -126,9 +149,11 @@ def test_changed_config_or_folds_is_refused():
     X, s = make_data()
     with tempfile.TemporaryDirectory() as d:
         go("inner", d, X, s, outer_folds=[0])
-        other = copy.deepcopy(CFG); other["model_params"]["n_estimators"] = [16]
+        other = copy.deepcopy(CFG)
+        other["model_params"]["n_estimators"] = [16]
         expect_stop(lambda: go("inner", d, X, s, cfg=other, outer_folds=[0]), "different settings")
-        s2 = s.copy(); s2.loc[0, "material"] = "Frozen"
+        s2 = s.copy()
+        s2.loc[0, "material"] = "Frozen"
         expect_stop(lambda: go("inner", d, X, s2, outer_folds=[0]), "different settings")
 
 
@@ -139,7 +164,7 @@ def test_select_needs_all_fits_then_picks_the_best_per_outer_fold():
         expect_stop(lambda: go("select", d, X, s), "missing")
         go("inner", d, X, s)
         (scores, mean, best), load = go("select", d, X, s)
-        assert load.calls == []                           # select reads no betas
+        assert load.calls == []  # select reads no betas
         assert len(scores) == 60 and len(mean) == 20 and len(best) == 5
         assert scores["accuracy"].between(0, 1).all() and scores["accuracy"].mean() > 0.8
         for k in range(5):
@@ -176,7 +201,9 @@ def test_a_training_set_without_every_class_stops():
     s = s.copy()
     lone = s.index[(s["mc_class"] == "K5")]
     s.loc[lone, "inner_fold_o0"] = np.where(s.loc[lone, "outer_fold"] == "0", "-1", "0")
-    with tempfile.TemporaryDirectory() as d:   # all K5 in inner fold 0 -> absent from its training set
+    with (
+        tempfile.TemporaryDirectory() as d
+    ):  # all K5 in inner fold 0 -> absent from its training set
         expect_stop(lambda: go("inner", d, X, s, outer_folds=[0]), "classes")
 
 

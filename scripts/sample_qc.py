@@ -16,6 +16,7 @@ Usage:
   python scripts/sample_qc.py summarize
   python scripts/sample_qc.py apply
 """
+
 import argparse
 import sys
 from pathlib import Path
@@ -63,8 +64,10 @@ def summarize(args):
     q = read_qc(qc_path)
     cohorts = sorted(q["cohort"].unique())
     if cohorts != [TRAIN]:
-        die(f"{qc_path}: expected only cohort {TRAIN}, found {cohorts}. "
-            "The threshold must be chosen from training samples only.")
+        die(
+            f"{qc_path}: expected only cohort {TRAIN}, found {cohorts}. "
+            "The threshold must be chosen from training samples only."
+        )
 
     out_dir = Path(args.out_dir)
     (out_dir / "figures").mkdir(parents=True, exist_ok=True)
@@ -73,10 +76,12 @@ def summarize(args):
 
     # How many samples fall below each candidate cut.
     grid = np.round(np.arange(0.30, 0.9501, 0.05), 2)
-    tab = pd.DataFrame({
-        "threshold": grid,
-        "n_below": [(fd < t).sum() for t in grid],
-    })
+    tab = pd.DataFrame(
+        {
+            "threshold": grid,
+            "n_below": [(fd < t).sum() for t in grid],
+        }
+    )
     tab["pct_below"] = (100 * tab["n_below"] / n).round(2)
     grid_path = out_dir / f"{TRAIN}_qc_grid.tsv"
     tab.to_csv(grid_path, sep="\t", index=False)
@@ -88,22 +93,27 @@ def summarize(args):
     low = np.sort(fd)[: min(60, n)]
     print("\nLowest frac_detected values, sorted (look for a gap):")
     for i in range(0, len(low), 10):
-        print("  " + "  ".join(f"{v:.3f}" for v in low[i:i + 10]))
+        print("  " + "  ".join(f"{v:.3f}" for v in low[i : i + 10]))
 
     # Do the other metrics flag the same samples or different ones?
-    print("\nAmong samples below each cut, medians of the other metrics "
-          "(all-sample medians: "
-          f"bisulfite_gct {q['bisulfite_gct'].median():.2f}, "
-          f"mean_intensity {q['mean_intensity'].median():.0f}):")
+    print(
+        "\nAmong samples below each cut, medians of the other metrics "
+        "(all-sample medians: "
+        f"bisulfite_gct {q['bisulfite_gct'].median():.2f}, "
+        f"mean_intensity {q['mean_intensity'].median():.0f}):"
+    )
     for t in (0.5, 0.6, 0.7, 0.8, 0.9):
         sub = q[q["frac_detected"] < t]
         if len(sub):
-            print(f"  < {t}: n={len(sub):4d}  bisulfite_gct "
-                  f"{sub['bisulfite_gct'].median():.2f}  mean_intensity "
-                  f"{sub['mean_intensity'].median():.0f}")
+            print(
+                f"  < {t}: n={len(sub):4d}  bisulfite_gct "
+                f"{sub['bisulfite_gct'].median():.2f}  mean_intensity "
+                f"{sub['mean_intensity'].median():.0f}"
+            )
 
     # Histograms. Log counts so a thin tail is visible.
     import matplotlib
+
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
@@ -113,8 +123,7 @@ def summarize(args):
         ax.set_yscale("log")
         ax.set_xlabel(m)
         ax.set_ylabel("samples (log scale)")
-    axes[3].scatter(q["mean_intensity"], q["frac_detected"], s=4,
-                    alpha=0.4, color="#4477aa")
+    axes[3].scatter(q["mean_intensity"], q["frac_detected"], s=4, alpha=0.4, color="#4477aa")
     axes[3].set_xlabel("mean_intensity")
     axes[3].set_ylabel("frac_detected")
     fig.suptitle(f"{TRAIN} sample QC (n={n}), pooled, no labels")
@@ -132,8 +141,7 @@ def read_config(path):
 
     path = Path(path)
     if not path.exists():
-        die(f"threshold file not found: {path}. Write and commit it before "
-            "running 'apply'.")
+        die(f"threshold file not found: {path}. Write and commit it before " "running 'apply'.")
     cfg = yaml.safe_load(path.read_text()) or {}
     missing = [k for k in CONFIG_KEYS if not cfg.get(k) and cfg.get(k) != 0]
     if missing:
@@ -161,11 +169,17 @@ def join_labels(q, table_path, cohort):
     a, b = set(q["geo_accession"]), set(t["geo_accession"])
     if a != b:
         example = sorted(a ^ b)[0]
-        die(f"{cohort}: QC table and {table_path} do not hold the same "
+        die(
+            f"{cohort}: QC table and {table_path} do not hold the same "
             f"samples ({len(a - b)} only in QC, {len(b - a)} only in table; "
-            f"e.g. {example})")
-    return q.merge(t[["geo_accession", "mc_class", "material"]],
-                   on="geo_accession", how="left", validate="one_to_one")
+            f"e.g. {example})"
+        )
+    return q.merge(
+        t[["geo_accession", "mc_class", "material"]],
+        on="geo_accession",
+        how="left",
+        validate="one_to_one",
+    )
 
 
 def apply(args):
@@ -173,8 +187,7 @@ def apply(args):
     cut = cfg["min_value"]
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    print(f"Threshold: keep samples with frac_detected >= {cut} "
-          f"(decided {cfg['decided_on']})")
+    print(f"Threshold: keep samples with frac_detected >= {cut} " f"(decided {cfg['decided_on']})")
 
     small = None
     for cohort, table in ((TRAIN, args.folds), (VALID, args.labels)):
@@ -182,12 +195,13 @@ def apply(args):
         q = join_labels(q, table, cohort)
         q["keep"] = q["frac_detected"] >= cut
         n, n_drop = len(q), int((~q["keep"]).sum())
-        print(f"\n{cohort}: {n} samples, {n_drop} dropped "
-              f"({100 * n_drop / n:.1f}%), {n - n_drop} kept")
+        print(
+            f"\n{cohort}: {n} samples, {n_drop} dropped "
+            f"({100 * n_drop / n:.1f}%), {n - n_drop} kept"
+        )
 
         status_path = out_dir / f"{cohort}_sample_qc_status.tsv"
-        q[["geo_accession", "frac_detected", "keep"]].to_csv(
-            status_path, sep="\t", index=False)
+        q[["geo_accession", "frac_detected", "keep"]].to_csv(status_path, sep="\t", index=False)
 
         mat = q.groupby("material")["keep"].agg(n="size", kept="sum")
         mat["dropped"] = mat["n"] - mat["kept"]
@@ -200,19 +214,25 @@ def apply(args):
         cls = cls.sort_values(["n_after", "n_before"]).reset_index()
         impact_path = out_dir / f"{cohort}_qc_class_impact.tsv"
         cls.to_csv(impact_path, sep="\t", index=False)
-        print(f"Classes losing at least one sample: "
-              f"{(cls['n_dropped'] > 0).sum()} of {len(cls)}; "
-              f"smallest class after QC: {cls['n_after'].min()}")
+        print(
+            f"Classes losing at least one sample: "
+            f"{(cls['n_dropped'] > 0).sum()} of {len(cls)}; "
+            f"smallest class after QC: {cls['n_after'].min()}"
+        )
         print(f"Wrote {status_path}\nWrote {impact_path}")
         if cohort == TRAIN:
             small = cls[cls["n_after"] < MIN_CLASS_SIZE]
 
     if len(small):
-        print(f"\nWARNING: {len(small)} training class(es) fall below "
-              f"{MIN_CLASS_SIZE} samples, too few for 5 outer folds:")
+        print(
+            f"\nWARNING: {len(small)} training class(es) fall below "
+            f"{MIN_CLASS_SIZE} samples, too few for 5 outer folds:"
+        )
         print(small.to_string(index=False))
-        print("Do not change the threshold in response. Decide how to handle "
-              "these classes and record it.")
+        print(
+            "Do not change the threshold in response. Decide how to handle "
+            "these classes and record it."
+        )
 
 
 def main(argv=None):

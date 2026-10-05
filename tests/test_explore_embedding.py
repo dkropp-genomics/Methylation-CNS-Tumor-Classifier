@@ -2,6 +2,7 @@
 
 Run with `python -m pytest tests/test_explore_embedding.py` or directly.
 """
+
 import subprocess
 import sys
 import tempfile
@@ -31,9 +32,9 @@ def make_inputs(root, poison=False, seed=0):
     x[cls == "B", :50] += 0.3
     x[cls == "C", 50:100] += 0.3
     x[mat == "Frozen", 100:150] += 0.1
-    x[rng.random(x.shape) < 0.01] = np.nan        # scattered missing values
-    x[:, 370] = np.nan                            # an all-NaN kept probe
-    x[::2, 371] = np.nan                          # 50% missing: must be skipped
+    x[rng.random(x.shape) < 0.01] = np.nan  # scattered missing values
+    x[:, 370] = np.nan  # an all-NaN kept probe
+    x[::2, 371] = np.nan  # 50% missing: must be skipped
     dropped = np.arange(5)
     if poison:
         x[dropped] = 50.0
@@ -45,21 +46,43 @@ def make_inputs(root, poison=False, seed=0):
     a[:] = x
 
     keep = np.setdiff1d(np.arange(N_SAMPLES), dropped)
-    pd.DataFrame({
-        "geo_accession": [f"GSM{i}" for i in keep], "zarr_row": keep,
-        "mc_class": cls[keep], "mc_family": cls[keep], "material": mat[keep],
-    }).sample(frac=1, random_state=1).to_csv(root / "folds.tsv", sep="\t", index=False)
-    pd.DataFrame({"col": range(380), "Probe_ID": [f"cg{i:04d}" for i in range(380)]}
-                 ).to_csv(root / "probes.tsv", sep="\t", index=False)
+    pd.DataFrame(
+        {
+            "geo_accession": [f"GSM{i}" for i in keep],
+            "zarr_row": keep,
+            "mc_class": cls[keep],
+            "mc_family": cls[keep],
+            "material": mat[keep],
+        }
+    ).sample(frac=1, random_state=1).to_csv(root / "folds.tsv", sep="\t", index=False)
+    pd.DataFrame({"col": range(380), "Probe_ID": [f"cg{i:04d}" for i in range(380)]}).to_csv(
+        root / "probes.tsv", sep="\t", index=False
+    )
     return root
 
 
 def run(root, *extra):
     return subprocess.run(
-        [sys.executable, str(SCRIPT), "--store", str(root / "store.zarr"),
-         "--folds", str(root / "folds.tsv"), "--probes", str(root / "probes.tsv"),
-         "--out-dir", str(root / "out"), "--n-probes", "200", "--n-pcs", "10", *extra],
-        capture_output=True, text=True)
+        [
+            sys.executable,
+            str(SCRIPT),
+            "--store",
+            str(root / "store.zarr"),
+            "--folds",
+            str(root / "folds.tsv"),
+            "--probes",
+            str(root / "probes.tsv"),
+            "--out-dir",
+            str(root / "out"),
+            "--n-probes",
+            "200",
+            "--n-pcs",
+            "10",
+            *extra,
+        ],
+        capture_output=True,
+        text=True,
+    )
 
 
 def test_outputs_and_structure(tmp_path):

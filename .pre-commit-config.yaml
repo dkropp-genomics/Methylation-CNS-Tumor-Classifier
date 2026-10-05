@@ -1,0 +1,21 @@
+# Checks run before each commit, and again by GitHub Actions on every push.
+#   pre-commit install            (once, to enable them locally)
+#   pre-commit run --all-files    (to run them by hand)
+# Committed results and data are left alone: their bytes are the record.
+exclude: ^(results/|data/|logs/)
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.10
+    hooks:
+      - id: ruff            # real errors only: see [tool.ruff.lint] in pyproject.toml
+        args: [--fix]
+  - repo: https://github.com/psf/black
+    rev: 26.10.0
+    hooks:
+      - id: black
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-added-large-files
+        args: [--maxkb=8000]

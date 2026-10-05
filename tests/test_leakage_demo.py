@@ -20,7 +20,7 @@ def noise(n=120, p=3000, n_classes=4, seed=0):
     X = rng.uniform(0, 1, (n, p)).astype(np.float32)
     X[rng.random((n, p)) < 0.01] = np.nan
     y = np.array([f"class{i % n_classes}" for i in range(n)], dtype=object)
-    fold = (np.arange(n) // n_classes) % 3          # every fold has every class
+    fold = (np.arange(n) // n_classes) % 3  # every fold has every class
     return X, y, fold
 
 
@@ -43,15 +43,17 @@ def test_small_noise_case_is_balanced_in_every_fold():
     rows, y, fold = small_noise_case(2000, n=150, n_classes=3, seed=1)
     assert rows.size == 150 and np.unique(rows).size == 150 and rows.max() < 2000
     for f in range(3):
-        assert np.unique(y[fold == f], return_counts=True)[1].tolist() == [17, 17, 16] or \
-            sorted(np.unique(y[fold == f], return_counts=True)[1].tolist()) in ([16, 17, 17], [17, 17, 17], [16, 16, 17], [16, 16, 16])
+        assert np.unique(y[fold == f], return_counts=True)[1].tolist() == [17, 17, 16] or sorted(
+            np.unique(y[fold == f], return_counts=True)[1].tolist()
+        ) in ([16, 17, 17], [17, 17, 17], [16, 16, 17], [16, 16, 16])
 
 
 def test_on_pure_noise_the_leaky_arm_scores_above_chance_and_the_inside_arm_does_not():
     X, y, fold = noise()
-    per_fold, summary = run_demo(X, y, fold, k=20, n_trees=100, n_jobs=1, seed=0,
-                                 log=lambda *_: None)
-    assert len(per_fold) == 3 * 2 * 3               # experiments x arms x folds
+    per_fold, summary = run_demo(
+        X, y, fold, k=20, n_trees=100, n_jobs=1, seed=0, log=lambda *_: None
+    )
+    assert len(per_fold) == 3 * 2 * 3  # experiments x arms x folds
     row = summary.set_index("experiment").loc["F-statistic, real labels"]
     # 4 balanced classes of noise: chance is 0.25
     assert row["accuracy_leaky"] > 0.45, row

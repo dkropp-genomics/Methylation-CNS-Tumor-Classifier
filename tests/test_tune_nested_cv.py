@@ -2,6 +2,7 @@
 
 Run with pytest, or directly:  python tests/test_tune_nested_cv.py
 """
+
 import copy
 import importlib.util
 import sys
@@ -18,22 +19,37 @@ sys.path.insert(0, str(ROOT / "tests"))
 from test_run_nested_cv import Loader, expect_stop, make_data  # noqa: E402
 
 spec = importlib.util.spec_from_file_location(
-    "tune_nested_cv", ROOT / "scripts" / "tune_nested_cv.py")
+    "tune_nested_cv", ROOT / "scripts" / "tune_nested_cv.py"
+)
 tune = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(tune)
 
-CFG = {"run_name": "t", "model": "lgbm", "seed": 3, "n_jobs": 1, "select_by": "macro_f1",
-       "n_trials": 4,
-       "fixed_params": {"class_weight": "balanced", "max_bin": 15, "subsample_freq": 1,
-                        "force_col_wise": True, "deterministic": True, "verbose": -1},
-       "search_space": {"n_probes": {"choice": [10, 40]},
-                        "correct_material": {"choice": [False, True]},
-                        "n_estimators": {"int": [5, 15]},
-                        "learning_rate": {"float": [0.05, 0.3], "log": True},
-                        "num_leaves": {"int": [3, 8]},
-                        "min_child_samples": {"int": [2, 5]},
-                        "colsample_bytree": {"float": [0.3, 1.0]},
-                        "subsample": {"float": [0.6, 1.0]}}}
+CFG = {
+    "run_name": "t",
+    "model": "lgbm",
+    "seed": 3,
+    "n_jobs": 1,
+    "select_by": "macro_f1",
+    "n_trials": 4,
+    "fixed_params": {
+        "class_weight": "balanced",
+        "max_bin": 15,
+        "subsample_freq": 1,
+        "force_col_wise": True,
+        "deterministic": True,
+        "verbose": -1,
+    },
+    "search_space": {
+        "n_probes": {"choice": [10, 40]},
+        "correct_material": {"choice": [False, True]},
+        "n_estimators": {"int": [5, 15]},
+        "learning_rate": {"float": [0.05, 0.3], "log": True},
+        "num_leaves": {"int": [3, 8]},
+        "min_child_samples": {"int": [2, 5]},
+        "colsample_bytree": {"float": [0.3, 1.0]},
+        "subsample": {"float": [0.6, 1.0]},
+    },
+}
 
 
 def go(d, X, s, cfg=CFG, **kw):
@@ -46,7 +62,7 @@ def test_search_never_loads_the_outer_test_fold_and_saves_every_fit():
     X, s = make_data()
     with tempfile.TemporaryDirectory() as d:
         (trials, scores, best, n), load = go(d, X, s, outer_folds=[0, 3])
-        assert best is None                                # partial run: nothing selected
+        assert best is None  # partial run: nothing selected
         assert len(trials) == 8 and len(scores) == 24
         files = list((Path(d) / "pred" / "t").glob("*.npz"))
         assert n == len(files) == 3 * trials.groupby("outer")["setting"].nunique().sum()
@@ -56,8 +72,9 @@ def test_search_never_loads_the_outer_test_fold_and_saves_every_fit():
         assert trials["macro_f1"].between(0, 1).all()
         assert not (Path(d) / "res" / "t" / "selected.tsv").exists()
         # different outer folds get different proposals (seed + fold)
-        assert list(trials.loc[trials.outer == 0, "setting"]) != \
-            list(trials.loc[trials.outer == 3, "setting"])
+        assert list(trials.loc[trials.outer == 0, "setting"]) != list(
+            trials.loc[trials.outer == 3, "setting"]
+        )
 
 
 def test_replay_gives_the_same_trials_without_fitting_or_loading():
@@ -76,8 +93,8 @@ def test_a_short_run_is_a_prefix_of_the_full_run():
         assert len(short) == 2
         (full, _, _, n4), _ = go(d, X, s, outer_folds=[2])
         assert list(full["setting"][:2]) == list(short["setting"])
-        assert n2 + n4 == 3 * full["setting"].nunique()    # nothing was fit twice
-    with tempfile.TemporaryDirectory() as d:               # and equals an uninterrupted run
+        assert n2 + n4 == 3 * full["setting"].nunique()  # nothing was fit twice
+    with tempfile.TemporaryDirectory() as d:  # and equals an uninterrupted run
         (fresh, _, _, _), _ = go(d, X, s, outer_folds=[2])
         assert list(fresh["setting"]) == list(full["setting"])
         assert np.allclose(fresh["macro_f1"], full["macro_f1"])
@@ -106,8 +123,14 @@ def test_complete_search_selects_the_best_trial_per_outer_fold():
             first_best = t.loc[t["macro_f1"] == t["macro_f1"].max(), "trial"].min()
             assert best.loc[best["outer"] == k, "trial"].iloc[0] == first_best
         res = Path(d) / "res" / "t"
-        for f in ("selected.tsv", "settings.tsv", "inner_scores.tsv", "trials_o0.tsv",
-                  "manifest.json", "fits.tsv"):
+        for f in (
+            "selected.tsv",
+            "settings.tsv",
+            "inner_scores.tsv",
+            "trials_o0.tsv",
+            "manifest.json",
+            "fits.tsv",
+        ):
             assert (res / f).exists(), f
         st = pd.read_csv(res / "settings.tsv", sep="\t")
         assert st["setting"].is_unique and set(best["setting"]) <= set(st["setting"])
@@ -123,24 +146,30 @@ def test_final_scoring_works_on_a_finished_search():
         assert tune.cv.run(*args, final_scoring=True) == 5
         for k in range(5):
             setting = best.loc[best["outer"] == k, "setting"].iloc[0]
-            proba, sid, _ = tune.cv.load_pred(tune.cv.pred_path(Path(d) / "pred" / "t", k, None, setting))
+            proba, sid, _ = tune.cv.load_pred(
+                tune.cv.pred_path(Path(d) / "pred" / "t", k, None, setting)
+            )
             assert set(sid) == set(s.loc[s["outer_fold"] == str(k), "geo_accession"])
             assert np.allclose(proba.sum(axis=1), 1, atol=1e-5)
 
 
 def test_bad_or_changed_config_stops():
     X, s = make_data()
-    bad = copy.deepcopy(CFG); del bad["search_space"]["n_probes"]
+    bad = copy.deepcopy(CFG)
+    del bad["search_space"]["n_probes"]
     with tempfile.TemporaryDirectory() as d:
         expect_stop(lambda: go(d, X, s, cfg=bad), "n_probes")
-    bad = copy.deepcopy(CFG); bad["fixed_params"]["num_leaves"] = 5
+    bad = copy.deepcopy(CFG)
+    bad["fixed_params"]["num_leaves"] = 5
     with tempfile.TemporaryDirectory() as d:
         expect_stop(lambda: go(d, X, s, cfg=bad), "both")
     with tempfile.TemporaryDirectory() as d:
         go(d, X, s, outer_folds=[0], max_trials=1)
-        other = copy.deepcopy(CFG); other["search_space"]["num_leaves"]["int"] = [3, 9]
-        expect_stop(lambda: go(d, X, s, cfg=other, outer_folds=[0], max_trials=1),
-                    "different settings")
+        other = copy.deepcopy(CFG)
+        other["search_space"]["num_leaves"]["int"] = [3, 9]
+        expect_stop(
+            lambda: go(d, X, s, cfg=other, outer_folds=[0], max_trials=1), "different settings"
+        )
 
 
 if __name__ == "__main__":

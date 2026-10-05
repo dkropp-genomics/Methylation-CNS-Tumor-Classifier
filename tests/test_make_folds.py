@@ -2,6 +2,7 @@
 
 Run with `python -m pytest tests/test_make_folds.py` or directly with python.
 """
+
 import subprocess
 import sys
 import tempfile
@@ -17,26 +18,43 @@ def make_inputs(root, drop=("GSM1000", "GSM1001")):
     different (reversed) order so zarr_row must come from a real lookup."""
     root = Path(root)
     ids = [f"GSM{1000 + i}" for i in range(120)]
-    pd.DataFrame({
-        "geo_accession": ids,
-        "methylation.class": [f"CLS,  {i // 20}" for i in range(120)],
-        "material": ["FFPE" if i % 3 else "Frozen" for i in range(120)],
-    }).to_csv(root / "meta.tsv", sep="\t", index=False)
-    pd.DataFrame({
-        "geo_accession": ids, "frac_detected": 0.9,
-        "keep": [i not in drop for i in ids],
-    }).to_csv(root / "status.tsv", sep="\t", index=False)
-    pd.DataFrame({
-        "row": range(120), "geo_accession": ids[::-1],
-    }).to_csv(root / "index.tsv", sep="\t", index=False)
+    pd.DataFrame(
+        {
+            "geo_accession": ids,
+            "methylation.class": [f"CLS,  {i // 20}" for i in range(120)],
+            "material": ["FFPE" if i % 3 else "Frozen" for i in range(120)],
+        }
+    ).to_csv(root / "meta.tsv", sep="\t", index=False)
+    pd.DataFrame(
+        {
+            "geo_accession": ids,
+            "frac_detected": 0.9,
+            "keep": [i not in drop for i in ids],
+        }
+    ).to_csv(root / "status.tsv", sep="\t", index=False)
+    pd.DataFrame(
+        {
+            "row": range(120),
+            "geo_accession": ids[::-1],
+        }
+    ).to_csv(root / "index.tsv", sep="\t", index=False)
     return root
 
 
 def run(root, *extra):
     return subprocess.run(
-        [sys.executable, str(SCRIPT), "--meta", str(root / "meta.tsv"),
-         "--outdir", str(root / "out"), *extra],
-        capture_output=True, text=True)
+        [
+            sys.executable,
+            str(SCRIPT),
+            "--meta",
+            str(root / "meta.tsv"),
+            "--outdir",
+            str(root / "out"),
+            *extra,
+        ],
+        capture_output=True,
+        text=True,
+    )
 
 
 def test_plain_run_unchanged(tmp_path):
@@ -51,8 +69,7 @@ def test_plain_run_unchanged(tmp_path):
 
 def test_qc_run_drops_and_maps_rows(tmp_path):
     root = make_inputs(tmp_path)
-    r = run(root, "--qc-status", str(root / "status.tsv"),
-            "--store-index", str(root / "index.tsv"))
+    r = run(root, "--qc-status", str(root / "status.tsv"), "--store-index", str(root / "index.tsv"))
     assert r.returncode == 0, r.stderr
     f = pd.read_csv(root / "out" / "folds_seed42_qc.tsv", sep="\t")
     assert len(f) == 118
@@ -92,10 +109,8 @@ def test_class_too_small_stops(tmp_path):
 def test_missing_from_store_index_stops(tmp_path):
     root = make_inputs(tmp_path)
     ix = pd.read_csv(root / "index.tsv", sep="\t")
-    ix[ix["geo_accession"] != "GSM1050"].to_csv(
-        root / "index.tsv", sep="\t", index=False)
-    r = run(root, "--qc-status", str(root / "status.tsv"),
-            "--store-index", str(root / "index.tsv"))
+    ix[ix["geo_accession"] != "GSM1050"].to_csv(root / "index.tsv", sep="\t", index=False)
+    r = run(root, "--qc-status", str(root / "status.tsv"), "--store-index", str(root / "index.tsv"))
     assert r.returncode != 0 and "GSM1050" in r.stderr
 
 

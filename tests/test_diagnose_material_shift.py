@@ -2,8 +2,8 @@
 
 Run with pytest, or directly:  python tests/test_diagnose_material_shift.py
 """
+
 import importlib.util
-import sys
 import tempfile
 from pathlib import Path
 
@@ -11,19 +11,21 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
-    "diagnose_material_shift", ROOT / "scripts" / "diagnose_material_shift.py")
+    "diagnose_material_shift", ROOT / "scripts" / "diagnose_material_shift.py"
+)
 dms = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(dms)
 
-P = 400          # probes
-COMMON = 0.08    # shift shared by every class on probes 0..49
-ODD = 0.60       # shift present in ONE class only, on probe 399
+P = 400  # probes
+COMMON = 0.08  # shift shared by every class on probes 0..49
+ODD = 0.60  # shift present in ONE class only, on probe 399
 
 
 def make_data(seed=0, n_classes=8, per=(12, 10)):
     """8 classes with both materials, plus one all-FFPE and one 1-frozen class."""
     rng = np.random.default_rng(seed)
     X, y, m = [], [], []
+
     def add(name, n_f, n_z, odd=False):
         base = rng.uniform(0.2, 0.7, P)
         for mat, n in (("FFPE", n_f), ("Frozen", n_z)):
@@ -32,7 +34,10 @@ def make_data(seed=0, n_classes=8, per=(12, 10)):
                 b[:, :50] += COMMON
                 if odd:
                     b[:, 399] += ODD
-            X.append(b); y.extend([name] * n); m.extend([mat] * n)
+            X.append(b)
+            y.extend([name] * n)
+            m.extend([mat] * n)
+
     for i in range(n_classes):
         add(f"C{i}", per[0], per[1], odd=(i == 3))
     add("ALLFFPE", 15, 0)
@@ -61,6 +66,7 @@ def test_only_classes_with_both_materials_are_used():
 
 def test_shift_matches_material_corrector():
     from methylclf.features import MaterialCorrector
+
     X, y, m = make_data()
     classes, D = dms.per_class_differences(X, y, m)
     shift = dms.pooled_shift(D, classes["weight"])
@@ -73,14 +79,13 @@ def test_one_class_probe_is_flagged_and_shared_probes_are_not():
     X, y, m = make_data()
     with tempfile.TemporaryDirectory() as d:
         res = dms.run(X, y, m, PROBES, d, top=60, skip_model=True)
-        for f in ("class_table.tsv", "top_probes.tsv", "top_probes_by_class.tsv",
-                  "summary.tsv"):
+        for f in ("class_table.tsv", "top_probes.tsv", "top_probes_by_class.tsv", "summary.tsv"):
             assert (Path(d) / f).exists(), f
     p = res["probes"].set_index("Probe_ID")
     odd = p.loc["cg00000399"]
     assert odd["top_class"] == "C3"
     assert odd["top_class_share"] > 0.9
-    assert abs(odd["shift"] - ODD / 8) < 0.02          # diluted over 8 classes
+    assert abs(odd["shift"] - ODD / 8) < 0.02  # diluted over 8 classes
     assert abs(odd["shift_without_top_class"]) < 0.02  # gone without C3
     assert odd["n_same_sign_gt_0.05"] == 1
     shared = p.loc[[f"cg{i:08d}" for i in range(50)]]
@@ -110,7 +115,7 @@ def test_material_model_shows_over_and_under_correction():
     X, y, m = make_data(seed=2, n_classes=10, per=(20, 20))
     for i in range(10):  # a different sign pattern per class on probes 100..199
         rows = np.flatnonzero((y == f"C{i}") & (m == "FFPE"))
-        scale = 0.05 + 0.02 * i                 # same direction, different size
+        scale = 0.05 + 0.02 * i  # same direction, different size
         X[np.ix_(rows, np.arange(100, 200))] += np.float32(scale)
     X = np.clip(X, 0, 1)
     t = dms.material_model(X, y, m, [f"C{i}" for i in range(10)], n_probes=P)

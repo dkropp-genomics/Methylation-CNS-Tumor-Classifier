@@ -64,7 +64,7 @@ class MissingnessFilter(TransformerMixin, BaseEstimator):
         n, p = X.shape
         n_missing = np.zeros(p, dtype=np.int64)
         for j in range(0, p, _BLOCK):
-            n_missing[j:j + _BLOCK] = np.isnan(X[:, j:j + _BLOCK]).sum(axis=0)
+            n_missing[j : j + _BLOCK] = np.isnan(X[:, j : j + _BLOCK]).sum(axis=0)
         self.frac_missing_ = n_missing / n
         self.keep_ = np.flatnonzero(self.frac_missing_ <= self.max_missing)
         self.n_features_in_ = p
@@ -95,15 +95,17 @@ class MedianImputer(TransformerMixin, BaseEstimator):
         p = X.shape[1]
         med = np.empty(p, dtype=np.float32)
         for j in range(0, p, _BLOCK):
-            s = np.sort(X[:, j:j + _BLOCK], axis=0)  # NaN sorts to the end
+            s = np.sort(X[:, j : j + _BLOCK], axis=0)  # NaN sorts to the end
             n_obs = (~np.isnan(s)).sum(axis=0)
             if (n_obs == 0).any():
                 bad = j + int(np.flatnonzero(n_obs == 0)[0])
-                _fail(f"MedianImputer.fit: probe column {bad} is missing in every fit "
-                      f"sample; run MissingnessFilter first")
+                _fail(
+                    f"MedianImputer.fit: probe column {bad} is missing in every fit "
+                    f"sample; run MissingnessFilter first"
+                )
             c = np.arange(s.shape[1])
             lo, hi = s[(n_obs - 1) // 2, c], s[n_obs // 2, c]
-            med[j:j + _BLOCK] = (lo.astype(np.float64) + hi) / 2
+            med[j : j + _BLOCK] = (lo.astype(np.float64) + hi) / 2
         self.medians_ = med
         self.n_features_in_ = p
         return self
@@ -113,7 +115,7 @@ class MedianImputer(TransformerMixin, BaseEstimator):
         if self.copy:
             X = X.copy()
         for j in range(0, X.shape[1], _BLOCK):
-            block = X[:, j:j + _BLOCK]  # a view: writing to it writes to X
+            block = X[:, j : j + _BLOCK]  # a view: writing to it writes to X
             r, c = np.nonzero(np.isnan(block))
             block[r, c] = self.medians_[j + c]
         return X
@@ -141,7 +143,7 @@ class TopVarianceSelector(TransformerMixin, BaseEstimator):
             _fail("TopVarianceSelector: need at least 2 samples to compute variance")
         var = np.empty(p, dtype=np.float64)
         for j in range(0, p, _BLOCK):
-            var[j:j + _BLOCK] = X[:, j:j + _BLOCK].var(axis=0, ddof=1, dtype=np.float64)
+            var[j : j + _BLOCK] = X[:, j : j + _BLOCK].var(axis=0, ddof=1, dtype=np.float64)
         if np.isnan(var).any():
             _fail("TopVarianceSelector.fit: NaN in the input; run MedianImputer first")
         order = np.lexsort((np.arange(p), -var))  # by variance (high first), then column
@@ -200,8 +202,10 @@ class MaterialCorrector(TransformerMixin, BaseEstimator):
         material, ffpe = self._is_ffpe(material, n, "MaterialCorrector.fit")
         values = sorted(set(material))
         if len(values) != 2 or self.ffpe_label not in values:
-            _fail(f"MaterialCorrector.fit: expected two materials including "
-                  f"'{self.ffpe_label}', found {values}")
+            _fail(
+                f"MaterialCorrector.fit: expected two materials including "
+                f"'{self.ffpe_label}', found {values}"
+            )
         num = np.zeros(p, dtype=np.float64)
         total_w, used = 0.0, []
         for c in sorted(set(y)):
@@ -214,8 +218,10 @@ class MaterialCorrector(TransformerMixin, BaseEstimator):
             total_w += w
             used.append(c)
         if not used:
-            _fail(f"MaterialCorrector.fit: no class has >= {self.min_per_material} samples "
-                  f"of each material; the shift cannot be estimated")
+            _fail(
+                f"MaterialCorrector.fit: no class has >= {self.min_per_material} samples "
+                f"of each material; the shift cannot be estimated"
+            )
         if np.isnan(num).any():
             _fail("MaterialCorrector.fit: NaN in the input; run MedianImputer first")
         self.shift_ = (num / total_w).astype(np.float32)
@@ -229,13 +235,15 @@ class MaterialCorrector(TransformerMixin, BaseEstimator):
         material, ffpe = self._is_ffpe(material, X.shape[0], "MaterialCorrector.transform")
         unknown = sorted(set(material) - set(self.materials_))
         if unknown:
-            _fail(f"MaterialCorrector.transform: unknown material {unknown}; "
-                  f"fitted on {self.materials_}")
+            _fail(
+                f"MaterialCorrector.transform: unknown material {unknown}; "
+                f"fitted on {self.materials_}"
+            )
         if self.copy:
             X = X.copy()
         rows = np.flatnonzero(ffpe)
         for i in range(0, rows.size, 256):  # in row blocks, to keep temporaries small
-            r = rows[i:i + 256]
+            r = rows[i : i + 256]
             X[r] = np.clip(X[r] - self.shift_, 0.0, 1.0)
         return X
 
@@ -255,8 +263,13 @@ class FeaturePipeline(BaseEstimator):
     Fitted steps: missing_, impute_, correct_ (None when off), select_.
     """
 
-    def __init__(self, n_probes: int = 10000, max_missing: float = 0.05,
-                 correct_material: bool = False, ffpe_label: str = "FFPE"):
+    def __init__(
+        self,
+        n_probes: int = 10000,
+        max_missing: float = 0.05,
+        correct_material: bool = False,
+        ffpe_label: str = "FFPE",
+    ):
         self.n_probes = n_probes
         self.max_missing = max_missing
         self.correct_material = correct_material

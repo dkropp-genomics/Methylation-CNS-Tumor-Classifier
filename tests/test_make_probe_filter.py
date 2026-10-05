@@ -2,6 +2,7 @@
 
 Run with `python -m pytest tests/test_make_probe_filter.py` or directly.
 """
+
 import subprocess
 import sys
 import tempfile
@@ -13,16 +14,16 @@ SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "make_probe_filter.py
 
 # id, chr, on_epic, recommended  -> expected fate
 ROWS = [
-    ("cg01", "chr1", True, False),    # kept
-    ("cg02", "chrX", True, False),    # removed: X
-    ("cg03", "chrY", True, True),     # removed: Y (counted there, not in mask)
-    ("cg04", "chr2", True, True),     # removed: mask
-    ("cg05", "chr3", False, False),   # removed: not on EPIC
-    ("cg06", "chr4", False, True),    # removed: mask (counted before EPIC)
+    ("cg01", "chr1", True, False),  # kept
+    ("cg02", "chrX", True, False),  # removed: X
+    ("cg03", "chrY", True, True),  # removed: Y (counted there, not in mask)
+    ("cg04", "chr2", True, True),  # removed: mask
+    ("cg05", "chr3", False, False),  # removed: not on EPIC
+    ("cg06", "chr4", False, True),  # removed: mask (counted before EPIC)
     ("ch.1.1", "chr5", True, False),  # removed: not CpG
-    ("rs01", "", True, False),        # removed: not CpG
-    ("ctl01", "", False, False),      # removed: not CpG
-    ("cg07", "chr22", True, False),   # kept
+    ("rs01", "", True, False),  # removed: not CpG
+    ("ctl01", "", False, False),  # removed: not CpG
+    ("cg07", "chr22", True, False),  # kept
 ]
 
 
@@ -40,9 +41,19 @@ def make_inputs(root, rows=ROWS):
 
 def run(root):
     return subprocess.run(
-        [sys.executable, str(SCRIPT), "--annotation", str(root / "annot.tsv.gz"),
-         "--probes", str(root / "probes.tsv"), "--out-dir", str(root / "out")],
-        capture_output=True, text=True)
+        [
+            sys.executable,
+            str(SCRIPT),
+            "--annotation",
+            str(root / "annot.tsv.gz"),
+            "--probes",
+            str(root / "probes.tsv"),
+            "--out-dir",
+            str(root / "out"),
+        ],
+        capture_output=True,
+        text=True,
+    )
 
 
 def test_filter_counts_and_kept(tmp_path):
@@ -54,8 +65,12 @@ def test_filter_counts_and_kept(tmp_path):
     assert kept["col"].tolist() == [0, 9]
     s = pd.read_csv(root / "out" / "probe_filter_summary.tsv", sep="\t")
     assert dict(zip(s["step"], s["removed"])) == {
-        "start": 0, "not_cpg_probe": 3, "chrX_chrY": 2,
-        "sesame_recommended_mask": 2, "not_on_epic": 1}
+        "start": 0,
+        "not_cpg_probe": 3,
+        "chrX_chrY": 2,
+        "sesame_recommended_mask": 2,
+        "not_on_epic": 1,
+    }
     assert s["remaining"].iloc[0] == 10 and s["remaining"].iloc[-1] == 2
 
 

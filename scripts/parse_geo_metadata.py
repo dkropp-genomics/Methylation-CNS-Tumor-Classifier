@@ -37,7 +37,6 @@ import csv
 import gzip
 import re
 import sys
-import urllib.request
 from collections import Counter
 from pathlib import Path
 
@@ -61,6 +60,7 @@ def download(url: str, dest: Path, tries: int = 3) -> None:
     import os
     import time
     import urllib.error
+    import urllib.request
 
     refusals_left = int(os.environ.get("GEO_REFUSAL_TRIES", "20"))
     wait = float(os.environ.get("GEO_RETRY_WAIT", "15"))
@@ -81,8 +81,11 @@ def download(url: str, dest: Path, tries: int = 3) -> None:
         except urllib.error.HTTPError as e:
             if e.code in (403, 429, 500, 502, 503, 504) and refusals_left > 0:
                 refusals_left -= 1
-                print(f"  server answered {e.code}; waiting {wait:g} s "
-                      f"({refusals_left} more waits allowed)", file=sys.stderr)
+                print(
+                    f"  server answered {e.code}; waiting {wait:g} s "
+                    f"({refusals_left} more waits allowed)",
+                    file=sys.stderr,
+                )
                 time.sleep(wait)
                 continue
             print(f"  attempt {attempt}/{tries} failed: {e}", file=sys.stderr)
@@ -139,9 +142,11 @@ def parse(rows: list[tuple[str, list[str]]]) -> tuple[list[str], list[dict], dic
             sys.exit(f"ERROR: {key} has {len(vals)} values for {n} samples")
 
     records = [
-        {"geo_accession": ids[i],
-         "title": first.get("!Sample_title", [""] * n)[i],
-         "source": first.get("!Sample_source_name_ch1", [""] * n)[i]}
+        {
+            "geo_accession": ids[i],
+            "title": first.get("!Sample_title", [""] * n)[i],
+            "source": first.get("!Sample_source_name_ch1", [""] * n)[i],
+        }
         for i in range(n)
     ]
     columns = ["geo_accession", "title", "source"]
@@ -166,8 +171,12 @@ def parse(rows: list[tuple[str, list[str]]]) -> tuple[list[str], list[dict], dic
 
     # Other single-valued !Sample_ fields, reported (not stored) so we can
     # see whether a diagnosis hides in e.g. !Sample_description.
-    skip = {"!Sample_geo_accession", "!Sample_title", "!Sample_source_name_ch1",
-            "!Sample_characteristics_ch1"}
+    skip = {
+        "!Sample_geo_accession",
+        "!Sample_title",
+        "!Sample_source_name_ch1",
+        "!Sample_characteristics_ch1",
+    }
     other = {k: v for k, v in first.items() if k not in skip}
     return columns, records, other
 
@@ -180,28 +189,49 @@ def summarize(columns, records, other, top: int = 8) -> list[list[str]]:
         vals = [r[col] for r in records if r.get(col, "")]
         counts = Counter(vals)
         head = "; ".join(f"{v} ({c})" for v, c in counts.most_common(top))
-        out.append([col, "characteristic" if col not in ("geo_accession", "title", "source")
-                    else "core", f"{len(vals)}/{n}", str(len(counts)), head])
+        out.append(
+            [
+                col,
+                "characteristic" if col not in ("geo_accession", "title", "source") else "core",
+                f"{len(vals)}/{n}",
+                str(len(counts)),
+                head,
+            ]
+        )
     for key, vals in other.items():
         counts = Counter(v for v in vals if v)
-        if len(counts) <= 1 and key.startswith(("!Sample_contact", "!Sample_status",
-                                                "!Sample_submission", "!Sample_last_update")):
+        if len(counts) <= 1 and key.startswith(
+            ("!Sample_contact", "!Sample_status", "!Sample_submission", "!Sample_last_update")
+        ):
             continue  # boilerplate identical across samples
         head = "; ".join(f"{v[:60]} ({c})" for v, c in counts.most_common(3))
-        out.append([key, "other (not stored)", f"{sum(counts.values())}/{n}",
-                    str(len(counts)), head])
+        out.append(
+            [key, "other (not stored)", f"{sum(counts.values())}/{n}", str(len(counts)), head]
+        )
     return out
 
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     p.add_argument("accession", help="GEO series, e.g. GSE109379")
-    p.add_argument("--meta-dir", type=Path, default=Path("data/meta"),
-                   help="where the series matrix is kept (default data/meta)")
-    p.add_argument("--outdir", type=Path, default=None,
-                   help="where <GSE>_samples.tsv goes (default: --meta-dir)")
-    p.add_argument("--fields-dir", type=Path, default=Path("results/meta"),
-                   help="where the field summary goes (default results/meta)")
+    p.add_argument(
+        "--meta-dir",
+        type=Path,
+        default=Path("data/meta"),
+        help="where the series matrix is kept (default data/meta)",
+    )
+    p.add_argument(
+        "--outdir",
+        type=Path,
+        default=None,
+        help="where <GSE>_samples.tsv goes (default: --meta-dir)",
+    )
+    p.add_argument(
+        "--fields-dir",
+        type=Path,
+        default=Path("results/meta"),
+        help="where the field summary goes (default results/meta)",
+    )
     p.add_argument("--base-url", default=GEO_BASE_URL, help=argparse.SUPPRESS)
     a = p.parse_args()
 

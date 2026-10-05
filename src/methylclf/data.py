@@ -71,8 +71,9 @@ class BetaStore:
 
     # ------------------------------------------------------------------ open
     @classmethod
-    def open(cls, zarr_path, folds_path, probes_path,
-             sample_index_path=None, probe_index_path=None) -> "BetaStore":
+    def open(
+        cls, zarr_path, folds_path, probes_path, sample_index_path=None, probe_index_path=None
+    ) -> "BetaStore":
         """Open the store and check both lookup tables against its index files.
 
         The index files written by build_zarr.py sit next to the store:
@@ -104,15 +105,19 @@ class BetaStore:
         sidx = _read_tsv(sample_index_path, ["row", "geo_accession"])
         sidx["row"] = _as_int(sidx, "row", sample_index_path)
         if len(sidx) != n_rows or not np.array_equal(sidx["row"], np.arange(n_rows)):
-            _fail(f"{sample_index_path}: expected rows 0..{n_rows - 1} in order, "
-                  f"to match the store's {n_rows} rows")
+            _fail(
+                f"{sample_index_path}: expected rows 0..{n_rows - 1} in order, "
+                f"to match the store's {n_rows} rows"
+            )
         true_row = dict(zip(sidx["geo_accession"], sidx["row"]))
         for gsm, row in zip(folds["geo_accession"], folds["zarr_row"]):
             if gsm not in true_row:
                 _fail(f"{folds_path}: sample {gsm} is not in {sample_index_path}")
             if true_row[gsm] != row:
-                _fail(f"{folds_path}: sample {gsm} has zarr_row {row}, but the store "
-                      f"index says row {true_row[gsm]}")
+                _fail(
+                    f"{folds_path}: sample {gsm} has zarr_row {row}, but the store "
+                    f"index says row {true_row[gsm]}"
+                )
 
         # ---- probes: kept-probe table vs the store's probe index
         probes = _read_tsv(probes_path, ["col", "Probe_ID"])
@@ -122,16 +127,20 @@ class BetaStore:
         pidx = _read_tsv(probe_index_path, ["col", "Probe_ID"])
         pidx["col"] = _as_int(pidx, "col", probe_index_path)
         if len(pidx) != n_cols or not np.array_equal(pidx["col"], np.arange(n_cols)):
-            _fail(f"{probe_index_path}: expected cols 0..{n_cols - 1} in order, "
-                  f"to match the store's {n_cols} columns")
+            _fail(
+                f"{probe_index_path}: expected cols 0..{n_cols - 1} in order, "
+                f"to match the store's {n_cols} columns"
+            )
         if probes["col"].min() < 0 or probes["col"].max() >= n_cols:
             _fail(f"{probes_path}: col outside 0..{n_cols - 1}")
         expected = pidx["Probe_ID"].to_numpy()[probes["col"].to_numpy()]
         bad = np.flatnonzero(expected != probes["Probe_ID"].to_numpy())
         if bad.size:
             i = bad[0]
-            _fail(f"{probes_path}: probe {probes['Probe_ID'].iloc[i]} has col "
-                  f"{probes['col'].iloc[i]}, but the store has {expected[i]} there")
+            _fail(
+                f"{probes_path}: probe {probes['Probe_ID'].iloc[i]} has col "
+                f"{probes['col'].iloc[i]}, but the store has {expected[i]} there"
+            )
 
         return cls(betas, folds.reset_index(drop=True), probes.reset_index(drop=True), stem)
 
@@ -152,8 +161,10 @@ class BetaStore:
             _fail("the same sample ID was requested more than once")
         unknown = [s for s in ids if s not in self._row_of]
         if unknown:
-            _fail(f"{len(unknown)} sample(s) are not in the fold table (failed QC, or "
-                  f"another cohort), first: {unknown[0]}")
+            _fail(
+                f"{len(unknown)} sample(s) are not in the fold table (failed QC, or "
+                f"another cohort), first: {unknown[0]}"
+            )
         return np.array([self._row_of[s] for s in ids], dtype=np.int64)
 
     def _cols(self, probe_ids) -> np.ndarray:
@@ -166,8 +177,9 @@ class BetaStore:
             _fail("the same probe ID was requested more than once")
         unknown = [p for p in ids if p not in self._col_of]
         if unknown:
-            _fail(f"{len(unknown)} probe(s) are not in the kept-probe table, "
-                  f"first: {unknown[0]}")
+            _fail(
+                f"{len(unknown)} probe(s) are not in the kept-probe table, " f"first: {unknown[0]}"
+            )
         return np.array([self._col_of[p] for p in ids], dtype=np.int64)
 
     # --------------------------------------------------------------- reading
@@ -224,10 +236,12 @@ class BetaStore:
             mean = np.where(n > 0, s / n, np.nan)
             var = np.where(n > 1, (ss - n * mean**2) / (n - 1), np.nan)
         ids = self.probe_ids if probe_ids is None else np.array(list(probe_ids))
-        return pd.DataFrame({
-            "Probe_ID": ids,
-            "n_obs": n,
-            "frac_missing": 1.0 - n / rows.size,
-            "mean": mean,
-            "var": np.clip(var, 0.0, None),
-        })
+        return pd.DataFrame(
+            {
+                "Probe_ID": ids,
+                "n_obs": n,
+                "frac_missing": 1.0 - n / rows.size,
+                "mean": mean,
+                "var": np.clip(var, 0.0, None),
+            }
+        )

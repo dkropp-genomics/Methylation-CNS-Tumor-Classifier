@@ -1,6 +1,7 @@
 """Tests for scripts/build_zarr.py on synthetic batch files.
 Run with `python -m pytest tests/` or `python tests/test_build_zarr.py`.
 """
+
 import sys
 import tempfile
 from pathlib import Path
@@ -59,9 +60,9 @@ def test_store_values_and_index_files(tmp_path):
     arr = zarr.open_group(str(store), mode="r")["betas"]
     assert arr.shape == (5, 50) and str(arr.dtype) == "float32"
     x = arr[:]
-    assert np.isnan(x[2]).all()                      # failed sample
+    assert np.isnan(x[2]).all()  # failed sample
     assert np.isnan(x[0, 1]) and np.isnan(x).sum() == 50 + 4
-    assert x[3, 7] == np.float32(0.407)              # GSM4, probe 8
+    assert x[3, 7] == np.float32(0.407)  # GSM4, probe 8
     samples = read_tsv(tmp_path / "zarr" / "C1.samples.tsv")
     assert [s["geo_accession"] for s in samples] == ["GSM1", "GSM2", "GSM3", "GSM4", "GSM5"]
     assert [s["row"] for s in samples] == list("01234")

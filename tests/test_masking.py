@@ -1,4 +1,5 @@
 """Tests for methylclf.masking. Run with pytest, or: python tests/test_masking.py"""
+
 import numpy as np
 
 from methylclf.masking import observed, observed_uniform, probe_positions
@@ -10,12 +11,12 @@ ARRAY = np.array([f"cg{i:06d}" for i in range(5000)], dtype=object)
 def test_same_sample_same_subset_whatever_else_is_asked():
     cols = np.arange(0, 5000, 7)
     a = observed_uniform(IDS, 5000, cols, seed=1)
-    b = observed_uniform(IDS[::-1], 5000, cols, seed=1)[::-1]     # other order
-    c = observed_uniform(IDS[:5], 5000, cols, seed=1)             # other companions
-    d = observed_uniform(IDS, 5000, np.arange(5000), seed=1)[:, cols]   # other features
+    b = observed_uniform(IDS[::-1], 5000, cols, seed=1)[::-1]  # other order
+    c = observed_uniform(IDS[:5], 5000, cols, seed=1)  # other companions
+    d = observed_uniform(IDS, 5000, np.arange(5000), seed=1)[:, cols]  # other features
     assert np.array_equal(a, b) and np.array_equal(a[:5], c) and np.array_equal(a, d)
     assert not np.array_equal(a, observed_uniform(IDS, 5000, cols, seed=2))
-    assert not np.array_equal(a[0], a[1])                         # samples differ
+    assert not np.array_equal(a[0], a[1])  # samples differ
 
 
 def test_levels_are_nested_and_have_the_right_share():

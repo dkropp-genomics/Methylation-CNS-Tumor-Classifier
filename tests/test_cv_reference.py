@@ -1,4 +1,5 @@
 """Tests for scripts/cv_reference.py."""
+
 import sys
 from pathlib import Path
 
@@ -12,12 +13,33 @@ import cv_reference as ref  # noqa: E402
 def preds():
     # classes A1, A2 (family A), B, C; C does not occur in validation
     true = ["A1"] * 4 + ["A2"] * 4 + ["B"] * 4 + ["C"] * 4
-    pred = ["A1", "A1", "A1", "A2", "A2", "A2", "A2", "C", "B", "B", "B", "B",
-            "A1", "A1", "A1", "A1"]
+    pred = [
+        "A1",
+        "A1",
+        "A1",
+        "A2",
+        "A2",
+        "A2",
+        "A2",
+        "C",
+        "B",
+        "B",
+        "B",
+        "B",
+        "A1",
+        "A1",
+        "A1",
+        "A1",
+    ]
     fam = {"A1": "A", "A2": "A", "B": "B", "C": "C"}
-    return pd.DataFrame({"mc_class": true, "predicted_class": pred,
-                         "family": [fam[c] for c in true],
-                         "predicted_family": [fam[c] for c in pred]})
+    return pd.DataFrame(
+        {
+            "mc_class": true,
+            "predicted_class": pred,
+            "family": [fam[c] for c in true],
+            "predicted_family": [fam[c] for c in pred],
+        }
+    )
 
 
 def get(t, level, metric):
@@ -28,7 +50,7 @@ def test_only_shared_classes_are_scored():
     t = ref.reference(preds(), {"A1", "A2", "B"}, n_boot=0)
     row = get(t, "class", "accuracy")
     assert row["n"] == 12 and row["n_groups"] == 3
-    assert abs(row["value"] - 10 / 12) < 1e-12        # class C's 4 errors are left out
+    assert abs(row["value"] - 10 / 12) < 1e-12  # class C's 4 errors are left out
 
 
 def test_macro_f1_by_hand():

@@ -8,6 +8,7 @@ Masked training: every time a training sample is shown, a random share of its
 probes is hidden. The share is drawn per sample between `min_fraction` and 1 on
 a log scale, so the network practises on 0.1%, 1%, 10% and 100% equally often.
 """
+
 from __future__ import annotations
 
 import math
@@ -37,7 +38,8 @@ def class_weights(y_idx, n_classes):
 
 def build_mlp(n_features, n_classes, hidden=(512, 256), dropout=0.2):
     import torch
-    layers, width = [], 2 * n_features            # value + observed flag per probe
+
+    layers, width = [], 2 * n_features  # value + observed flag per probe
     for h in hidden:
         layers += [torch.nn.Linear(width, h), torch.nn.ReLU(), torch.nn.Dropout(dropout)]
         width = h
@@ -48,6 +50,7 @@ def build_mlp(n_features, n_classes, hidden=(512, 256), dropout=0.2):
 def make_input(values, obs):
     """values: standardized betas (n, F); obs: bool (n, F). Returns (n, 2F)."""
     import torch
+
     flag = obs.to(values.dtype)
     return torch.cat([values * flag, flag], dim=1)
 
@@ -55,22 +58,40 @@ def make_input(values, obs):
 def predict_proba(net, Zs, obs, batch_size=512):
     """Class probabilities for standardized betas `Zs` with observed-mask `obs`."""
     import torch
+
     was_training = net.training
     net.eval()
     out = []
     with torch.no_grad():
         for i in range(0, Zs.shape[0], batch_size):
-            x = make_input(torch.from_numpy(Zs[i:i + batch_size]),
-                           torch.from_numpy(obs[i:i + batch_size]))
+            x = make_input(
+                torch.from_numpy(Zs[i : i + batch_size]), torch.from_numpy(obs[i : i + batch_size])
+            )
             out.append(torch.softmax(net(x), dim=1).numpy())
     net.train(was_training)
     return np.vstack(out)
 
 
-def train_mlp(Zs, y_idx, n_classes, *, masked, hidden=(512, 256), dropout=0.2, lr=1e-3,
-              weight_decay=0.01, batch_size=128, max_epochs=60, eval_every=5,
-              min_fraction=0.001, seed=0, n_threads=6, on_checkpoint=None,
-              schedule="constant", stop_epoch=None):
+def train_mlp(
+    Zs,
+    y_idx,
+    n_classes,
+    *,
+    masked,
+    hidden=(512, 256),
+    dropout=0.2,
+    lr=1e-3,
+    weight_decay=0.01,
+    batch_size=128,
+    max_epochs=60,
+    eval_every=5,
+    min_fraction=0.001,
+    seed=0,
+    n_threads=6,
+    on_checkpoint=None,
+    schedule="constant",
+    stop_epoch=None,
+):
     """Train on standardized training-fold betas `Zs` (n, F) and labels 0..K-1.
 
     `on_checkpoint(epoch, net)` is called every `eval_every` epochs and after
@@ -83,6 +104,7 @@ def train_mlp(Zs, y_idx, n_classes, *, masked, hidden=(512, 256), dropout=0.2, l
     from inner-fold scores). Returns the trained network.
     """
     import torch
+
     torch.set_num_threads(int(n_threads))
     torch.manual_seed(int(seed))
     g = torch.Generator().manual_seed(int(seed))
@@ -106,9 +128,9 @@ def train_mlp(Zs, y_idx, n_classes, *, masked, hidden=(512, 256), dropout=0.2, l
     for epoch in range(1, last_epoch + 1):
         order = torch.randperm(n, generator=g)
         for start in range(0, n, int(batch_size)):
-            idx = order[start:start + int(batch_size)]
+            idx = order[start : start + int(batch_size)]
             xb = X[idx]
-            if masked:      # per sample: a coverage share, then a random subset of probes
+            if masked:  # per sample: a coverage share, then a random subset of probes
                 share = torch.exp(torch.rand(len(idx), 1, generator=g) * log_min)
                 obs = torch.rand(len(idx), F, generator=g) < share
             else:

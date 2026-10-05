@@ -2,6 +2,7 @@
 
 Run with pytest, or directly:  python tests/test_score_outer.py
 """
+
 import importlib.util
 import sys
 import tempfile
@@ -29,15 +30,19 @@ def full_run(d, s):
     rng = np.random.default_rng(5)
     for k in range(5):
         rows = s[s["outer_fold"] == str(k)]
-        cv.save_pred(cv.pred_path(pred, k, None, "s000"),
-                     fake_scores(rows["mc_class"].to_numpy(), rng, 0.5),
-                     rows["geo_accession"].to_numpy(), CLASSES)
+        cv.save_pred(
+            cv.pred_path(pred, k, None, "s000"),
+            fake_scores(rows["mc_class"].to_numpy(), rng, 0.5),
+            rows["geo_accession"].to_numpy(),
+            CLASSES,
+        )
     return pred, res
 
 
 def go(d, s):
-    return so.score_run("r", s, FAMILY, Path(d) / "pred", Path(d) / "res", summarize,
-                        to_family, n_boot=20)
+    return so.score_run(
+        "r", s, FAMILY, Path(d) / "pred", Path(d) / "res", summarize, to_family, n_boot=20
+    )
 
 
 def test_every_sample_scored_once_and_tables_written():
@@ -53,7 +58,9 @@ def test_every_sample_scored_once_and_tables_written():
         assert {"all", "FFPE", "Frozen"} <= set(metrics["group"])
         assert per_class["n"].sum() == len(s) and len(per_class) == 6
         assert per_class["sensitivity"].between(0, 1).all()
-        assert (per_class["n_family_correct"] >= (per_class["sensitivity"] * per_class["n"]).round()).all()
+        assert (
+            per_class["n_family_correct"] >= (per_class["sensitivity"] * per_class["n"]).round()
+        ).all()
         assert preds["class_score"].between(0, 1).all()
         # calibration sharpens underconfident scores
         assert preds["class_score"].mean() > preds["raw_class_score"].mean()
@@ -86,7 +93,7 @@ def test_missing_or_wrong_files_stop():
         pred, res = full_run(d, s)
         path = cv.pred_path(pred, 3, None, "s000")
         P, ids, cls = cv.load_pred(path)
-        cv.save_pred(path, P[1:], ids[1:], cls)            # one test sample missing
+        cv.save_pred(path, P[1:], ids[1:], cls)  # one test sample missing
         expect_stop(lambda: go(d, s), "outer test fold 3")
     with tempfile.TemporaryDirectory() as d:
         pred, res = full_run(d, s)

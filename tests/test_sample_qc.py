@@ -2,6 +2,7 @@
 
 Run with `python -m pytest tests/test_sample_qc.py` or `python tests/test_sample_qc.py`.
 """
+
 import subprocess
 import sys
 import tempfile
@@ -31,14 +32,16 @@ def make_inputs(root, n_train=60, n_valid=20, seed=0):
     (root / "qc").mkdir(parents=True)
 
     def qc(cohort, n, start):
-        return pd.DataFrame({
-            "cohort": cohort,
-            "geo_accession": [f"GSM{start + i}" for i in range(n)],
-            "status": "ok",
-            "frac_detected": rng.uniform(0.9, 0.99, n),
-            "bisulfite_gct": rng.uniform(1.0, 2.0, n),
-            "mean_intensity": rng.uniform(3000, 9000, n),
-        })
+        return pd.DataFrame(
+            {
+                "cohort": cohort,
+                "geo_accession": [f"GSM{start + i}" for i in range(n)],
+                "status": "ok",
+                "frac_detected": rng.uniform(0.9, 0.99, n),
+                "bisulfite_gct": rng.uniform(1.0, 2.0, n),
+                "mean_intensity": rng.uniform(3000, 9000, n),
+            }
+        )
 
     tr = qc("GSE90496", n_train, 1000)
     va = qc("GSE109379", n_valid, 5000)
@@ -48,25 +51,43 @@ def make_inputs(root, n_train=60, n_valid=20, seed=0):
 
     tr.to_csv(root / "qc" / "GSE90496_sesame_qc.tsv", sep="\t", index=False)
     va.to_csv(root / "qc" / "GSE109379_sesame_qc.tsv", sep="\t", index=False)
-    pd.DataFrame({
-        "geo_accession": tr["geo_accession"], "mc_class": classes,
-        "material": np.where(np.arange(n_train) % 3 == 0, "frozen", "FFPE"),
-    }).to_csv(root / "folds.tsv", sep="\t", index=False)
-    pd.DataFrame({
-        "geo_accession": va["geo_accession"], "mc_class": "A",
-        "material": "FFPE",
-    }).to_csv(root / "labels.tsv", sep="\t", index=False)
+    pd.DataFrame(
+        {
+            "geo_accession": tr["geo_accession"],
+            "mc_class": classes,
+            "material": np.where(np.arange(n_train) % 3 == 0, "frozen", "FFPE"),
+        }
+    ).to_csv(root / "folds.tsv", sep="\t", index=False)
+    pd.DataFrame(
+        {
+            "geo_accession": va["geo_accession"],
+            "mc_class": "A",
+            "material": "FFPE",
+        }
+    ).to_csv(root / "labels.tsv", sep="\t", index=False)
     (root / "cfg.yaml").write_text(CONFIG.format(cut=0.8))
     return root
 
 
 def run(root, cmd, *extra):
-    args = [sys.executable, str(SCRIPT), cmd,
-            "--qc-dir", str(root / "qc"), "--out-dir", str(root / "out")]
+    args = [
+        sys.executable,
+        str(SCRIPT),
+        cmd,
+        "--qc-dir",
+        str(root / "qc"),
+        "--out-dir",
+        str(root / "out"),
+    ]
     if cmd == "apply":
-        args += ["--config", str(root / "cfg.yaml"),
-                 "--folds", str(root / "folds.tsv"),
-                 "--labels", str(root / "labels.tsv")]
+        args += [
+            "--config",
+            str(root / "cfg.yaml"),
+            "--folds",
+            str(root / "folds.tsv"),
+            "--labels",
+            str(root / "labels.tsv"),
+        ]
     return subprocess.run(args + list(extra), capture_output=True, text=True)
 
 
