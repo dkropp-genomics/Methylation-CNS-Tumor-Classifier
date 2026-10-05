@@ -1,0 +1,5 @@
+mc_class	gene	n_kept_probes	n_past_missingness	best_variance_rank	n_ranked_probes	n_model_probes	n_in_model
+ETMR	SHPRH	14	12	155876	303387	10000	0
+HGNET, MN1	PWWP3A	34	31	16414	303387	10000	0
+PITAD, ACTH	TBX19	8	7	89630	303387	10000	0
+HGNET, BCOR	RET	26	25	22723	303387	10000	0
