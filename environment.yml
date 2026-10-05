@@ -1,8 +1,10 @@
-# Python environment (modeling, tests).
+# Python environment (modeling, evaluation, interpretation, tests).
 #   conda env create -f environment.yml
 #   conda activate methyl-py && python -m pip install --no-deps -e .
 # Both channels are named here on purpose: bioconda is not in the user-level
 # conda config on the development machine.
+# The versions below are the ones every result in the README was produced with.
+# environment.lock.yml records the exact build of every package.
 # Memory: the full pipeline needs 24 GB available to Linux. Under WSL2 set
 #   [wsl2] memory=24GB, swap=16GB   in C:\Users\<name>\.wslconfig
 # (the WSL default of half of RAM was not enough for preprocessing).
@@ -12,12 +14,17 @@ channels:
   - bioconda
 dependencies:
   - python=3.12
-  - numpy
+  - numpy=2.5
   - pandas
   - pyarrow
-  - scikit-learn
+  - scikit-learn=1.9
+  - lightgbm=4.7
+  - optuna=5.0
+  - pytorch-cpu=2.13        # CPU build; no GPU is needed anywhere
+  - shap=0.52
   - zarr=3.4
   - pyyaml
+  - openpyxl                # reads the published supplementary table
   - matplotlib
   - umap-learn
   - pytest=9.1
