@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below, together with the papers whose data it depends on."
+title: "Methylation-CNS-Tumor-Classifier: machine learning classification of CNS tumors from DNA methylation, with a sparse-coverage stress test"
+type: software
+authors:
+  - family-names: Kropp
+    given-names: "Dawson R."
+repository-code: "https://github.com/dkropp-genomics/Methylation-CNS-Tumor-Classifier"
+license: MIT
+version: 0.1.0
+references:
+  - type: article
+    title: "DNA methylation-based classification of central nervous system tumours"
+    authors:
+      - family-names: Capper
+        given-names: David
+    journal: Nature
+    year: 2018
+    volume: 555
+    start: 469
+    end: 474
+    doi: 10.1038/nature26000

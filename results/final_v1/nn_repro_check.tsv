@@ -1,0 +1,5 @@
+model	coverage	n_samples	max_abs_weight_diff	max_abs_score_diff	n_top_class_changed
+nn_plain	1	2767	0	0	0
+nn_plain	0.1	2767	0	0	0
+nn_plain	0.01	2767	0	0	0
+nn_plain	0.001	2767	0	0	0
