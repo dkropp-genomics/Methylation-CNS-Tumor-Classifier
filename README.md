@@ -30,7 +30,7 @@ Three things I did not expect:
 ![Accuracy as fewer CpGs are observed](results/cv/sparsity_report_v1/sparsity_curve.png)
 
 ```bash
-nextflow run pipeline/main.nf -profile quick    # TODO: confirm after the first full pipeline run
+nextflow run pipeline/main.nf -profile quick    # external-cohort results and SHAP, about 3 hours
 ```
 
 ## How it works
@@ -227,7 +227,7 @@ before its results existed, and that is marked.
 | Sparse coverage | Masked network beats the random forest with 1% of CpGs or fewer | 0.927 against 0.020 at 1%; 0.462 against 0.020 at 0.1% | Yes, with a caveat |
 | Leakage | Accuracy gap from selecting features outside the folds, measured and explained | 0.5 points on the real task; 22 points above chance with few samples and random labels | Reported |
 | Interpretation | *Reworded.* Top CpGs for the 5 largest classes with stability, genomic context and gene-level summaries, plus a test on four published class and gene pairs | All reported; the four pairs were not testable | Reported |
-| Reproducibility | One command rebuilds everything on a CPU desktop within 24 hours, with the same numbers on a rerun | TODO: fill in once the pipeline has run end to end | Pending |
+| Reproducibility | One command rebuilds everything on a CPU desktop within 24 hours, with the same numbers on a rerun | `quick` rebuilt from a fresh clone in 2 h 48 min, with every regenerated results table identical apart from timing columns. `full` (about 20 hours, estimated) was not run end to end | Partly |
 
 **Notes on three rows.**
 
@@ -349,13 +349,13 @@ error. `environment-r.yml` documents the command.
 ### Run
 
 ```bash
-nextflow run pipeline/main.nf -profile quick    # TODO: confirm after the first full pipeline run
+nextflow run pipeline/main.nf -profile quick    # external-cohort results and SHAP, about 3 hours
 ```
 
 | Profile | What it reruns | Time on a 6-core desktop |
 |---|---|---|
-| `quick` | Download, preprocessing, final models from the committed selections, external scoring, SHAP. Cross-validation is not rerun | TODO: measure (about 4 hours expected) |
-| `full` | Everything, including the hyperparameter searches | About 20 hours |
+| `quick` | Download, preprocessing, final models from the committed selections, external scoring, SHAP. Cross-validation is not rerun | 2 h 48 min measured, including a 13-minute download |
+| `full` | Everything, including the hyperparameter searches | About 20 hours, estimated from each stage's measured time; not run end to end |
 
 Where the time goes in `full`: network search about 9 hours, LightGBM search
 about 5, sparse-coverage scoring about 2, preprocessing about 1.5, final models
@@ -363,6 +363,9 @@ about 1.
 
 Every long step saves its work as it goes. If a run stops, the same command
 resumes it.
+
+A rebuild depends on GEO being reachable. Both download scripts wait and retry
+when GEO refuses a request, which it did intermittently during testing.
 
 ### Same numbers on a rerun
 
@@ -372,6 +375,12 @@ the numerical library. Refitting the plain network gave identical weights and
 identical scores for all 2,767 tumors at every coverage level
 (`results/final_v1/nn_repro_check.tsv`). All of these reruns were on the same
 machine and environment; the masked network was not refitted.
+
+A rebuild from a fresh clone with the `quick` profile (new download, new
+preprocessing, five refitted models) regenerated every results table it touches
+identically, apart from timing columns and timestamps. Every downloaded array
+matched its committed MD5. Stage timings are in
+`results/rebuild/quick_profile_trace.tsv`.
 
 ### What is committed and what is not
 
