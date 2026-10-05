@@ -1,0 +1,55 @@
+# Interpretation of the final random forest with SHAP (TreeSHAP).
+# Everything here was fixed on 2026-10-05, before any attribution was computed.
+run_name: shap_v1
+decided_on: "2026-10-05"
+model: data/models/final_v1/rf.joblib      # the forest that scored the validation cohort
+
+# The target was reworded before results existed. The README must say so.
+target:
+  original: share of top-SHAP CpGs near genes known for that class, for the 5 largest classes
+  reworded: >
+    for the 5 largest classes, report the top CpGs by mean absolute SHAP with
+    three measures fixed in advance (stability, genomic context, gene level),
+    plus a test on four published class-gene pairs
+  reason: >
+    published differential-methylation lists compare subgroups within one
+    tumor type; no class-against-all-others list was found for any of the
+    five classes, so a curated "known genes" list could not be built honestly
+
+top_n: 100
+largest_classes: ["GBM, RTK II", "MB, G4", "LGG, PA PF", "EPN, PF A", "MNG"]   # checked against the fold table
+
+# 1. Stability: top-N overlap between two random halves of a class's samples
+stability: {n_splits: 20, seed: 0}
+
+# 2. Genomic context: top-N against all model probes, by relation to CpG island
+# 3. Gene level: genes with at least this many top-N CpGs
+gene_min_cpgs: 2
+
+# 4. Published class-gene pairs. Source: Benfatto et al., Nature Communications
+#    2025, "Explainable artificial intelligence of DNA methylation-based brain
+#    tumor diagnostics" (https://www.nature.com/articles/s41467-025-57078-0).
+#    Their forest and ours learned from the same reference cohort, so this
+#    tests agreement with the published explanation, not independent biology.
+#    A pair is "recovered" when the gene has a CpG in the class's top_n.
+pairs:
+  - class: "ETMR"
+    gene: SHPRH
+    aliases: [SHPRH]
+    direction: hyper
+    quote: "the promoter region of SHPRH that was specifically hypermethylated in ETMR"
+  - class: "HGNET, MN1"
+    gene: PWWP3A
+    aliases: [PWWP3A, MUM1]        # MUM1 is the symbol in the 2011 array annotation
+    direction: hypo
+    quote: "pronounced hypomethylation across the entire gene body specific to HGNET_MN1"
+  - class: "PITAD, ACTH"
+    gene: TBX19
+    aliases: [TBX19]
+    direction: hypo
+    quote: "hypomethylation of the promoter specific in PITAD_ACTH"
+  - class: "HGNET, BCOR"
+    gene: RET
+    aliases: [RET]
+    direction: hyper
+    quote: "hypermethylation of a small region near the fourth exon specific to HGNET_BCOR"
