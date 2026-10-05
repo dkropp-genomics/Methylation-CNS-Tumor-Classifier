@@ -1,0 +1,2 @@
+model	scores	level	metric	cv_reference	cv_n_groups	max_drop	threshold	validation	ci_low	ci_high	n	n_groups	difference	met
+rf	calibrated	family	macro_f1	0.99295	54	0.05000	0.94295	0.86789	0.81958	0.90822	1096	54	-0.12506	False

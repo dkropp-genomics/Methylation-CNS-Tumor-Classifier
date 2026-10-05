@@ -1,0 +1,20 @@
+[
+  {
+    "scored_at": "2026-10-05 11:27:32",
+    "models": [
+      "rf",
+      "lgbm",
+      "nn_plain",
+      "nn_masked",
+      "centroid"
+    ],
+    "n_samples": 1096,
+    "levels": [
+      1.0,
+      0.1,
+      0.01,
+      0.001
+    ],
+    "mask_seed": 20261004
+  }
+]
