@@ -51,10 +51,23 @@ def matrix_url(acc: str, base: str = GEO_BASE_URL) -> str:
 
 
 def download(url: str, dest: Path, tries: int = 3) -> None:
-    """Download to a .part file; rename only after gzip reads it fully."""
+    """Download to a .part file; rename only after gzip reads it fully.
+
+    GEO sometimes refuses a request for a moment (HTTP 403, 429 or 5xx) and
+    answers the next one. Those refusals are waited out, up to
+    GEO_REFUSAL_TRIES times (default 20), GEO_RETRY_WAIT seconds apart (default
+    15). Any other failure counts against `tries`, as before.
+    """
+    import os
+    import time
+    import urllib.error
+
+    refusals_left = int(os.environ.get("GEO_REFUSAL_TRIES", "20"))
+    wait = float(os.environ.get("GEO_RETRY_WAIT", "15"))
     dest.parent.mkdir(parents=True, exist_ok=True)
     part = dest.with_name(dest.name + ".part")
-    for attempt in range(1, tries + 1):
+    attempt = 1
+    while attempt <= tries:
         try:
             print(f"Downloading {url}")
             with urllib.request.urlopen(url, timeout=120) as r, open(part, "wb") as f:
@@ -65,8 +78,18 @@ def download(url: str, dest: Path, tries: int = 3) -> None:
                     pass
             part.replace(dest)
             return
+        except urllib.error.HTTPError as e:
+            if e.code in (403, 429, 500, 502, 503, 504) and refusals_left > 0:
+                refusals_left -= 1
+                print(f"  server answered {e.code}; waiting {wait:g} s "
+                      f"({refusals_left} more waits allowed)", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            print(f"  attempt {attempt}/{tries} failed: {e}", file=sys.stderr)
+            attempt += 1
         except Exception as e:  # network error or truncated file
             print(f"  attempt {attempt}/{tries} failed: {e}", file=sys.stderr)
+            attempt += 1
     sys.exit(f"ERROR: could not download {url}")
 
 

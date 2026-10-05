@@ -47,6 +47,8 @@
 # ENVIRONMENT (mainly for tests)
 #   GEO_BASE_URL   default https://ftp.ncbi.nlm.nih.gov/geo
 #   MIN_FREE_GB    free space to keep in reserve (default: 5)
+#   GEO_REFUSAL_TRIES, GEO_RETRY_WAIT   how often and how long (s) to wait when
+#                  GEO refuses a request for a moment (defaults: 20, 15)
 #
 # EXIT STATUS: 0 when every requested dataset is verified, non-zero otherwise.
 # =============================================================================
@@ -65,6 +67,8 @@ OFFLINE=0
 DEFAULT_DATASETS=(GSE90496 GSE109379)
 GEO_BASE_URL="${GEO_BASE_URL:-https://ftp.ncbi.nlm.nih.gov/geo}"
 MIN_FREE_GB="${MIN_FREE_GB:-5}"
+GEO_REFUSAL_TRIES="${GEO_REFUSAL_TRIES:-20}"
+GEO_RETRY_WAIT="${GEO_RETRY_WAIT:-15}"
 
 # Every IDAT GEO serves for a 450K series looks like
 #   GSM2402855_5775041068_R04C01_Grn.idat.gz
@@ -91,9 +95,29 @@ geo_tar_url() {
 }
 
 # Size of the remote file in bytes, following redirects (last header wins).
+# GEO sometimes refuses a request for a moment (HTTP 403, 429 or 5xx) and
+# answers the next one: wait and ask again, up to GEO_REFUSAL_TRIES times.
+# Any other failure (wrong address, no connection) fails at once.
 remote_bytes() {
-    curl -sfIL --retry 3 --retry-delay 5 "$1" | tr -d '\r' |
-        awk 'tolower($1) == "content-length:" { n = $2 } END { if (n != "") print n; else exit 1 }'
+    local url=$1 n=0 code hdr
+    hdr=$(mktemp)
+    while :; do
+        code=$(curl -sIL --retry 3 --retry-delay 5 -o "$hdr" -w '%{http_code}' "$url") ||
+            { rm -f "$hdr"; return 1; }
+        case $code in
+            200)
+                tr -d '\r' < "$hdr" |
+                    awk 'tolower($1) == "content-length:" { n = $2 } END { if (n != "") print n; else exit 1 }'
+                code=$?; rm -f "$hdr"; return "$code" ;;
+            403|429|5??)
+                n=$(( n + 1 ))
+                if (( n > GEO_REFUSAL_TRIES )); then rm -f "$hdr"; return 1; fi
+                log "GEO answered $code; waiting ${GEO_RETRY_WAIT} s (try $n of $GEO_REFUSAL_TRIES)" >&2
+                sleep "$GEO_RETRY_WAIT" ;;
+            *)
+                rm -f "$hdr"; return 1 ;;
+        esac
+    done
 }
 
 require_space() {  # require_space <bytes needed> <dir> <what for>
@@ -165,6 +189,7 @@ download_tar() {  # download_tar <acc> <url> <tar path> <remote bytes or "">
 
     log "$acc: downloading $(human "$remote") from $url"
     wget --continue --tries=20 --waitretry=30 --retry-connrefused \
+         --retry-on-http-error=403,429,500,502,503,504 \
          --progress=dot:giga -O "$part" "$url"
     have=$(file_bytes "$part")
     (( have == remote )) || die "$acc: downloaded $have bytes, expected $remote; rerun to resume"
