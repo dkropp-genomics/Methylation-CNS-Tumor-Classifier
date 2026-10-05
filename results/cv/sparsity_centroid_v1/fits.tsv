@@ -1,0 +1,6 @@
+stage	outer	inner	setting	n_train	n_test	n_features	seconds_features	seconds_model	finished
+sparsity	0	test	centroid:dlda	2213	554	50000	0.0	27.9	2026-10-05 09:47:44
+sparsity	1	test	centroid:dlda	2213	554	50000	0.0	28.2	2026-10-05 09:48:29
+sparsity	2	test	centroid:dlda	2214	553	50000	0.0	29.4	2026-10-05 09:49:15
+sparsity	3	test	centroid:dlda	2214	553	50000	0.0	29.6	2026-10-05 09:50:01
+sparsity	4	test	centroid:dlda	2214	553	50000	0.0	31.4	2026-10-05 09:50:49

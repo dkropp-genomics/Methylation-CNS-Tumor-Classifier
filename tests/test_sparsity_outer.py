@@ -44,7 +44,9 @@ def setup(d, X, s, with_nn):
     t_lgbm.tune.run(LG_CFG, *args)
     cv.run("outer", LG_CFG, *args, final_scoring=True)
     models = {"rf": {"kind": "tree", "run": "rf", "config": "-"},
-              "lgbm": {"kind": "tree", "run": "lg", "config": "-"}}
+              "lgbm": {"kind": "tree", "run": "lg", "config": "-"},
+              "centroid": {"kind": "centroid",
+                           "features": {"n_probes": 60, "correct_material": False}}}
     cfgs = {"rf": RF_CFG, "lgbm": LG_CFG}
     if with_nn:
         t_nn.nn.run("inner", NN_CFG, s, Loader(X, s), PROBES, FeaturePipeline, pred, res)
@@ -84,8 +86,19 @@ def test_fit_is_gated_reproduces_phase3_and_report_pools_every_sample():
             assert np.allclose(z["proba"].sum(axis=2), 1, atol=1e-4)
             assert set(z["sample_ids"]) == set(s.loc[s["outer_fold"] == "3", "geo_accession"])
 
-        metrics, diffs = sp.run("report", cfg, cfgs, s, pred_root=pred, res_root=res,
-                                family_of=FAMILY, summarize=summarize, n_boot=20)
+        metrics, diffs, top_acc = sp.run("report", cfg, cfgs, s, pred_root=pred, res_root=res,
+                                         family_of=FAMILY, summarize=summarize, n_boot=20)
+        # family of the predicted class can never be less accurate than the class
+        w = top_acc.pivot_table(index=["model", "coverage"], columns="label_level",
+                                values="accuracy")
+        assert (w["family_of_predicted_class"] >= w["class"] - 1e-12).all()
+        assert ("centroid", "rf") in set(zip(diffs["model_a"], diffs["model_b"]))
+        try:
+            import matplotlib  # noqa: F401
+            sp.plot_curve(top_acc, res / "sp" / "curve.png")
+            assert (res / "sp" / "curve.png").stat().st_size > 10000
+        except ImportError:
+            pass
         assert set(metrics["model"]) == set(cfg["models"])
         assert set(metrics["coverage"]) == {1.0, 0.1, 0.01}
         assert set(metrics["label_level"]) == {"class", "family"}
@@ -100,7 +113,8 @@ def test_fit_is_gated_reproduces_phase3_and_report_pools_every_sample():
             assert {"nn_masked", "nn_plain"} <= set(diffs["model_a"])
             assert set(diffs["metric"]) == {"accuracy", "macro_f1"}
             assert (diffs["ci_low"] <= diffs["difference"] + 1e-9).all()
-        for f in ("metrics.tsv", "differences.tsv", "manifest.json", "fits.tsv"):
+        for f in ("metrics.tsv", "differences.tsv", "accuracy_top_class.tsv", "manifest.json",
+                  "fits.tsv"):
             assert (res / "sp" / f).exists()
 
 
@@ -121,6 +135,42 @@ def test_fast_metrics_and_paired_difference():
     assert out["accuracy"]["share_of_draws_above_0"] == 1.0
     same = {r["metric"]: r for r in sp.paired_difference(truth, good, good, 4, 50, seed=0)}
     assert same["accuracy"]["difference"] == 0 and same["accuracy"]["ci_high"] == 0
+
+
+def test_centroid_uses_only_observed_probes_and_reads_other_runs():
+    from methylclf.masking import observed_uniform
+    rng = np.random.default_rng(0)
+    classes = ["A", "B", "C"]
+    centers = np.array([[0.2] * 30, [0.5] * 30, [0.8] * 30])
+    y = np.repeat(classes, 20).astype(object)
+    Z = (centers[np.repeat([0, 1, 2], 20)] + rng.normal(0, 0.05, (60, 30))).astype(np.float32)
+    Zt = (centers[[0, 1, 2, 0]] + rng.normal(0, 0.05, (4, 30))).astype(np.float32)
+    u = observed_uniform(["a", "b", "c", "d"], 30, np.arange(30), seed=1)
+    P = sp.predict_centroid(Z, y, Zt, u, [1.0, 0.3], classes)
+    assert P.shape == (2, 4, 3) and np.allclose(P.sum(axis=2), 1)
+    assert list(P[0].argmax(axis=1)) == [0, 1, 2, 0]
+    # values of unobserved probes have no effect at all
+    Zbad = Zt.copy(); Zbad[u >= 0.3] = 99.0
+    assert np.allclose(sp.predict_centroid(Z, y, Zbad, u, [0.3], classes), P[1:2])
+    assert not np.allclose(sp.predict_centroid(Z, y, Zbad, u, [1.0], classes), P[0:1])
+    # a report config can take a model's predictions from another sparsity run
+    X, s = make_data()
+    with tempfile.TemporaryDirectory() as d:
+        pred, res = Path(d) / "pred", Path(d) / "res"
+        only = {"run_name": "cen", "levels": [1.0, 0.1], "mask_seed": 9, "models": {
+            "centroid": {"kind": "centroid",
+                         "features": {"n_probes": 60, "correct_material": False}}}}
+        n, load = fit(only, {}, X, s, pred, res, final_scoring=True)
+        assert n == 5
+        for k, ids in enumerate(load.calls[0::2]):               # training-side loads
+            assert not set(ids) & set(s.loc[s["outer_fold"] == str(k), "geo_accession"])
+        rep = {"run_name": "rep", "levels": [1.0, 0.1], "mask_seed": 9, "models": {
+            "centroid": {"kind": "centroid", "pred_run": "cen"}}}
+        metrics, _, top_acc = sp.run("report", rep, {}, s, pred_root=pred, res_root=res,
+                                     family_of=FAMILY, summarize=summarize, n_boot=10)
+        full = top_acc[(top_acc["coverage"] == 1.0) & (top_acc["label_level"] == "class")]
+        assert full["accuracy"].iloc[0] > 0.9
+        assert (res / "rep" / "accuracy_top_class.tsv").exists()
 
 
 def test_config_checks():

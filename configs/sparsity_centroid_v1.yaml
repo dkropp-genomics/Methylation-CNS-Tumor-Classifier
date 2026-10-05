@@ -1,0 +1,11 @@
+# A sparse baseline added after the first sparsity results (the forest with
+# median filling collapsed to one class). Nearest class centroid on the
+# observed CpGs only; nothing to tune. Same probes, levels and masks as the
+# network, so the comparison is like for like.
+run_name: sparsity_centroid_v1
+levels: [1.0, 0.1, 0.01, 0.001]
+mask_seed: 20261004
+models:
+  centroid:
+    kind: centroid
+    features: {n_probes: 50000, correct_material: false}

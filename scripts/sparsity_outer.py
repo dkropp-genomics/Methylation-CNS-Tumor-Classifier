@@ -42,8 +42,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import run_nested_cv as cv  # noqa: E402
 import train_nn as tnn  # noqa: E402
 
-PAIRS = (("nn_masked", "rf"), ("nn_masked", "nn_plain"), ("nn_masked", "lgbm"),
-         ("nn_plain", "rf"))
+PAIRS = (("nn_masked", "centroid"), ("nn_masked", "nn_plain"), ("nn_masked", "rf"),
+         ("nn_masked", "lgbm"), ("nn_plain", "centroid"), ("nn_plain", "rf"),
+         ("centroid", "rf"))
+VAR_FLOOR = 1e-4     # added to each probe's within-class variance (beta units squared)
 
 
 def check_config(cfg, model_cfgs):
@@ -53,8 +55,11 @@ def check_config(cfg, model_cfgs):
     if not all(0 < float(v) <= 1 for v in cfg["levels"]):
         cv.fail("config: levels must be in (0, 1]")
     for name, m in cfg["models"].items():
-        if m.get("kind") not in ("tree", "nn"):
-            cv.fail(f"config: models.{name}.kind must be 'tree' or 'nn'")
+        if m.get("kind") not in ("tree", "nn", "centroid"):
+            cv.fail(f"config: models.{name}.kind must be 'tree', 'nn' or 'centroid'")
+        if m["kind"] == "centroid" and "pred_run" not in m and \
+                set(m.get("features", {})) != {"n_probes", "correct_material"}:
+            cv.fail(f"config: models.{name}.features must give n_probes and correct_material")
         if m["kind"] == "nn":
             if m.get("network") not in ("plain", "masked"):
                 cv.fail(f"config: models.{name}.network must be 'plain' or 'masked'")
@@ -128,6 +133,42 @@ def predict_tree(m, mcfg, row, Z_tr, y_tr, Z_te, u, levels, classes):
     return np.stack(out)
 
 
+def predict_centroid(Z_tr, y_tr, Z_te, u, levels, classes):
+    """Nearest class centroid on the observed CpGs only (diagonal LDA, equal priors).
+
+    Fit, training fold only: each class's mean profile, and one within-class
+    variance per probe. Predict: for a sample, the squared distance to each
+    class mean, each probe divided by its variance, summed over the probes that
+    sample observed. Unobserved probes are simply left out, so nothing is
+    filled in. There is nothing to tune.
+
+    The "probabilities" are a softmax of minus half the distance per observed
+    probe. Only their order is meaningful: use them for accuracy and F1, not
+    for calibration metrics.
+    """
+    from methylclf.masking import observed
+    y_tr = np.asarray(y_tr, dtype=object)
+    C = np.vstack([Z_tr[y_tr == c].mean(axis=0, dtype=np.float64) for c in classes])
+    resid = np.zeros(Z_tr.shape[1], dtype=np.float64)
+    for i, c in enumerate(classes):
+        d = Z_tr[y_tr == c].astype(np.float64) - C[i]
+        resid += (d * d).sum(axis=0)
+    var = resid / max(len(y_tr) - len(classes), 1) + VAR_FLOOR
+    A = (C / var).T                      # (F, K): centroid over variance
+    B = (C * C / var).T                  # (F, K): centroid squared over variance
+    X = Z_te.astype(np.float64)
+    out = []
+    for lv in levels:
+        O = observed(u, lv).astype(np.float64)
+        # distance = sum_obs (x - c)^2 / var, without the term that is equal for all classes
+        dist = -2.0 * (X * O) @ A + O @ B
+        n_obs = np.maximum(O.sum(axis=1, keepdims=True), 1.0)
+        z = -0.5 * (dist - dist.min(axis=1, keepdims=True)) / n_obs
+        e = np.exp(z)
+        out.append(e / e.sum(axis=1, keepdims=True))
+    return np.stack(out)
+
+
 def predict_nn(mcfg, row, Z_tr, y_tr, Z_te, u, levels, classes):
     from methylclf.masking import observed
     from methylclf.nn import Standardizer, predict_proba, train_mlp
@@ -167,11 +208,14 @@ def stage_fit(cfg, model_cfgs, samples, load, probe_ids, pipeline_factory, pred_
               f"in {time.time() - t0:.0f} s", flush=True)
         cache = {}                                   # features shared by models
         for name in todo:
-            m, mcfg = cfg["models"][name], model_cfgs[name]
+            m, mcfg = cfg["models"][name], model_cfgs.get(name)
             t1 = time.time()
             if m["kind"] == "tree":
                 row = selected_tree(res_root, m, k)
                 key = (int(row["n_probes"]), bool(row["correct_material"]))
+            elif m["kind"] == "centroid":
+                row = {"setting": "dlda"}
+                key = (int(m["features"]["n_probes"]), bool(m["features"]["correct_material"]))
             else:
                 row = selected_nn(res_root, m, k)
                 key = (int(mcfg["features"]["n_probes"]),
@@ -184,6 +228,8 @@ def stage_fit(cfg, model_cfgs, samples, load, probe_ids, pipeline_factory, pred_
                                  probe_positions(names, probe_ids), int(cfg["mask_seed"]))
             if m["kind"] == "tree":
                 proba = predict_tree(m, mcfg, row, Z_tr, y[train], Z_te, u, levels, classes)
+            elif m["kind"] == "centroid":
+                proba = predict_centroid(Z_tr, y[train], Z_te, u, levels, classes)
             else:
                 proba = predict_nn(mcfg, row, Z_tr, y[train], Z_te, u, levels, classes)
             save_levels(out_path(pred_dir, name, k), proba, ids[~train], classes, levels)
@@ -223,8 +269,13 @@ def stage_fit(cfg, model_cfgs, samples, load, probe_ids, pipeline_factory, pred_
 
 
 # --------------------------------------------------------------------------
-def pooled(cfg, pred_dir, name, folds):
-    """One prediction per sample and level, in fold-table order."""
+def pooled(cfg, pred_root, name, folds):
+    """One prediction per sample and level, in fold-table order.
+
+    A model entry may name `pred_run`, the sparsity run that holds its
+    predictions; by default it is this config's own run.
+    """
+    pred_dir = Path(pred_root) / cfg["models"][name].get("pred_run", cfg["run_name"])
     outer_of = dict(zip(folds["geo_accession"], folds["outer_fold"].astype(int)))
     by_id, classes, levels = {}, None, None
     for k in range(cv.N_OUTER):
@@ -275,12 +326,12 @@ def paired_difference(t, pa, pb, n_classes, n_boot, seed):
 
 
 def stage_report(cfg, folds, family_of, summarize, pred_root, res_root, n_boot=1000):
-    pred_dir, res_dir = Path(pred_root) / cfg["run_name"], Path(res_root) / cfg["run_name"]
+    res_dir = Path(res_root) / cfg["run_name"]
     y = folds["mc_class"].to_numpy(dtype=object)
     tables, top = [], {}
     classes = levels = None
     for name in cfg["models"]:
-        P, classes, levels = pooled(cfg, pred_dir, name, folds)
+        P, classes, levels = pooled(cfg, pred_root, name, folds)
         if [float(v) for v in cfg["levels"]] != levels:
             cv.fail(f"{name}: saved levels {levels} differ from the config")
         for a, lv in enumerate(levels):
@@ -303,10 +354,77 @@ def stage_report(cfg, folds, family_of, summarize, pred_root, res_root, n_boot=1
                                        n_boot, seed=0):
                 rows.append({"model_a": a, "model_b": b, "coverage": lv, **r})
     diffs = pd.DataFrame(rows)
+    # Family of the predicted class. (A family SCORE, the sum of its classes' scores,
+    # only makes sense for calibrated scores; with sparse input the scores are flat
+    # and the largest family wins the sum. This table avoids that.)
+    fam_of_class = np.array([family_of[c] for c in classes], dtype=object)
+    fam_true = np.array([family_of[c] for c in y], dtype=object)
+    rng = np.random.default_rng(0)
+    draws = [rng.integers(0, len(y), len(y)) for _ in range(n_boot)]
+    rows = []
+    for (name, lv), pred in top.items():
+        for label, ok in (("class", pred == t_idx), ("family_of_predicted_class",
+                                                      fam_of_class[pred] == fam_true)):
+            b = np.array([ok[i].mean() for i in draws]) if n_boot else np.array([np.nan])
+            rows.append({"model": name, "coverage": lv, "label_level": label,
+                         "accuracy": float(ok.mean()),
+                         "ci_low": float(np.percentile(b, 2.5)) if n_boot else np.nan,
+                         "ci_high": float(np.percentile(b, 97.5)) if n_boot else np.nan,
+                         "n": len(y)})
+    top_acc = pd.DataFrame(rows)
     res_dir.mkdir(parents=True, exist_ok=True)
+    top_acc.to_csv(res_dir / "accuracy_top_class.tsv", sep="\t", index=False,
+                   float_format="%.5f")
     metrics.to_csv(res_dir / "metrics.tsv", sep="\t", index=False, float_format="%.5f")
     diffs.to_csv(res_dir / "differences.tsv", sep="\t", index=False, float_format="%.5f")
-    return metrics, diffs
+    return metrics, diffs, top_acc
+
+
+LABELS = {"nn_masked": "Masked network", "nn_plain": "Plain network",
+          "centroid": "Nearest centroid", "rf": "Random forest", "lgbm": "LightGBM"}
+# fixed colour and marker per model (validated categorical order; shape repeats identity)
+STYLE = {"nn_masked": ("#2a78d6", "o"), "nn_plain": ("#eb6834", "s"),
+         "centroid": ("#1baf7a", "^"), "rf": ("#eda100", "D"), "lgbm": ("#e87ba4", "v")}
+
+
+def plot_curve(top_acc, path, label_level="class"):
+    """Accuracy against the share of CpGs observed, one line per model."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    ink, muted, grid = "#1f1f1e", "#6b6a63", "#e6e5df"
+    t = top_acc[top_acc["label_level"] == label_level]
+    fig, ax = plt.subplots(figsize=(7.2, 4.4), dpi=200)
+    fig.patch.set_facecolor("#fcfcfb"); ax.set_facecolor("#fcfcfb")
+    order = [m for m in LABELS if m in set(t["model"])] + \
+            sorted(set(t["model"]) - set(LABELS))
+    for name in order:
+        d = t[t["model"] == name].sort_values("coverage", ascending=False)
+        color, marker = STYLE.get(name, ("#6b6a63", "x"))
+        x, v = d["coverage"].to_numpy() * 100, d["accuracy"].to_numpy()
+        ax.errorbar(x, v, yerr=[v - d["ci_low"].to_numpy(), d["ci_high"].to_numpy() - v],
+                    color=color, marker=marker, markersize=7, linewidth=2, capsize=3,
+                    markeredgecolor="#fcfcfb", markeredgewidth=1.2,
+                    label=LABELS.get(name, name), zorder=3)
+    ax.set_xscale("log"); ax.invert_xaxis()
+    levels = sorted(set(t["coverage"] * 100), reverse=True)
+    ax.set_xticks(levels); ax.set_xticklabels([f"{v:g}%" for v in levels]); ax.minorticks_off()
+    ax.set_ylim(0, 1.02); ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
+    ax.set_xlabel("Share of array CpGs observed (fewer to the right)", color=muted)
+    what = "class" if label_level == "class" else "family of the predicted class"
+    ax.set_ylabel(f"Accuracy ({what})", color=muted)
+    ax.set_title("Accuracy as fewer CpGs are observed", color=ink, loc="left", fontsize=12)
+    ax.grid(axis="y", color=grid, linewidth=0.8, zorder=0); ax.set_axisbelow(True)
+    for side in ("top", "right", "left"):
+        ax.spines[side].set_visible(False)
+    ax.spines["bottom"].set_color(grid)
+    ax.tick_params(colors=muted, length=0)
+    leg = ax.legend(frameon=False, loc="lower left", fontsize=9, labelcolor=ink)
+    fig.text(0.01, 0.01, f"Outer test folds pooled, n = {int(t['n'].iloc[0])}; "
+             "bars are 95% bootstrap intervals.", color=muted, fontsize=7.5)
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    fig.savefig(path, facecolor=fig.get_facecolor())
+    plt.close(fig)
 
 
 def run(stage, cfg, model_cfgs, samples, load=None, probe_ids=None, pipeline_factory=None,
@@ -350,6 +468,8 @@ def main(argv=None):
     cfg = yaml.safe_load(Path(args.config).read_text())
     model_cfgs = {}
     for name, m in cfg.get("models", {}).items():
+        if m.get("kind") == "centroid":
+            continue
         if not Path(m.get("config", "")).exists():
             cv.fail(f"models.{name}.config: {m.get('config')} not found")
         model_cfgs[name] = yaml.safe_load(Path(m["config"]).read_text())
@@ -369,11 +489,25 @@ def main(argv=None):
     from methylclf.metrics import summarize
     folds = pd.read_csv(args.folds, sep="\t", dtype=str, keep_default_na=False)
     fam = pd.read_csv(args.families, sep="\t", dtype=str, keep_default_na=False)
-    metrics, diffs = run("report", cfg, model_cfgs, folds, pred_root=args.pred_root,
-                         res_root=args.res_root, family_of=dict(zip(fam["mc_class"], fam["family"])),
-                         summarize=summarize, n_boot=args.n_boot)
-    for lvl_name in ("class", "family"):
-        for metric in ("accuracy", "macro_f1"):
+    metrics, diffs, top_acc = run("report", cfg, model_cfgs, folds, pred_root=args.pred_root,
+                                  res_root=args.res_root,
+                                  family_of=dict(zip(fam["mc_class"], fam["family"])),
+                                  summarize=summarize, n_boot=args.n_boot)
+    res_dir = Path(args.res_root) / cfg["run_name"]
+    for label, stem in (("class", "sparsity_curve"),
+                        ("family_of_predicted_class", "sparsity_curve_family")):
+        plot_curve(top_acc, res_dir / f"{stem}.png", label)
+    print(f"wrote {res_dir}/sparsity_curve.png and sparsity_curve_family.png")
+    a = top_acc.copy()
+    a["text"] = [f"{v:.3f} ({lo:.3f}-{hi:.3f})" for v, lo, hi in
+                 zip(a["accuracy"], a["ci_low"], a["ci_high"])]
+    for label in ("class", "family_of_predicted_class"):
+        t = a[a["label_level"] == label].pivot_table(index="model", columns="coverage",
+                                                     values="text", aggfunc="first", sort=False)
+        print(f"\n== accuracy, {label}; columns = share of CpGs observed ==")
+        print(t[sorted(t.columns, reverse=True)].to_string())
+    for lvl_name in ("class",):          # family SCORES are not valid below full coverage
+        for metric in ("macro_f1",):
             sub = metrics[(metrics["metric"] == metric) & (metrics["group"] == "all")]
             print(f"\n== {metric}, {lvl_name} level; columns = share of CpGs observed; "
                   f"value (95% interval) ==")

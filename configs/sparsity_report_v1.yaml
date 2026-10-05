@@ -1,0 +1,11 @@
+# Report over all five models. Reads saved predictions only; pred_run names the
+# sparsity run that holds each model's test-fold predictions.
+run_name: sparsity_report_v1
+levels: [1.0, 0.1, 0.01, 0.001]
+mask_seed: 20261004
+models:
+  nn_masked: {kind: nn,   run: nn_v2,   config: configs/nn_v2.yaml, network: masked, pred_run: sparsity_v1}
+  nn_plain:  {kind: nn,   run: nn_v2,   config: configs/nn_v2.yaml, network: plain,  pred_run: sparsity_v1}
+  centroid:  {kind: centroid, pred_run: sparsity_centroid_v1}
+  rf:        {kind: tree, run: rf_v1,   config: configs/rf_v1.yaml,   pred_run: sparsity_v1}
+  lgbm:      {kind: tree, run: lgbm_v1, config: configs/lgbm_v1.yaml, pred_run: sparsity_v1}

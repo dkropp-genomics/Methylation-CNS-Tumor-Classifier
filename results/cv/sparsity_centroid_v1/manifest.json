@@ -1,0 +1,26 @@
+{
+  "config": {
+    "sparsity": {
+      "run_name": "sparsity_centroid_v1",
+      "levels": [
+        1.0,
+        0.1,
+        0.01,
+        0.001
+      ],
+      "mask_seed": 20261004,
+      "models": {
+        "centroid": {
+          "kind": "centroid",
+          "features": {
+            "n_probes": 50000,
+            "correct_material": false
+          }
+        }
+      }
+    },
+    "models": {}
+  },
+  "folds_sha256": "e417d5617b8add6c38db7fc0a9c61341a13763109f61f708045af102c64fbb3e",
+  "n_samples": 2767
+}
