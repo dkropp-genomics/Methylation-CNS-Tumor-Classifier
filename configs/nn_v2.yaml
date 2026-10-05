@@ -1,0 +1,26 @@
+# Neural network, plain and masked. Sized from the nn_v1 pilot (one inner fold
+# of outer fold 0): learning rate 0.001 with a constant schedule gave jumpy
+# curves, and the masked network was still improving at 60 epochs.
+# Changing anything here after a run has started is refused (manifest.json).
+run_name: nn_v2
+model: mlp
+seed: 42
+n_threads: 6
+select_by: macro_f1            # averaged over the coverage levels below
+levels: [1.0, 0.1, 0.01, 0.001]   # share of array CpGs observed at test time
+mask_seed: 20261004            # fixes which CpGs each sample "observes"
+features:                      # FeaturePipeline arguments, fixed for the network
+  n_probes: 50000
+  correct_material: false
+train:
+  hidden: [512, 256]
+  batch_size: 128
+  weight_decay: 0.01
+  schedule: cosine             # learning rate falls smoothly to zero by the last epoch
+  max_epochs: {plain: 60, masked: 150}
+  eval_every: 10               # held-out scores are recorded every 10 epochs
+  min_fraction: 0.001          # masked training hides down to 0.1% observed
+grid:                          # every combination is one setting
+  masked: [false, true]        # false = plain network, true = masked training
+  lr: [0.001, 0.0003]
+  dropout: [0.2]

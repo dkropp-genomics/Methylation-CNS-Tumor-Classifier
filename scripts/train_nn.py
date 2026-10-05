@@ -88,6 +88,16 @@ def load_curve(path: Path) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def max_epochs_for(cfg, masked) -> int:
+    """max_epochs is one number, or {plain: ..., masked: ...}."""
+    m = cfg["train"]["max_epochs"]
+    if isinstance(m, dict):
+        if set(m) != {"plain", "masked"}:
+            cv.fail("config: train.max_epochs must be a number or {plain: , masked: }")
+        return int(m["masked" if masked else "plain"])
+    return int(m)
+
+
 def fit_one(Zs_tr, y_idx, Zs_te, y_te, u_te, classes, row, cfg):
     """Train one network; return its learning curve on the held-out samples."""
     from methylclf.masking import observed
@@ -110,7 +120,8 @@ def fit_one(Zs_tr, y_idx, Zs_te, y_te, u_te, classes, row, cfg):
     train_mlp(Zs_tr, y_idx, len(classes), masked=bool(row["masked"]), hidden=tuple(t["hidden"]),
               dropout=float(row.get("dropout", 0.2)), lr=float(row.get("lr", 1e-3)),
               weight_decay=float(t["weight_decay"]), batch_size=int(t["batch_size"]),
-              max_epochs=int(t["max_epochs"]), eval_every=int(t["eval_every"]),
+              max_epochs=max_epochs_for(cfg, row["masked"]), eval_every=int(t["eval_every"]),
+              schedule=str(t.get("schedule", "constant")),
               min_fraction=float(t["min_fraction"]), seed=int(cfg["seed"]),
               n_threads=int(cfg["n_threads"]), on_checkpoint=checkpoint)
     if not proba_full:                      # 1.0 not among the levels

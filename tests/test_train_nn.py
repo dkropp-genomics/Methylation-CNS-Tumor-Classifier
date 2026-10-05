@@ -131,6 +131,37 @@ def test_training_learns_saves_curves_and_never_loads_the_test_fold():
         assert np.allclose(before[nn.METRICS], nn.load_curve(path)[nn.METRICS], atol=1e-3)
 
 
+def test_cosine_schedule_and_separate_epoch_limits():
+    if not HAVE_TORCH:
+        print("   (skipped: no PyTorch)"); return
+    X, s = make_data()
+    cfg = copy.deepcopy(CFG)
+    cfg["train"].update({"max_epochs": {"plain": 20, "masked": 30}, "schedule": "cosine"})
+    assert nn.max_epochs_for(cfg, False) == 20 and nn.max_epochs_for(cfg, True) == 30
+    with tempfile.TemporaryDirectory() as d:
+        go("inner", d, X, s, cfg=cfg, outer_folds=[0], inner_folds=[0])
+        curves, _ = go("curves", d, X, s, cfg=cfg, outer_folds=[0], inner_folds=[0])
+        last = curves.groupby("masked")["epoch"].max()
+        assert last[False] == 20 and last[True] == 30
+        end = curves[(curves["epoch"] == 20) & ~curves["masked"] & (curves["level"] == 1.0)]
+        assert (end["accuracy"] > 0.8).all()
+    from methylclf.nn import Standardizer, train_mlp
+    rng = np.random.default_rng(0)
+    Zs = Standardizer().fit(Z := rng.normal(0.5, 0.1, (40, 6)).astype(np.float32)).transform(Z)
+    y = (Zs[:, 0] > 0).astype(np.int64)
+    seen = []
+    kw = dict(masked=False, hidden=(4,), dropout=0.0, lr=0.01, batch_size=8, eval_every=4,
+              seed=0, n_threads=1, schedule="cosine")
+    full = train_mlp(Zs, y, 2, max_epochs=10, **kw)
+    stopped = train_mlp(Zs, y, 2, max_epochs=10, stop_epoch=6,
+                        on_checkpoint=lambda e, n_: seen.append(e), **kw)
+    assert seen == [4, 6]
+    assert stopped is not full
+    expect_stop(lambda: train_mlp(Zs, y, 2, max_epochs=10, stop_epoch=11, **kw), "stop_epoch")
+    bad = dict(kw); bad["schedule"] = "linear"
+    expect_stop(lambda: train_mlp(Zs, y, 2, max_epochs=10, **bad), "schedule")
+
+
 def test_network_input_and_masked_training_pieces():
     if not HAVE_TORCH:
         print("   (skipped: no PyTorch)"); return

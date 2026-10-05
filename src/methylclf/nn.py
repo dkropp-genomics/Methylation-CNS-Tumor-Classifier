@@ -69,12 +69,18 @@ def predict_proba(net, Zs, obs, batch_size=512):
 
 def train_mlp(Zs, y_idx, n_classes, *, masked, hidden=(512, 256), dropout=0.2, lr=1e-3,
               weight_decay=0.01, batch_size=128, max_epochs=60, eval_every=5,
-              min_fraction=0.001, seed=0, n_threads=6, on_checkpoint=None):
+              min_fraction=0.001, seed=0, n_threads=6, on_checkpoint=None,
+              schedule="constant", stop_epoch=None):
     """Train on standardized training-fold betas `Zs` (n, F) and labels 0..K-1.
 
     `on_checkpoint(epoch, net)` is called every `eval_every` epochs and after
     the last one; that is how held-out scores are recorded along the way.
-    Returns the trained network.
+
+    schedule="cosine" lowers the learning rate smoothly from `lr` to zero over
+    `max_epochs`, so the last epochs make small, steady adjustments.
+    `stop_epoch` ends training early while keeping the schedule of the full
+    `max_epochs` run (used to refit a model for a number of epochs chosen
+    from inner-fold scores). Returns the trained network.
     """
     import torch
     torch.set_num_threads(int(n_threads))
@@ -86,9 +92,18 @@ def train_mlp(Zs, y_idx, n_classes, *, masked, hidden=(512, 256), dropout=0.2, l
     w = torch.from_numpy(class_weights(np.asarray(y_idx), n_classes))
     net = build_mlp(F, n_classes, hidden, dropout)
     opt = torch.optim.AdamW(net.parameters(), lr=float(lr), weight_decay=float(weight_decay))
+    if schedule not in ("constant", "cosine"):
+        raise SystemExit(f"ERROR: nn: unknown schedule '{schedule}'")
+    sched = None
+    if schedule == "cosine":
+        steps = int(max_epochs) * math.ceil(n / int(batch_size))
+        sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=steps)
+    last_epoch = int(max_epochs) if stop_epoch is None else int(stop_epoch)
+    if not 1 <= last_epoch <= int(max_epochs):
+        raise SystemExit(f"ERROR: nn: stop_epoch must be within 1..{max_epochs}")
     log_min = math.log(float(min_fraction))
     net.train()
-    for epoch in range(1, int(max_epochs) + 1):
+    for epoch in range(1, last_epoch + 1):
         order = torch.randperm(n, generator=g)
         for start in range(0, n, int(batch_size)):
             idx = order[start:start + int(batch_size)]
@@ -102,6 +117,8 @@ def train_mlp(Zs, y_idx, n_classes, *, masked, hidden=(512, 256), dropout=0.2, l
             loss = torch.nn.functional.cross_entropy(net(make_input(xb, obs)), y[idx], weight=w)
             loss.backward()
             opt.step()
-        if on_checkpoint is not None and (epoch % int(eval_every) == 0 or epoch == max_epochs):
+            if sched is not None:
+                sched.step()
+        if on_checkpoint is not None and (epoch % int(eval_every) == 0 or epoch == last_epoch):
             on_checkpoint(epoch, net)
     return net
