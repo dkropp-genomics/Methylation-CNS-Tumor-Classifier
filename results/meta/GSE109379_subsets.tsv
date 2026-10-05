@@ -1,0 +1,1105 @@
+geo_accession	sentrix	mc_class	capper_score	capper_interpretation	label_source	kept_qc	capper_matched	path_concordant	capper_no_match
+GSM2940725	10003886252_R05C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940726	10003886252_R06C02	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940727	10003886253_R03C02	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940728	10003886253_R04C01	A IDH	0.954	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940729	10003886253_R04C02	GBM, MYCN	0.905	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940730	10003886256_R01C01	PITAD, FSH LH	0.981	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940731	10003886256_R02C02	LGG, PA PF	0.949	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940732	10003886256_R05C02	GBM, RTK II	0.987	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940733	10003886256_R06C01	MNG	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940734	10003886258_R01C01	GBM, MES	0.994	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940735	10003886258_R01C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940736	10003886258_R03C02	GBM, MES	0.983	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940737	10003886258_R04C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940738	10003886258_R05C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940739	10003886258_R06C02	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940740	10003886259_R01C01	GBM, RTK I	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940741	10006823022_R04C02	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940742	10006823022_R05C02	GBM, RTK II	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940743	10006823022_R06C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940744	10006823024_R01C01	MNG	0.988	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940745	10006823024_R02C01	A IDH	0.966	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940746	10006823024_R02C02	LGG, PA PF	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940747	10006823024_R03C01	DMG, K27	0.202	no match to established class	no match, family only	True	False	False	True
+GSM2940748	10006823024_R04C01	MB, SHH INF	0.995	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940749	10006823024_R04C02	GBM, MES	0.694	no match to established class	no match, family only	True	False	False	True
+GSM2940750	10006823024_R05C02	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940751	10006823024_R06C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940752	10006823069_R01C01	DMG, K27	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940753	10006823069_R01C02	EPN, PF A	0.752	no match to established class	no match, class named	True	False	False	True
+GSM2940754	10006823069_R02C02	EPN, RELA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940755	10006823069_R03C01	O IDH	0.991	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940756	10006823069_R04C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940757	10006823069_R05C01	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940758	10006823071_R01C01	O IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940759	10006823071_R01C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940760	10006823071_R02C01	A IDH, HG	0.636	no match to established class	no match, family only	True	False	False	True
+GSM2940761	10006823071_R03C01	DMG, K27	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940762	10006823071_R05C01	SCHW, MEL	0.228	no match to established class	no match, family only	True	False	False	True
+GSM2940763	10006823071_R06C01	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940764	10006823122_R03C01	GBM, MES	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940765	10006823122_R04C01	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940766	10006823123_R01C02	MNG	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940767	10006823123_R02C02	GBM, RTK II	0.995	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940768	10006823123_R03C02	LGG, PA PF	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940769	10006823123_R04C02	GBM, RTK II	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940770	10006823123_R05C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940771	10006823130_R01C01	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940772	10006823130_R01C02	GBM, MES	0.991	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940773	10006823130_R02C02	EPN, PF A	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940774	10006823130_R05C02	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940775	10006823130_R06C02	GBM, MES	0.976	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940776	10006823132_R05C02	EPN, PF A	0.996	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940777	10006823133_R01C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940778	10006823141_R02C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940779	10006823141_R03C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940780	10006823141_R04C01	EPN, PF A	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940781	10006823141_R06C01	MELCYT	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940782	10006823143_R06C02	PXA	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940783	10006823144_R01C01	LGG, PA/GG ST	0.918	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940784	10006823144_R02C02	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940785	10006823144_R03C01	O IDH	0.983	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940786	10006823144_R04C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940787	10006823144_R04C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940788	10006823144_R05C01	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940789	10006823144_R05C02	LGG, PA PF	0.938	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940790	10006823155_R01C01	PLEX, PED B	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940791	10006823155_R01C02	A IDH	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940792	10006823155_R03C01	ANA PA	0.962	misleading profile	matched, class named	True	True	False	False
+GSM2940793	10006823155_R05C02	DMG, K27	0.948	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940794	10006823155_R06C02	MNG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940795	10006823160_R01C01	CHORDM	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940796	10006823160_R01C02	CNS NB, FOXR2	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940797	10006823160_R02C01	MB, G4	0.242	no match to established class	no match, family only	True	False	False	True
+GSM2940798	10006823160_R02C02	CNS NB, FOXR2	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940799	10006823160_R03C01	LGG, PA/GG ST	0.635	no match to established class	no match, family only	True	False	False	True
+GSM2940800	10006823165_R03C01	MB, G4	0.803	no match to established class	no match, family only	True	False	False	True
+GSM2940801	101178130116_R03C02	PXA	0.494	no match to established class	no match, class named	True	False	False	True
+GSM2940802	101178130116_R06C01	LGG, DNT	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940803	101178130118_R01C01	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940804	101178130118_R02C01	MELAN	0.202	no match to established class	no match, class named	True	False	False	True
+GSM2940805	101231000009_R02C01	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940806	101231000009_R03C01	GBM, RTK II	0.848	no match to established class	no match, family only	True	False	False	True
+GSM2940807	101231000009_R04C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940808	101231000009_R05C01	GBM, RTK I	0.984	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940809	101231000014_R02C01	O IDH	0.939	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940810	101231000014_R04C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940811	101231000014_R04C02	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940812	200277210030_R05C01	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940813	200277210056_R01C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940814	200277210056_R02C01	ANA PA	0.986	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940815	200277210056_R03C01	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940816	200277210056_R03C02	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940817	200277210056_R04C01	MB, SHH CHL AD	0.951	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940818	200277210056_R04C02	GBM, MYCN	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940819	200277210056_R05C01	MB, G3	0.509	no match to established class	no match, family only	True	False	False	True
+GSM2940820	200277210056_R05C02	GBM, RTK I	0.962	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940821	200277210056_R06C01	LGG, PA PF	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940822	200277210073_R01C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940823	200277210073_R02C01	EWS	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940824	200325530023_R01C01	CN	0.942	misleading profile	matched, class named	True	True	False	False
+GSM2940825	200325530023_R01C02	EPN, RELA	0.997	establishing new diagnosis	matched, class named	False	True	False	False
+GSM2940826	200325530023_R03C02	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940827	200325530023_R04C02	LGG, PA PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940828	200325530023_R05C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940829	200325530023_R05C02	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940830	200325530023_R06C01	IHG	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940831	200325530023_R06C02	A IDH, HG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940832	200325530024_R01C01	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940833	200325530024_R01C02	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940834	200325530024_R02C01	LGG, DNT	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940835	200325530024_R02C02	ANA PA	1.0	establishing new diagnosis	matched, class named	False	True	False	False
+GSM2940836	200325530024_R03C01	ANA PA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940837	200325530024_R04C01	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940838	200325530024_R05C01	GBM, MES	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940839	200325530024_R06C01	PXA	0.629	no match to established class	no match, class named	True	False	False	True
+GSM2940840	200325530044_R03C02	A IDH, HG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940841	200325530044_R04C02	MB, SHH INF	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940842	200325530048_R05C01	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940843	200325530103_R01C01	DMG, K27	0.495	no match to established class	no match, class named	True	False	False	True
+GSM2940844	200325530103_R03C02	ANA PA	0.809	no match to established class	no match, class named	True	False	False	True
+GSM2940845	200325530103_R05C02	SUBEPN, SPINE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940846	200325530103_R06C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940847	200325530103_R06C02	PTPR, B	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940848	200325530104_R01C01	ANA PA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940849	200325530104_R02C01	LGG, PA/GG ST	0.951	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940850	200325530166_R01C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940851	200325530166_R02C02	EPN, PF A	0.967	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940852	200325530166_R03C01	MNG	0.981	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940853	200325530166_R04C01	LGG, GG	0.998	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940854	200325530166_R04C02	EPN, PF B	0.973	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940855	200325530166_R05C01	GBM, RTK II	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940856	200325530166_R05C02	GBM, MID	0.935	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940857	200325530166_R06C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940858	200360420061_R05C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940859	200360420061_R06C02	A IDH	0.818	no match to established class	no match, family only	True	False	False	True
+GSM2940860	200360420062_R01C02	DMG, K27	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940861	200360420062_R02C01	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940862	200360420062_R04C01	EPN, SPINE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940863	200360420062_R06C01	GBM, RTK II	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940864	200362700065_R02C02	LGG, PA PF	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940865	200362700065_R03C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940866	200362700065_R05C02	LGG, RGNT	0.108	no match to established class	no match, class named	True	False	False	True
+GSM2940867	200362700194_R01C01	MELAN	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940868	200362700194_R01C02	SCHW	0.263	no match to established class	no match, class named	True	False	False	True
+GSM2940869	200362700194_R04C02	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940870	200362700194_R05C02	MB, G3	0.66	no match to established class	no match, family only	True	False	False	True
+GSM2940871	200362700194_R06C01	PLEX, PED B	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940872	200362700196_R01C02	GBM, MID	0.664	no match to established class	no match, family only	True	False	False	True
+GSM2940873	200362700196_R02C01	LGG, PA PF	0.988	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940874	200362700196_R02C02	PITAD, STH DNS B	0.231	no match to established class	no match, class named	True	False	False	True
+GSM2940875	200362700196_R03C02	PXA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940876	200362700196_R04C01	GBM, MYCN	0.997	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940877	200362700196_R05C01	EPN, PF A	0.998	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940878	200362700196_R05C02	ANA PA	0.986	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940879	200362700196_R06C01	MB, SHH INF	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940880	200362700204_R01C01	ENB, A	0.918	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940881	200362700204_R04C01	EPN, PF A	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940882	200394870010_R01C02	GBM, RTK II	0.95	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940883	200394870010_R03C01	GBM, RTK II	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940884	200394870010_R04C01	LGG, PA PF	0.975	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940885	200394870010_R05C01	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940886	200394870010_R06C01	MB, SHH CHL AD	0.981	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940887	200394870069_R01C02	LGG, PA PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940888	200394870069_R04C01	MB, SHH CHL AD	0.989	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940889	200394870069_R04C02	EPN, PF A	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940890	200394870069_R06C01	LGG, PA PF	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940891	200394870071_R06C01	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940892	200394870072_R01C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940893	200394870113_R05C02	LGG, PA MID	0.993	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940894	200394870113_R06C02	EPN, PF A	0.99	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940895	200394970046_R01C01	ANA PA	0.988	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940896	200394970046_R04C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940897	200394970064_R01C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940898	200394970064_R02C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940899	200394970064_R05C01	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940900	200394970104_R02C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940901	200394970104_R03C01	ATRT, SHH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940902	200394970104_R06C01	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940903	200397540001_R02C02	LGG, DNT	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940904	200397540001_R03C01	EPN, PF A	0.994	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940905	200397540001_R03C02	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940906	200397540001_R04C01	LGG, PA PF	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940907	200397540001_R04C02	EPN, RELA	0.765	no match to established class	no match, class named	True	False	False	True
+GSM2940908	200397540001_R05C01	LGG, RGNT	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940909	200397540001_R06C01	LGG, DNT	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940910	200397540001_R06C02	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940911	200397540002_R01C01	DMG, K27	0.97	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940912	200397540002_R03C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940913	200400320088_R01C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940914	200400320088_R01C02	LIPN	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940915	200400320088_R02C02	SCHW	0.938	confirmation of diagnosis	matched, class named	False	True	True	False
+GSM2940916	200400320088_R03C01	MB, G4	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940917	200400320088_R03C02	GBM, MES	0.943	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940918	200400320088_R04C01	O IDH	0.99	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940919	200400320088_R05C01	MELCYT	0.765	no match to established class	no match, class named	True	False	False	True
+GSM2940920	200400320088_R06C01	PGG, nC	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940921	200406080086_R01C02	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940922	200406080086_R02C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940923	200406080086_R03C01	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940924	200406080086_R04C01	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940925	200406080086_R05C01	MB, SHH INF	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940926	200406080086_R06C01	ANA PA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940927	200486890026_R01C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940928	200486890026_R01C02	GBM, MES	0.997	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940929	200486890026_R02C01	PITAD, ACTH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940930	200486890026_R02C02	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940931	200486890026_R04C01	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940932	3998523002_R05C02	GBM, MES	0.977	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940933	3998523018_R02C01	MB, SHH CHL AD	0.99	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940934	3998523018_R02C02	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940935	3998523018_R03C01	EPN, MPE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940936	3998523018_R03C02	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940937	3998523018_R04C01	O IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940938	3998523018_R04C02	GBM, RTK I	0.531	no match to established class	no match, family only	True	False	False	True
+GSM2940939	3998523018_R05C01	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940940	3998523018_R05C02	A IDH, HG	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940941	3998523019_R03C02	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940942	3998523022_R02C02	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940943	3998523022_R04C02	A IDH, HG	0.991	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940944	3998523022_R05C02	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940945	3998523022_R06C02	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940946	3998523030_R01C01	LGG, PA PF	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940947	3998523030_R01C02	A IDH	0.939	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940948	3998523030_R02C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940949	3998523030_R02C02	GBM, RTK I	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940950	3998523030_R03C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940951	3998523030_R04C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940952	3998523030_R04C02	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940953	3998523030_R05C01	PXA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940954	3998523030_R05C02	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940955	3998523030_R06C01	PIN T, PPT	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940956	3998523030_R06C02	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940957	3998523031_R01C01	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940958	3998523031_R02C01	MB, SHH CHL AD	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940959	3998523031_R04C02	A IDH, HG	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940960	3998523031_R06C02	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940961	3998523032_R02C01	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940962	3998523032_R02C02	EPN, PF A	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940963	3998523032_R03C01	SUBEPN, SPINE	0.091	no match to established class	no match, class named	True	False	False	True
+GSM2940964	3998523032_R05C01	LGG, PA PF	0.99	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940965	3998523056_R01C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940966	3998523056_R01C02	A IDH, HG	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940967	3998523056_R02C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940968	3998523056_R02C02	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940969	3998523056_R03C01	MB, SHH INF	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940970	3998523056_R03C02	A IDH, HG	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940971	3998523056_R05C02	GBM, MES	0.9	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940972	3998523056_R06C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940973	3998523056_R06C02	SUBEPN, ST	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940974	3998523057_R01C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940975	3998523057_R01C02	MNG	0.848	no match to established class	no match, class named	True	False	False	True
+GSM2940976	3998523057_R02C01	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940977	3998523057_R02C02	LGG, PA/GG ST	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940978	3998523057_R04C01	A IDH	0.989	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940979	3998523057_R05C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940980	3998523057_R05C02	MELCYT	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940981	3998523057_R06C01	O IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940982	3998523057_R06C02	EPN, RELA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940983	3998523058_R01C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940984	3998523058_R02C01	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940985	3998523058_R03C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940986	3998546128_R01C02	GBM, MYCN	0.998	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940987	3998546128_R02C01	A IDH, HG	0.383	no match to established class	no match, family only	True	False	False	True
+GSM2940988	3998546128_R02C02	GBM, MID	0.99	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940989	3998546128_R03C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940990	3998546128_R03C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940991	3998546128_R04C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940992	3998546128_R04C02	LGG, PA MID	0.598	no match to established class	no match, family only	True	False	False	True
+GSM2940993	3998546128_R05C01	EPN, RELA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940994	3998546128_R06C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940995	3998546129_R01C01	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940996	3998546129_R01C02	EPN, PF A	0.994	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2940997	3998546129_R02C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2940998	3998546129_R02C02	PXA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2940999	3998546129_R03C01	LGG, MYB	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941000	3998546129_R03C02	A IDH, HG	0.968	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941001	3998546129_R04C01	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941002	3998546129_R04C02	GBM, RTK I	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941003	3998546129_R05C01	MB, SHH INF	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941004	3998546129_R05C02	A IDH, HG	0.545	no match to established class	no match, family only	True	False	False	True
+GSM2941005	3998546129_R06C01	A IDH	0.976	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941006	3998546129_R06C02	MB, SHH CHL AD	0.97	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941007	3998546133_R01C01	GBM, MES	0.942	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941008	3998546133_R03C01	GBM, RTK I	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941009	3998546133_R04C01	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941010	3998546133_R05C01	MNG	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941011	3998567085_R01C02	HGNET, MN1	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941012	3998567085_R02C02	O IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941013	3998567085_R03C01	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941014	3998567085_R04C01	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941015	3998567085_R04C02	GBM, MES	0.926	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941016	3998567085_R05C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941017	3998567085_R06C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941018	3998567087_R02C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941019	3998567087_R03C02	LGG, PA PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941020	3998567087_R04C01	GBM, MES	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941021	3998567087_R04C02	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941022	3998567087_R05C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941023	3998567087_R06C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941024	3998567087_R06C02	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941025	3998567088_R02C01	LGG, PA PF	0.994	misleading profile	matched, class named	True	True	False	False
+GSM2941026	3998567088_R03C01	A IDH	0.977	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941027	3998567088_R04C01	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941028	3998567088_R05C01	DMG, K27	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941029	3998568127_R04C02	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941030	3998568127_R05C02	EWS	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941031	3998568129_R03C02	PXA	0.191	no match to established class	no match, class named	True	False	False	True
+GSM2941032	3998568154_R03C01	PXA	0.883	no match to established class	no match, class named	True	False	False	True
+GSM2941033	3998568166_R01C01	GBM, RTK II	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941034	3998568166_R01C02	LGG, PA PF	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941035	3998568166_R02C02	EPN, PF A	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941036	3998568166_R03C01	GBM, RTK II	0.998	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941037	3998568166_R03C02	MNG	0.079	no match to established class	no match, family only	True	False	False	True
+GSM2941038	3998568166_R05C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941039	3998568166_R05C02	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941040	3998568166_R06C01	SCHW, MEL	0.191	no match to established class	no match, class named	True	False	False	True
+GSM2941041	3998568166_R06C02	O IDH	0.985	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941042	3998568167_R01C01	DMG, K27	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941043	3998568167_R02C01	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941044	3998568167_R03C01	MB, SHH CHL AD	0.871	no match to established class	no match, family only	True	False	False	True
+GSM2941045	3998568167_R04C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941046	3998909013_R02C02	GBM, RTK I	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941047	3998909026_R03C02	LGG, GG	0.691	no match to established class	no match, class named	True	False	False	True
+GSM2941048	3998909026_R04C01	LGG, MYB	0.403	no match to established class	no match, class named	True	False	False	True
+GSM2941049	3998909026_R05C01	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941050	3998909026_R05C02	ANA PA	0.624	no match to established class	no match, class named	True	False	False	True
+GSM2941051	3998909026_R06C01	A IDH	0.956	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941052	3998909027_R03C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941053	3998909027_R04C01	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941054	3998909027_R05C01	LGG, PA PF	0.982	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941055	3998909027_R06C02	DMG, K27	0.692	no match to established class	no match, class named	True	False	False	True
+GSM2941056	3998909050_R03C02	MNG	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941057	3998909050_R04C02	IHG	0.31	no match to established class	no match, class named	True	False	False	True
+GSM2941058	3998909050_R05C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941059	3998909051_R01C01	MB, SHH CHL AD	0.991	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941060	3998909051_R03C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941061	3998909051_R04C01	HGNET, BCOR	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941062	3998909051_R04C02	EPN, PF B	0.995	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941063	3998909062_R01C01	PXA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941064	3998909062_R01C02	O IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941065	3998909062_R02C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941066	3998909062_R02C02	A IDH	0.978	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941067	3998909062_R03C01	O IDH	0.973	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941068	3998909062_R04C01	SUBEPN, PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941069	3998909063_R01C02	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941070	3998909063_R04C02	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941071	3998909070_R02C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941072	3998909070_R03C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941073	3998909070_R04C02	O IDH	0.99	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941074	3998909072_R01C02	GBM, RTK I	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941075	3998909072_R02C02	A IDH	0.642	no match to established class	no match, family only	True	False	False	True
+GSM2941076	3998909072_R03C02	GBM, MYCN	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941077	3998909072_R04C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941078	3998909072_R04C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941079	3998909072_R05C01	LGG, PA MID	0.996	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941080	3998909072_R05C02	EPN, PF A	0.95	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941081	3998909072_R06C01	A IDH, HG	0.91	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941082	3998909072_R06C02	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941083	3998909073_R01C01	MB, SHH CHL AD	0.979	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941084	3998909073_R02C01	EPN, RELA	0.138	no match to established class	no match, class named	True	False	False	True
+GSM2941085	3998909075_R02C02	GBM, MID	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941086	3998909075_R03C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941087	3998909075_R04C02	PXA	0.978	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941088	3998909075_R05C02	PXA	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941089	3998909089_R01C02	MELAN	0.351	no match to established class	no match, class named	True	False	False	True
+GSM2941090	3998909089_R02C01	IHG	0.55	no match to established class	no match, class named	True	False	False	True
+GSM2941091	3998909089_R02C02	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941092	3998909089_R05C01	O IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941093	3998909174_R03C02	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941094	3998909174_R04C02	GBM, RTK II	0.959	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941095	3998909181_R01C01	MB, SHH INF	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941096	3998909181_R01C02	ETMR	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941097	3998909181_R02C01	LGG, PA/GG ST	0.978	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941098	3998909181_R02C02	A IDH, HG	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941099	3998909181_R03C02	GBM, MES	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941100	3998909181_R04C01	ANA PA	0.982	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941101	3998909181_R05C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941102	3998909182_R02C01	EPN, SPINE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941103	3998909182_R03C01	HGNET, MN1	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941104	3998909182_R03C02	DLGNT	0.767	no match to established class	no match, class named	True	False	False	True
+GSM2941105	3998909182_R04C02	GBM, MID	0.949	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941106	3998909182_R05C01	GBM, MES	0.614	no match to established class	no match, family only	True	False	False	True
+GSM2941107	3998909182_R05C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941108	3998909182_R06C02	GBM, RTK II	0.911	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941109	3998909193_R01C01	DLGNT	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941110	3998919099_R01C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941111	3998919099_R02C02	LGG, PA/GG ST	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941112	3998919099_R03C01	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941113	3998919099_R03C02	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941114	3998919099_R05C02	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941115	3998919099_R06C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941116	3998920094_R01C01	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941117	3998920094_R02C01	GBM, RTK II	0.816	no match to established class	no match, family only	True	False	False	True
+GSM2941118	3998920120_R01C01	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941119	3998920120_R02C01	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941120	3998920120_R03C01	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941121	3998920120_R04C01	A IDH, HG	0.749	no match to established class	no match, family only	True	False	False	True
+GSM2941122	3998920120_R06C01	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941123	3998920147_R01C02	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941124	3998920147_R03C02	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941125	3998920147_R04C02	LGG, DNT	0.923	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941126	3998998159_R01C02	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941127	3998998159_R02C02	A IDH, HG	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941128	3998998159_R03C01	GBM, MYCN	0.575	no match to established class	no match, family only	True	False	False	True
+GSM2941129	3998998159_R03C02	MB, WNT	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941130	3998998159_R04C01	MB, WNT	0.953	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941131	3998998159_R04C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941132	3998998159_R05C01	GBM, RTK I	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941133	3998998159_R05C02	PXA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941134	3998998159_R06C01	PXA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941135	3998998159_R06C02	PXA	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941136	3998998164_R01C02	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941137	3998998164_R02C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941138	3998998164_R02C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941139	3998998164_R03C02	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941140	3998998164_R05C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941141	3998998164_R06C01	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941142	3998998164_R06C02	EPN, MPE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941143	3998998187_R02C01	GBM, RTK III	0.994	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941144	3998998187_R04C01	EPN, PF A	0.961	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941145	3998998187_R05C01	EPN, MPE	1.0	establishing new diagnosis	matched, class named	False	True	False	False
+GSM2941146	3999002043_R03C02	EPN, MPE	0.36	no match to established class	no match, class named	True	False	False	True
+GSM2941147	3999002044_R01C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941148	3999002044_R02C01	LGG, PA/GG ST	0.931	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941149	3999002044_R02C02	MNG	0.837	no match to established class	no match, class named	True	False	False	True
+GSM2941150	3999002044_R03C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941151	3999002044_R03C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941152	3999002044_R04C02	A IDH, HG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941153	3999002044_R05C01	ANA PA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941154	3999002044_R05C02	O IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941155	3999002044_R06C01	LGG, GG	0.998	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941156	3999002049_R01C01	GBM, MES	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941157	3999002049_R01C02	MNG	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941158	3999002049_R02C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941159	3999002049_R03C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941160	3999002049_R04C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941161	3999002049_R05C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941162	3999002049_R06C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941163	3999002051_R02C01	A IDH	0.997	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941164	3999002051_R02C02	GBM, RTK I	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941165	3999078079_R01C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941166	3999078079_R01C02	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941167	3999078079_R02C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941168	3999078079_R03C02	ATRT, SHH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941169	3999078079_R05C01	EPN, PF A	0.989	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941170	3999078079_R06C02	MB, WNT	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941171	3999078080_R04C02	GBM, RTK II	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941172	3999078080_R05C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941173	3999078080_R06C02	HGNET, BCOR	0.998	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941174	3999078119_R01C01	GBM, RTK III	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941175	3999078119_R03C02	LGG, PA PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941176	3999078119_R05C02	GBM, MES	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941177	3999078119_R06C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941178	3999078120_R02C02	GBM, G34	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941179	3999078120_R03C01	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941180	3999078120_R04C02	LGG, PA PF	0.782	no match to established class	no match, family only	True	False	False	True
+GSM2941181	3999078120_R05C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941182	3999078120_R05C02	EPN, RELA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941183	3999078120_R06C02	LGG, PA PF	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941184	3999078123_R01C01	A IDH	0.99	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941185	3999078123_R01C02	MB, SHH CHL AD	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941186	3999078123_R02C01	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941187	3999078123_R02C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941188	3999078123_R03C01	ETMR	0.914	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941189	3999078123_R05C01	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941190	3999078159_R02C01	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941191	3999078159_R03C01	PITAD, TSH	0.675	no match to established class	no match, class named	True	False	False	True
+GSM2941192	3999078159_R05C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941193	3999078159_R06C01	GBM, MYCN	0.745	no match to established class	no match, family only	True	False	False	True
+GSM2941194	3999078159_R06C02	PTPR, A	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941195	3999095103_R01C02	LGG, PA PF	0.979	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941196	3999095103_R04C01	A IDH, HG	0.991	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941197	3999095103_R04C02	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941198	3999095103_R05C01	EPN, RELA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941199	3999095103_R06C01	LGG, PA PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941200	3999095103_R06C02	LGG, PA/GG ST	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941201	3999095104_R01C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941202	3999095104_R03C01	HMB	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941203	3999095104_R04C01	A IDH, HG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941204	3999095104_R04C02	EPN, RELA	0.667	no match to established class	no match, class named	True	False	False	True
+GSM2941205	3999095104_R05C02	EPN, PF B	0.996	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941206	3999095104_R06C01	LGG, MYB	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941207	3999095105_R01C01	O IDH	0.951	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941208	3999100043_R04C01	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941209	3999100091_R06C02	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941210	3999100100_R03C02	GBM, RTK II	0.969	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941211	3999100100_R04C02	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941212	3999100100_R05C01	ANA PA	0.258	no match to established class	no match, family only	True	False	False	True
+GSM2941213	3999100100_R05C02	SFT HMPC	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941214	3999100101_R02C01	MB, G3	0.942	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941215	3999100101_R03C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941216	3999100101_R05C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941217	3999100101_R06C01	ATRT, SHH	0.226	no match to established class	no match, family only	True	False	False	True
+GSM2941218	3999100101_R06C02	GBM, RTK I	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941219	3999543042_R03C01	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941220	3999543042_R05C02	LGG, PA/GG ST	0.597	no match to established class	no match, family only	True	False	False	True
+GSM2941221	3999543042_R06C02	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941222	3999543050_R01C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941223	3999543050_R02C01	EPN, PF B	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941224	3999543050_R03C02	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941225	3999543050_R04C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941226	3999543050_R05C02	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941227	3999543050_R06C02	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941228	3999543051_R03C01	MNG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941229	3999543051_R04C01	MELAN	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941230	3999543051_R05C02	EPN, MPE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941231	3999543051_R06C02	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941232	3999547142_R01C01	ATRT, MYC	0.938	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941233	3999547142_R01C02	GBM, MYCN	0.619	no match to established class	no match, family only	True	False	False	True
+GSM2941234	3999547142_R03C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941235	3999547142_R04C02	DMG, K27	0.516	no match to established class	no match, class named	True	False	False	True
+GSM2941236	3999547142_R05C02	EPN, RELA	0.365	no match to established class	no match, class named	True	False	False	True
+GSM2941237	3999547142_R06C02	EPN, PF B	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941238	3999834001_R01C02	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941239	3999834001_R02C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941240	3999834001_R03C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941241	3999834001_R06C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941242	3999834002_R04C02	LGG, PA PF	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941243	3999834002_R06C02	LGG, PA/GG ST	0.977	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941244	3999834003_R01C02	GBM, MES	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941245	3999834003_R06C02	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941246	3999834021_R03C01	DMG, K27	0.993	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941247	3999834063_R01C02	A IDH, HG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941248	3999834063_R03C01	O IDH	0.982	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941249	3999834067_R01C01	IHG	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941250	3999834067_R01C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941251	3999834067_R02C02	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941252	3999834067_R04C01	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941253	3999834067_R05C02	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941254	3999834068_R01C01	ATRT, SHH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941255	3999834068_R01C02	SCHW	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941256	3999834068_R02C01	IHG	0.991	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941257	3999834068_R04C01	GBM, MYCN	0.54	no match to established class	no match, family only	True	False	False	True
+GSM2941258	3999834068_R04C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941259	3999834068_R05C02	A IDH	0.988	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941260	3999834068_R06C01	GBM, RTK II	0.822	no match to established class	no match, family only	True	False	False	True
+GSM2941261	3999834068_R06C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941262	3999834070_R02C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941263	3999834070_R03C01	MNG	0.921	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941264	3999834070_R03C02	MNG	0.954	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941265	3999834070_R04C01	PXA	0.986	misleading profile	matched, class named	True	True	False	False
+GSM2941266	3999834070_R05C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941267	3999834070_R06C01	GBM, RTK II	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941268	3999834093_R05C02	GBM, MES	0.994	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941269	3999834094_R02C02	A IDH	0.985	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941270	3999834094_R03C01	GBM, RTK II	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941271	3999834098_R02C02	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941272	3999834098_R04C01	MB, G4	0.998	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941273	3999834100_R02C02	PXA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941274	3999834104_R02C02	O IDH	0.993	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941275	3999834104_R03C01	GBM, MES	0.799	no match to established class	no match, family only	True	False	False	True
+GSM2941276	3999834105_R03C02	MB, SHH CHL AD	0.973	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941277	3999834105_R04C02	MNG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941278	3999834105_R05C02	LGG, PA/GG ST	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941279	3999834105_R06C02	MB, WNT	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941280	3999834115_R01C01	EPN, RELA	0.522	no match to established class	no match, class named	True	False	False	True
+GSM2941281	3999834115_R02C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941282	3999834115_R03C01	ANA PA	0.955	misleading profile	matched, class named	True	True	False	False
+GSM2941283	3999834118_R02C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941284	3999834118_R05C02	GBM, MES	0.98	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941285	3999834120_R01C01	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941286	3999834120_R02C01	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941287	3999875055_R05C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941288	3999875055_R06C01	GBM, MES	0.909	confirmation of diagnosis	matched, class named	False	True	True	False
+GSM2941289	3999875055_R06C02	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941290	3999875056_R01C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941291	3999875056_R01C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941292	3999875056_R02C01	GBM, RTK II	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941293	3999875056_R02C02	GBM, MES	0.955	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941294	3999875056_R03C01	O IDH	0.989	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941295	3999875056_R06C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941296	3999875057_R02C01	GBM, MES	0.909	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941297	3999875057_R03C01	DMG, K27	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941298	3999875071_R01C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941299	3999875071_R02C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941300	3999875071_R04C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941301	3999875071_R04C02	A IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941302	3999875071_R05C01	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941303	3999875071_R05C02	MNG	0.127	no match to established class	no match, class named	True	False	False	True
+GSM2941304	3999875071_R06C01	O IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941305	3999875073_R01C02	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941306	3999875073_R02C02	LGG, PA/GG ST	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941307	3999875073_R03C01	A IDH, HG	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941308	3999875073_R04C01	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941309	3999875073_R05C02	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941310	3999875073_R06C02	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941311	3999875076_R01C01	DMG, K27	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941312	3999875076_R01C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941313	3999875076_R02C02	HMB	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941314	3999875076_R04C01	MB, SHH INF	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941315	3999875076_R05C01	EPN, SPINE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941316	9007225144_R06C01	LGG, DNT	0.692	no match to established class	no match, class named	True	False	False	True
+GSM2941317	9020331028_R04C01	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941318	9296930017_R06C02	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941319	9297949046_R04C01	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941320	9297949046_R05C01	GBM, RTK II	0.571	no match to established class	no match, family only	True	False	False	True
+GSM2941321	9297949139_R05C02	GBM, RTK III	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941322	9297949139_R06C02	MB, SHH CHL AD	0.989	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941323	9305216168_R06C02	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941324	9305651060_R04C02	ATRT, SHH	0.992	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941325	9305651060_R06C02	GBM, MES	0.962	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941326	9305651095_R03C02	ANA PA	0.723	no match to established class	no match, class named	True	False	False	True
+GSM2941327	9305651095_R06C01	MB, G4	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941328	9305651146_R01C01	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941329	9305651146_R04C01	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941330	9340996003_R03C02	MB, SHH INF	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941331	9340996058_R01C01	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941332	9340996058_R02C01	EPN, PF A	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941333	9340996058_R05C01	MB, SHH CHL AD	0.998	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941334	9340996058_R06C01	EPN, RELA	0.99	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941335	9370847051_R01C02	GBM, RTK II	0.975	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941336	9370847051_R02C02	GBM, RTK II	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941337	9370847051_R04C02	CN	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941338	9373550131_R02C01	GBM, MES	0.747	no match to established class	no match, family only	True	False	False	True
+GSM2941339	9373550131_R03C02	LGG, PA/GG ST	0.648	no match to established class	no match, family only	True	False	False	True
+GSM2941340	9373550131_R04C01	EPN, PF A	0.369	no match to established class	no match, class named	True	False	False	True
+GSM2941341	9373550131_R04C02	LGG, PA PF	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941342	9373550131_R05C01	LGG, PA PF	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941343	9373551039_R04C01	A IDH	0.81	no match to established class	no match, family only	True	False	False	True
+GSM2941344	9373551042_R04C02	GBM, MES	0.606	no match to established class	no match, family only	True	False	False	True
+GSM2941345	9373551042_R05C02	GBM, RTK II	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941346	9373551108_R01C01	MB, G3	0.998	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941347	9373551108_R03C01	MB, SHH CHL AD	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941348	9374342010_R02C01	HGNET, BCOR	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941349	9374342010_R04C01	A IDH	0.988	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941350	9374342010_R05C01	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941351	9374342010_R06C02	MB, SHH CHL AD	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941352	9376561022_R03C02	EPN, PF A	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941353	9376561022_R05C02	LGG, RGNT	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941354	9376561022_R06C02	EPN, PF A	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941355	9376561024_R04C01	EPN, RELA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941356	9376561024_R05C01	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941357	9376561042_R06C02	DMG, K27	0.976	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941358	9376561062_R01C01	LGG, PA MID	0.99	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941359	9376561062_R02C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941360	9376561062_R03C01	A IDH, HG	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941361	9376561062_R06C01	LGG, DNT	0.552	no match to established class	no match, class named	True	False	False	True
+GSM2941362	9379082039_R01C02	MNG	0.995	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941363	9379082039_R04C01	GBM, RTK II	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941364	9379082092_R01C02	HGNET, MN1	0.068	no match to established class	no match, family only	True	False	False	True
+GSM2941365	9379082092_R04C01	GBM, RTK I	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941366	9379082092_R04C02	DMG, K27	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941367	9379082092_R05C02	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941368	9379086132_R02C01	GBM, MYCN	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941369	9379086132_R04C01	HGNET, MN1	0.408	no match to established class	no match, class named	True	False	False	True
+GSM2941370	9379086132_R05C01	CNS NB, FOXR2	0.998	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941371	9406921039_R03C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941372	9406921039_R05C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941373	9406921039_R06C02	GBM, RTK II	0.998	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941374	9406921070_R01C01	A IDH	0.988	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941375	9406921070_R02C02	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941376	9406921070_R04C01	LGG, MYB	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941377	9406921070_R05C01	LGG, PA/GG ST	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941378	9406921148_R01C01	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941379	9406921148_R02C01	EPN, PF A	0.772	no match to established class	no match, class named	True	False	False	True
+GSM2941380	9406921148_R04C01	PIN T, PB B	0.337	no match to established class	no match, class named	True	False	False	True
+GSM2941381	9406921148_R05C01	A IDH	0.993	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941382	9406921148_R06C02	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941383	9406921149_R01C01	DLGNT	0.948	misleading profile	matched, class named	True	True	False	False
+GSM2941384	9406921149_R03C01	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941385	9406922161_R01C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941386	9406922161_R01C02	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941387	9406922161_R03C01	O IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941388	9407201028_R04C02	EPN, RELA	0.133	no match to established class	no match, family only	True	False	False	True
+GSM2941389	9407201029_R01C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941390	9407201029_R02C02	LGG, GG	0.998	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941391	9407201030_R02C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941392	9407201030_R04C01	MB, WNT	0.496	no match to established class	no match, class named	True	False	False	True
+GSM2941393	9407201030_R05C01	PXA	0.816	no match to established class	no match, class named	True	False	False	True
+GSM2941394	9407201030_R06C01	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941395	9407210090_R06C02	MB, G4	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941396	9420867051_R01C01	EWS	0.09	no match to established class	no match, class named	True	False	False	True
+GSM2941397	9420867051_R03C01	LGG, PA PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941398	9420867051_R04C01	GBM, RTK III	0.949	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941399	9420867051_R05C01	EPN, PF A	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941400	9420867051_R06C01	ATRT, TYR	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941401	9420867121_R02C02	GBM, MES	0.992	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941402	9420867121_R03C02	GBM, RTK II	0.535	no match to established class	no match, family only	True	False	False	True
+GSM2941403	9420867121_R05C02	EPN, MPE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941404	9420867121_R06C02	LGG, PA PF	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941405	9420867122_R01C02	A IDH	0.994	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941406	9422491056_R02C01	GBM, RTK II	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941407	9422493146_R04C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941408	9422493151_R05C02	EPN, PF B	0.451	no match to established class	no match, class named	True	False	False	True
+GSM2941409	9422493151_R06C01	MB, G4	0.969	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941410	9426021175_R01C02	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941411	9426021175_R03C02	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941412	9426021175_R05C01	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941413	9444374133_R03C02	LGG, PA/GG ST	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941414	9444374133_R04C01	GBM, RTK III	0.64	no match to established class	no match, family only	True	False	False	True
+GSM2941415	9444374134_R01C02	LGG, DNT	0.959	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941416	9444374134_R06C01	MB, WNT	0.122	no match to established class	no match, class named	True	False	False	True
+GSM2941417	9444374168_R04C02	DMG, K27	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941418	9444375028_R01C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941419	9444375028_R03C02	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941420	9444375028_R04C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941421	9444375028_R06C01	A IDH	0.982	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941422	9444375033_R04C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941423	9444375033_R06C02	SFT HMPC	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941424	9444375037_R01C01	GBM, MYCN	0.44	no match to established class	no match, family only	True	False	False	True
+GSM2941425	9444375037_R05C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941426	9444375037_R06C02	LGG, PA PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941427	9444375113_R01C01	GBM, RTK I	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941428	9444375113_R02C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941429	9444375114_R04C02	MB, SHH INF	0.577	no match to established class	no match, family only	True	False	False	True
+GSM2941430	9444375114_R05C02	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941431	9444375150_R01C01	MB, WNT	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941432	9444375150_R02C01	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941433	9444375150_R04C01	MB, SHH CHL AD	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941434	9444375150_R06C01	LGG, PA PF	0.573	no match to established class	no match, family only	True	False	False	True
+GSM2941435	9513149129_R01C01	MB, G4	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941436	9513149129_R01C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941437	9513149129_R02C01	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941438	9513149129_R03C01	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941439	9513149129_R03C02	GBM, MES	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941440	9513149129_R04C01	A IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941441	9513149129_R04C02	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941442	9513149129_R06C01	LGG, PA/GG ST	0.995	misleading profile	matched, class named	True	True	False	False
+GSM2941443	9533774014_R04C02	DMG, K27	0.934	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941444	9533774014_R05C02	LGG, DNT	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941445	9533774014_R06C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941446	9533774018_R02C02	ETMR	0.989	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941447	9533774021_R01C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941448	9533774021_R02C02	ATRT, MYC	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941449	9533774021_R03C02	EPN, SPINE	0.158	no match to established class	no match, class named	True	False	False	True
+GSM2941450	9533774023_R02C02	GBM, MES	0.956	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941451	9533774023_R05C01	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941452	9533774023_R06C01	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941453	9533774024_R05C01	PLEX, PED B	0.514	no match to established class	no match, family only	True	False	False	True
+GSM2941454	9533774024_R06C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941455	9533774033_R02C02	EPN, PF A	0.988	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941456	9533774033_R03C02	MNG	0.074	no match to established class	no match, class named	True	False	False	True
+GSM2941457	9533774033_R04C02	GBM, MYCN	0.793	no match to established class	no match, family only	True	False	False	True
+GSM2941458	9533774033_R06C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941459	9533774033_R06C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941460	9533774041_R01C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941461	9533774041_R02C01	O IDH	0.99	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941462	9533774088_R02C02	GBM, RTK III	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941463	9533774088_R03C02	GBM, MID	0.968	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941464	9533774088_R04C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941465	9533774088_R05C02	LGG, DNT	0.943	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941466	9533774097_R03C02	MB, SHH INF	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941467	9533774097_R04C01	PXA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941468	9533774097_R05C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941469	9534104007_R01C02	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941470	9534104007_R02C01	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941471	9534104007_R03C01	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941472	9534104007_R05C02	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941473	9534104007_R06C01	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941474	9534104007_R06C02	A IDH	0.994	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941475	9534104008_R01C02	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941476	9534104008_R02C01	LGG, SEGA	0.97	misleading profile	matched, class named	True	True	False	False
+GSM2941477	9534104008_R03C01	LGG, PA PF	0.988	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941478	9534104008_R03C02	GBM, MYCN	0.957	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941479	9534104008_R04C01	MNG	0.38	no match to established class	no match, class named	True	False	False	True
+GSM2941480	9534104008_R05C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941481	9534104008_R06C01	GBM, RTK II	0.824	no match to established class	no match, family only	True	False	False	True
+GSM2941482	9534104010_R04C01	ANA PA	0.474	no match to established class	no match, class named	True	False	False	True
+GSM2941483	9534104010_R04C02	EPN, PF A	0.992	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941484	9534104010_R05C01	GBM, G34	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941485	9534104010_R05C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941486	9553932002_R02C02	PXA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941487	9553932002_R06C02	GBM, MID	0.946	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941488	9553932008_R01C01	GBM, MES	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941489	9553932008_R02C01	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941490	9553932008_R03C02	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941491	9553932008_R04C01	GBM, MID	0.603	no match to established class	no match, family only	True	False	False	True
+GSM2941492	9553932010_R06C02	PXA	0.688	no match to established class	no match, class named	True	False	False	True
+GSM2941493	9553932029_R02C01	GBM, MES	0.925	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941494	9553932030_R01C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941495	9553932030_R03C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941496	9553932030_R06C01	GBM, MYCN	0.939	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941497	9553932054_R01C02	LGG, GG	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941498	9553932054_R02C02	MB, G3	0.994	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941499	9553932054_R03C02	SCHW	0.917	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941500	9553932054_R04C01	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941501	9553932054_R04C02	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941502	9553932054_R05C01	MB, WNT	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941503	9553932054_R05C02	ETMR	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941504	9553932054_R06C01	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941505	9611519030_R05C01	LGG, PA MID	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941506	9611519051_R01C01	GBM, G34	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941507	9611519051_R02C01	EPN, PF A	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941508	9611519051_R05C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941509	9611519051_R06C01	MB, SHH CHL AD	0.951	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941510	9647455131_R05C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941511	9647455131_R06C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941512	9647455233_R01C01	EPN, PF A	0.422	no match to established class	no match, class named	True	False	False	True
+GSM2941513	9647455233_R01C02	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941514	9647455233_R03C01	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941515	9647455233_R04C01	EPN, PF A	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941516	9647455233_R04C02	LGG, PA PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941517	9647455233_R05C02	LGG, MYB	0.998	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941518	9647455233_R06C02	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941519	9721366135_R01C01	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941520	9721366135_R02C01	MB, WNT	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941521	9721366138_R03C02	O IDH	0.991	confirmation of diagnosis	matched, class named	False	True	True	False
+GSM2941522	9721366138_R05C02	ANA PA	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941523	9721366138_R06C02	EPN, PF B	0.427	no match to established class	no match, family only	True	False	False	True
+GSM2941524	9721366149_R01C01	MNG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941525	9721366149_R01C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941526	9721366149_R02C01	EPN, PF A	0.984	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941527	9721366149_R03C02	A IDH, HG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941528	9721366149_R04C01	GBM, MES	0.74	no match to established class	no match, family only	True	False	False	True
+GSM2941529	9721366149_R04C02	SCHW, MEL	0.5	no match to established class	no match, class named	True	False	False	True
+GSM2941530	9721366149_R05C02	EPN, RELA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941531	9721366149_R06C01	A IDH	0.993	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941532	9721366150_R02C01	GBM, RTK II	0.997	confirmation of diagnosis	matched, subclass failed	True	True	True	False
+GSM2941533	9721366150_R02C02	GBM, RTK I	0.998	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941534	9721366150_R03C01	EPN, RELA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941535	9721366150_R05C01	ATRT, TYR	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941536	9721366150_R06C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941537	9741779119_R02C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941538	9741779119_R02C02	GBM, MYCN	0.848	no match to established class	no match, family only	True	False	False	True
+GSM2941539	9741779119_R03C01	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941540	9741779119_R03C02	LGG, PA PF	0.96	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941541	9741779119_R04C01	GBM, RTK I	0.967	confirmation of diagnosis	matched, class named	False	True	True	False
+GSM2941542	9741779119_R04C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941543	9741779119_R05C01	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941544	9741950008_R01C01	CNS NB, FOXR2	0.993	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941545	9741950008_R01C02	CHORDM	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941546	9741950008_R02C01	GBM, MES	0.544	no match to established class	no match, family only	True	False	False	True
+GSM2941547	9741950008_R04C01	LGG, PA/GG ST	0.985	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941548	9741950008_R05C01	MB, G3	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941549	9741950025_R01C02	A IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941550	9741950025_R02C02	MB, SHH CHL AD	0.996	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941551	9741950025_R03C02	PXA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941552	9741950025_R04C01	PXA	0.998	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941553	9741950025_R04C02	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941554	9741950025_R05C02	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941555	9741950025_R06C01	A IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941556	9741950027_R01C01	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941557	9741950085_R01C02	EPN, PF A	0.959	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941558	9741950085_R02C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941559	9741950085_R02C02	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941560	9741950085_R03C01	ANA PA	0.908	misleading profile	matched, class named	True	True	False	False
+GSM2941561	9741950085_R03C02	GBM, RTK I	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941562	9741950085_R04C01	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941563	9741950085_R05C02	A IDH, HG	0.963	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941564	9741950085_R06C02	MB, G3	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941565	9741950095_R01C02	MB, G3	0.993	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941566	9741950095_R02C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941567	9741950095_R02C02	GBM, RTK II	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941568	9741950095_R03C01	GBM, MID	0.571	no match to established class	no match, family only	True	False	False	True
+GSM2941569	9741950095_R03C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941570	9741950095_R04C02	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941571	9741950095_R05C01	LGG, PA MID	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941572	9741950095_R05C02	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941573	9741950149_R01C02	MELAN	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941574	9741950149_R03C02	SCHW	0.985	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941575	9741950149_R04C01	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941576	9741950149_R05C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941577	9741950149_R06C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941578	9741950149_R06C02	SCHW	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941579	9829119119_R02C02	DMG, K27	0.495	no match to established class	no match, class named	True	False	False	True
+GSM2941580	9829119119_R03C01	SCHW, MEL	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941581	9829119119_R04C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941582	9829119119_R05C01	A IDH	0.95	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941583	9829119119_R05C02	O IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941584	9829119119_R06C01	A IDH, HG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941585	9855358001_R02C02	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941586	9855358001_R03C02	MB, G4	0.991	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941587	9855358001_R04C01	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941588	9855358003_R01C01	GBM, MID	0.37	no match to established class	no match, family only	True	False	False	True
+GSM2941589	9855358003_R01C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941590	9855358003_R02C01	MNG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941591	9855358003_R03C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941592	9855358003_R04C01	LGG, DNT	0.412	no match to established class	no match, class named	True	False	False	True
+GSM2941593	9855358026_R02C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941594	9855358026_R02C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941595	9855358026_R04C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941596	9855358026_R05C02	ANA PA	0.453	no match to established class	no match, class named	True	False	False	True
+GSM2941597	9855358026_R06C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941598	9855358027_R03C02	MNG	0.052	no match to established class	no match, family only	True	False	False	True
+GSM2941599	9855358027_R05C02	A IDH, HG	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941600	9855358031_R01C01	LGG, PA PF	0.741	no match to established class	no match, family only	True	False	False	True
+GSM2941601	9855358031_R02C01	GBM, RTK I	0.931	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941602	9855358031_R03C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941603	9855358035_R06C02	MB, SHH INF	0.97	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941604	9855358056_R03C01	GBM, MES	0.912	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941605	9855358056_R03C02	GBM, RTK II	0.971	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941606	9855358056_R06C01	ANA PA	0.98	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941607	9855358058_R01C02	MB, SHH CHL AD	0.995	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941608	9855358058_R02C02	GBM, MES	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941609	9855358058_R03C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941610	9855358058_R04C02	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941611	9855358058_R05C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941612	9878820008_R01C02	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941613	9878820008_R02C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941614	9878820008_R03C01	ANA PA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941615	9878820008_R04C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941616	9878820008_R05C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941617	9878820017_R01C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941618	9878820017_R02C01	GBM, RTK I	0.98	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941619	9878820017_R03C01	ANA PA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941620	9878820017_R06C02	GBM, MID	0.949	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941621	9878820018_R01C02	GBM, RTK I	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941622	9878820018_R02C01	GBM, MID	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941623	9878820018_R02C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941624	9878820018_R04C01	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941625	9878820018_R04C02	GBM, MES	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941626	9878820018_R05C01	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941627	9878820018_R05C02	O IDH	0.98	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941628	9878820021_R01C01	ANA PA	0.806	no match to established class	no match, class named	True	False	False	True
+GSM2941629	9878820021_R01C02	DLGNT	0.987	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941630	9878820021_R02C02	EPN, PF A	0.993	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941631	9878820021_R03C01	ETMR	0.307	no match to established class	no match, class named	True	False	False	True
+GSM2941632	9878820066_R01C01	GBM, MID	0.95	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941633	9878820121_R01C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941634	9878820121_R03C01	PITAD, FSH LH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941635	9878820122_R05C02	LGG, PA PF	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941636	9878820122_R06C02	EPN, PF A	0.938	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941637	9878820123_R03C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941638	9878820123_R03C02	HGNET, MN1	0.447	no match to established class	no match, class named	True	False	False	True
+GSM2941639	9878820123_R05C01	A IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941640	9878820127_R01C02	GBM, RTK II	0.997	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941641	9878820140_R01C01	A IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941642	9878820140_R01C02	EPN, RELA	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941643	9878820140_R02C01	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941644	9878820140_R02C02	MB, SHH CHL AD	0.121	no match to established class	no match, family only	True	False	False	True
+GSM2941645	9878820140_R04C01	GBM, MES	0.954	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941646	9878820140_R05C01	ETMR	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941647	9878820140_R06C02	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941648	9878820156_R01C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941649	9878820156_R01C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941650	9878820156_R02C01	PLEX, PED A	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941651	9878820156_R02C02	GBM, MES	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941652	9878820156_R03C01	A IDH, HG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941653	9878820156_R03C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941654	9878820156_R05C01	GBM, MES	0.786	no match to established class	no match, family only	True	False	False	True
+GSM2941655	9878820156_R05C02	LGG, PA/GG ST	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941656	9878827209_R01C02	MNG	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941657	9878827209_R04C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941658	9878827209_R06C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941659	9878827210_R01C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941660	9878827210_R01C02	GBM, RTK III	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941661	9878827210_R02C01	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941662	9878827210_R02C02	GBM, RTK III	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941663	9878827210_R03C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941664	9878827210_R03C02	O IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941665	9878827210_R04C01	A IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941666	9878827210_R04C02	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941667	9878827210_R05C02	A IDH, HG	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941668	9878827210_R06C01	GBM, RTK III	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941669	9878827225_R01C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941670	9878827225_R01C02	GBM, MID	0.943	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941671	9878827225_R03C02	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941672	9878827225_R04C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941673	9878827225_R06C02	A IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941674	9878827227_R01C01	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941675	9878827227_R02C01	MNG	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941676	9878827227_R02C02	EPN, SPINE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941677	9878827227_R03C02	PLEX, AD	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941678	9878827227_R04C02	EPN, MPE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941679	9878827227_R05C01	EPN, SPINE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941680	9878827227_R06C01	EPN, SPINE	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941681	9878827235_R06C02	MNG	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941682	9878827239_R01C01	MNG	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941683	9878827239_R02C02	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941684	9878827239_R03C01	EPN, MPE	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941685	9878827239_R03C02	LYMPHO	0.512	no match to established class	no match, class named	True	False	False	True
+GSM2941686	9878827239_R05C02	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941687	9878827239_R06C02	GBM, RTK II	0.998	confirmation of diagnosis	matched, subclass failed	True	True	True	False
+GSM2941688	9878827240_R01C01	GBM, RTK II	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941689	9878827240_R01C02	LGG, PA PF	0.969	misleading profile	matched, class named	True	True	False	False
+GSM2941690	9878827240_R05C01	O IDH	0.982	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941691	9878827240_R06C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941692	9968646117_R05C02	LGG, PA PF	0.991	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941693	9968646118_R01C02	MELAN	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941694	9968646118_R02C02	SCHW	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941695	9968646118_R03C01	GBM, MES	0.921	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941696	9968646118_R04C01	GBM, RTK II	0.999	confirmation of diagnosis	matched, subclass failed	True	True	True	False
+GSM2941697	9968646118_R04C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941698	9968646118_R05C01	GBM, MES	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941699	9968646118_R06C01	LGG, PA PF	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941700	9968646118_R06C02	GBM, RTK II	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941701	9968646164_R01C01	GBM, MES	0.948	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941702	9968646164_R01C02	GBM, RTK II	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941703	9968646164_R02C02	GBM, MYCN	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941704	9968646164_R03C02	GBM, RTK II	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941705	9968646164_R05C02	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941706	9968646165_R01C01	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941707	9968646165_R02C02	GBM, MYCN	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941708	9968646165_R03C01	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941709	9968646165_R04C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941710	9968646165_R05C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941711	9968646165_R06C01	MB, G4	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941712	9968646165_R06C02	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941713	9968646167_R01C01	EPN, PF A	0.998	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941714	9968646167_R02C02	LGG, DNT	0.972	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941715	9968646167_R06C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941716	9969477013_R01C02	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941717	9969477013_R02C02	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941718	9969477013_R03C01	EPN, PF A	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941719	9969477013_R04C01	GBM, RTK II	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941720	9969477013_R05C01	O IDH	0.976	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941721	9969477013_R05C02	A IDH	0.98	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941722	9969477013_R06C01	GBM, RTK II	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941723	9969477014_R03C01	EPN, PF B	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941724	9969477014_R03C02	MB, G4	0.992	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941725	9969477014_R04C01	GBM, MID	0.843	no match to established class	no match, family only	True	False	False	True
+GSM2941726	9969477014_R04C02	GBM, RTK II	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941727	9969477014_R05C01	A IDH	0.993	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941728	9969477014_R06C01	GBM, RTK I	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941729	9969477014_R06C02	MNG	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941730	9969477017_R01C01	GBM, RTK I	0.863	no match to established class	no match, family only	True	False	False	True
+GSM2941731	9969477017_R02C02	GBM, MES	0.948	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941732	9969477017_R03C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941733	9969477017_R04C01	GBM, RTK II	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941734	9969477017_R05C02	O IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941735	9969477017_R06C02	ANA PA	0.771	no match to established class	no match, class named	True	False	False	True
+GSM2941736	9969477018_R06C01	A IDH, HG	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941737	9969477022_R01C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941738	9969477022_R02C01	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941739	9969477022_R05C01	DMG, K27	0.995	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941740	9969477022_R05C02	LGG, PA/GG ST	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941741	9969477022_R06C01	GBM, RTK II	0.956	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941742	9969477041_R02C02	EPN, PF A	0.998	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941743	9969477041_R03C02	A IDH, HG	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941744	9969477055_R02C01	O IDH	0.929	confirmation of diagnosis	matched, subclass failed	True	True	True	False
+GSM2941745	9969477055_R03C01	ANA PA	0.848	no match to established class	no match, class named	True	False	False	True
+GSM2941746	9969477055_R04C01	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941747	9969477055_R05C01	EPN, RELA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941748	9969477055_R06C01	A IDH	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941749	9969477057_R01C01	A IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941750	9969477057_R03C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941751	9969477057_R06C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941752	9969477058_R01C01	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941753	9969477058_R02C01	GBM, MES	0.993	confirmation of diagnosis	matched, subclass failed	True	True	True	False
+GSM2941754	9969477058_R04C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941755	9969477064_R04C02	MB, SHH CHL AD	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941756	9969477064_R05C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941757	9969477064_R06C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941758	9969477065_R01C02	GBM, RTK II	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941759	9969477065_R02C02	GBM, RTK II	0.552	no match to established class	no match, family only	True	False	False	True
+GSM2941760	9969477065_R04C01	SUBEPN, SPINE	0.721	no match to established class	no match, class named	True	False	False	True
+GSM2941761	9969477065_R06C01	GBM, MES	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941762	9969477074_R01C01	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941763	9969477074_R02C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941764	9969477074_R02C02	LGG, PA MID	0.924	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941765	9969477074_R04C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941766	9969477074_R04C02	EPN, RELA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941767	9969477074_R05C01	LGG, PA/GG ST	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941768	9969477074_R06C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941769	9969477079_R02C01	PXA	0.505	no match to established class	no match, class named	True	False	False	True
+GSM2941770	9969477079_R04C01	GBM, RTK I	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941771	9969477079_R06C01	GBM, RTK II	0.967	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941772	9969477086_R01C02	A IDH, HG	0.977	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941773	9969477086_R02C01	GBM, MES	0.992	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941774	9969477086_R03C01	A IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941775	9969477086_R04C01	LGG, PA/GG ST	0.989	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941776	9969477086_R04C02	SUBEPN, PF	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941777	9969477086_R05C01	SUBEPN, PF	0.984	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941778	9969477086_R06C01	LGG, PA PF	0.695	no match to established class	no match, family only	True	False	False	True
+GSM2941779	9969477088_R01C02	A IDH, HG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941780	9969477088_R02C01	MB, G4	0.997	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941781	9969477088_R03C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941782	9969477088_R03C02	O IDH	0.995	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941783	9969477088_R05C02	GBM, MID	0.975	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941784	9969477088_R06C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941785	9969477100_R03C01	MB, SHH CHL AD	0.992	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941786	9969477100_R04C01	GBM, RTK I	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941787	9969477100_R04C02	EPN, PF A	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941788	9969477101_R06C01	A IDH	0.996	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941789	9969477101_R06C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941790	9969477102_R02C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941791	9969477102_R02C02	A IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941792	9969477102_R03C01	A IDH	0.993	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941793	9969477102_R04C01	SCHW	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941794	9969477102_R05C01	GBM, MID	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941795	9969477102_R05C02	LGG, PA MID	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941796	9969477104_R01C01	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941797	9969477104_R02C01	LGG, PA PF	0.393	no match to established class	no match, family only	True	False	False	True
+GSM2941798	9969477107_R03C01	EPN, RELA	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941799	9969477107_R03C02	GBM, MES	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941800	9969477107_R04C02	A IDH	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941801	9969477107_R06C02	A IDH	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941802	9969477108_R01C01	GBM, RTK I	0.997	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941803	9969477108_R03C02	O IDH	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941804	9969477108_R05C02	MB, G3	0.873	no match to established class	no match, family only	True	False	False	True
+GSM2941805	9969477122_R02C02	A IDH	0.994	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941806	9969477122_R03C01	PITUI	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941807	9969477122_R04C01	GBM, RTK I	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941808	9969477122_R05C01	DMG, K27	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941809	9969477122_R06C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941810	9969477123_R02C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941811	9969477123_R04C01	MNG	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941812	9969477123_R05C01	GBM, MID	0.999	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941813	9969477123_R05C02	GBM, MES	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941814	9969477123_R06C02	GBM, RTK II	0.994	confirmation of diagnosis	matched, class named	False	True	True	False
+GSM2941815	9969477124_R01C01	MB, SHH INF	0.964	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941816	9980102013_R01C02	GBM, RTK II	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941817	9980102013_R02C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941818	9980102013_R02C02	GBM, MID	0.979	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941819	9980102013_R03C01	GBM, MES	1.0	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941820	9980102013_R03C02	GBM, G34	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941821	9980102013_R04C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941822	9980102013_R05C01	O IDH	0.999	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941823	9980102013_R05C02	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941824	9980102013_R06C02	MELCYT	1.0	establishing new diagnosis	matched, class named	True	True	False	False
+GSM2941825	9980102032_R01C01	EPN, PF A	0.999	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941826	9980102032_R02C01	DMG, K27	0.988	confirmation of diagnosis	matched, class named	True	True	True	False
+GSM2941827	9980102032_R03C01	MB, SHH CHL AD	1.0	confirmation and refinement of diagnosis	matched, class named	True	True	True	False
+GSM2941828	9980102032_R03C02	MNG	0.998	confirmation of diagnosis	matched, class named	True	True	True	False
