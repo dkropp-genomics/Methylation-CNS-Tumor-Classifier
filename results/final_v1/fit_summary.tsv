@@ -1,0 +1,6 @@
+model	kind	n_train	n_features	correct_material	oof_accuracy_raw	calibrator	calibrator_converged	reload_max_abs_diff	train_accuracy	seconds_features	seconds_model	file_mb
+rf	tree	2767	10000	True	0.967112	raw C=1	True	0	1	64	25.8	27.8
+lgbm	tree	2767	10000	False	0.959884	log C=10	True	0	1	34.1	31.4	7.7
+nn_plain	nn	2767	50000	False				0	1	33.6	543.6	190.1
+nn_masked	nn	2767	50000	False				0	0.998193	0.1	1432.5	194.5
+centroid	centroid	2767	50000	False				0	0.961691	0.1	10	74.4

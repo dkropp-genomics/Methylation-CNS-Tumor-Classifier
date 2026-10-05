@@ -1,0 +1,315 @@
+{
+  "config": {
+    "final": {
+      "run_name": "final_v1",
+      "decided_on": "2026-10-05",
+      "train_cohort": "GSE90496",
+      "validation_cohort": "GSE109379",
+      "labels": {
+        "source": "GEO's \"methylation class\" is the top-scoring class of the published classifier (Capper et al. 2018, version v11b2), with no score cut-off. It agrees with Supplementary Table 4 in all 1,035 cases where that table names a class (scripts/check_validation_labels.py).\n",
+        "wording": "agreement with the published classifier's calls",
+        "headline_set": "all",
+        "subsets": [
+          "capper_matched",
+          "path_concordant",
+          "capper_no_match"
+        ]
+      },
+      "target": {
+        "model": "rf",
+        "scores": "calibrated",
+        "level": "family",
+        "metric": "macro_f1",
+        "reference": "results/final_v1/cv_reference.tsv",
+        "max_drop": 0.05,
+        "also_report": [
+          "accuracy"
+        ]
+      },
+      "models": {
+        "rf": {
+          "kind": "tree",
+          "run": "rf_v1",
+          "config": "configs/rf_v1.yaml",
+          "setting": "s004",
+          "rule": "best mean inner macro-F1 over all 15 inner fits; ties to the earlier setting"
+        },
+        "lgbm": {
+          "kind": "tree",
+          "run": "lgbm_v1",
+          "config": "configs/lgbm_v1.yaml",
+          "setting": "ta46a6b97d9",
+          "rule": "the per-fold selected trial with the highest inner macro-F1",
+          "note": "trials are not shared between outer folds, so this rule is simple but partly arbitrary"
+        },
+        "nn_plain": {
+          "kind": "nn",
+          "run": "nn_v2",
+          "config": "configs/nn_v2.yaml",
+          "network": "plain",
+          "setting": "s000",
+          "epoch": 60,
+          "rule": "the setting and the number of epochs selected in most outer folds"
+        },
+        "nn_masked": {
+          "kind": "nn",
+          "run": "nn_v2",
+          "config": "configs/nn_v2.yaml",
+          "network": "masked",
+          "setting": "s001",
+          "epoch": 150,
+          "rule": "the setting and the number of epochs selected in most outer folds"
+        },
+        "centroid": {
+          "kind": "centroid",
+          "features": {
+            "n_probes": 50000,
+            "correct_material": false
+          },
+          "rule": "nothing to choose"
+        }
+      },
+      "calibration": {
+        "scores_from": "one 5-fold pass over GSE90496 on the existing outer folds with the final setting, giving one out-of-fold score vector per training sample\n",
+        "rf": {
+          "transform": "raw",
+          "C": 1.0
+        },
+        "lgbm": {
+          "transform": "log",
+          "C": 10.0
+        },
+        "rule": "the form chosen in most outer folds (calibration_selected.tsv)",
+        "uncalibrated": [
+          "nn_plain",
+          "nn_masked",
+          "centroid"
+        ]
+      },
+      "analyses": {
+        "full_coverage": [
+          "rf",
+          "lgbm",
+          "nn_plain",
+          "nn_masked",
+          "centroid"
+        ],
+        "headline": "rf",
+        "sparsity": {
+          "levels": [
+            1.0,
+            0.1,
+            0.01,
+            0.001
+          ],
+          "mask_seed": 20261004
+        },
+        "confident_share": {
+          "threshold": 0.9,
+          "cv_value": 0.92
+        },
+        "by_material": true,
+        "n_boot": 1000
+      }
+    },
+    "models": {
+      "rf": {
+        "run_name": "rf_v1",
+        "model": "rf",
+        "seed": 42,
+        "n_jobs": 10,
+        "select_by": "macro_f1",
+        "features": {
+          "n_probes": [
+            5000,
+            10000,
+            20000
+          ],
+          "correct_material": [
+            false,
+            true
+          ]
+        },
+        "model_params": {
+          "n_estimators": [
+            500
+          ],
+          "max_features": [
+            "sqrt"
+          ],
+          "class_weight": [
+            "balanced_subsample"
+          ]
+        }
+      },
+      "lgbm": {
+        "run_name": "lgbm_v1",
+        "model": "lgbm",
+        "seed": 42,
+        "n_jobs": 6,
+        "select_by": "macro_f1",
+        "n_trials": 20,
+        "fixed_params": {
+          "class_weight": "balanced",
+          "max_bin": 63,
+          "subsample_freq": 1,
+          "force_col_wise": true,
+          "deterministic": true,
+          "verbose": -1
+        },
+        "search_space": {
+          "n_probes": {
+            "choice": [
+              5000,
+              10000
+            ]
+          },
+          "correct_material": {
+            "choice": [
+              false,
+              true
+            ]
+          },
+          "n_estimators": {
+            "int": [
+              100,
+              300
+            ]
+          },
+          "learning_rate": {
+            "float": [
+              0.03,
+              0.2
+            ],
+            "log": true
+          },
+          "num_leaves": {
+            "int": [
+              4,
+              31
+            ]
+          },
+          "min_child_samples": {
+            "int": [
+              2,
+              10
+            ]
+          },
+          "colsample_bytree": {
+            "float": [
+              0.05,
+              0.5
+            ]
+          },
+          "subsample": {
+            "float": [
+              0.6,
+              1.0
+            ]
+          },
+          "reg_lambda": {
+            "float": [
+              0.001,
+              10.0
+            ],
+            "log": true
+          }
+        }
+      },
+      "nn_plain": {
+        "run_name": "nn_v2",
+        "model": "mlp",
+        "seed": 42,
+        "n_threads": 6,
+        "select_by": "macro_f1",
+        "levels": [
+          1.0,
+          0.1,
+          0.01,
+          0.001
+        ],
+        "mask_seed": 20261004,
+        "features": {
+          "n_probes": 50000,
+          "correct_material": false
+        },
+        "train": {
+          "hidden": [
+            512,
+            256
+          ],
+          "batch_size": 128,
+          "weight_decay": 0.01,
+          "schedule": "cosine",
+          "max_epochs": {
+            "plain": 60,
+            "masked": 150
+          },
+          "eval_every": 10,
+          "min_fraction": 0.001
+        },
+        "grid": {
+          "masked": [
+            false,
+            true
+          ],
+          "lr": [
+            0.001,
+            0.0003
+          ],
+          "dropout": [
+            0.2
+          ]
+        }
+      },
+      "nn_masked": {
+        "run_name": "nn_v2",
+        "model": "mlp",
+        "seed": 42,
+        "n_threads": 6,
+        "select_by": "macro_f1",
+        "levels": [
+          1.0,
+          0.1,
+          0.01,
+          0.001
+        ],
+        "mask_seed": 20261004,
+        "features": {
+          "n_probes": 50000,
+          "correct_material": false
+        },
+        "train": {
+          "hidden": [
+            512,
+            256
+          ],
+          "batch_size": 128,
+          "weight_decay": 0.01,
+          "schedule": "cosine",
+          "max_epochs": {
+            "plain": 60,
+            "masked": 150
+          },
+          "eval_every": 10,
+          "min_fraction": 0.001
+        },
+        "grid": {
+          "masked": [
+            false,
+            true
+          ],
+          "lr": [
+            0.001,
+            0.0003
+          ],
+          "dropout": [
+            0.2
+          ]
+        }
+      }
+    }
+  },
+  "folds_sha256": "e417d5617b8add6c38db7fc0a9c61341a13763109f61f708045af102c64fbb3e",
+  "n_samples": 2767
+}

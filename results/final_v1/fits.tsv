@@ -1,0 +1,6 @@
+stage	outer	inner	setting	n_train	n_test	n_features	seconds_features	seconds_model	finished
+final	all	all	rf	2767	0	10000	64.0	25.8	2026-10-05 10:42:35
+final	all	all	lgbm	2767	0	10000	34.1	31.4	2026-10-05 10:43:40
+final	all	all	nn_plain	2767	0	50000	33.6	543.6	2026-10-05 10:53:18
+final	all	all	nn_masked	2767	0	50000	0.1	1432.5	2026-10-05 11:17:10
+final	all	all	centroid	2767	0	50000	0.1	10.0	2026-10-05 11:17:20
