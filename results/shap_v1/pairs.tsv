@@ -1,0 +1,5 @@
+mc_class	gene	expected_direction	n_model_probes	testable	recovered
+ETMR	SHPRH	hyper	0	False	False
+HGNET, MN1	PWWP3A	hypo	0	False	False
+PITAD, ACTH	TBX19	hypo	0	False	False
+HGNET, BCOR	RET	hyper	0	False	False
