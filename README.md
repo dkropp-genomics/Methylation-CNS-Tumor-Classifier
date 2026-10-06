@@ -1,5 +1,9 @@
 # Methylation-CNS-Tumor-Classifier
 
+[![tests](https://github.com/dkropp-genomics/Methylation-CNS-Tumor-Classifier/actions/workflows/tests.yml/badge.svg)](https://github.com/dkropp-genomics/Methylation-CNS-Tumor-Classifier/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
+
 **How accurately can DNA methylation classify brain tumors, and how much of that
 accuracy survives when only a small fraction of CpGs is measured, as in
 low-coverage Nanopore sequencing during surgery?**
